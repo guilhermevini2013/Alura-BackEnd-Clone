@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.models;
+package com.alura.aluraAPI.models.person;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
