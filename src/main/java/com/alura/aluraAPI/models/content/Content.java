@@ -22,4 +22,6 @@ public class Content {
     protected LocalDate publicationDate;
     protected String description;
     protected Integer totalHours;
+    @OneToOne(mappedBy = "content")
+    private Certificate certificate;
 }

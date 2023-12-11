@@ -1,18 +1,17 @@
 package com.alura.aluraAPI.models.person;
 
+import com.alura.aluraAPI.models.content.Certificate;
+import com.alura.aluraAPI.models.content.Curses;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
-import lombok.Generated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.validation.annotation.Validated;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "students")
+@Table(name = "student")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,8 +22,16 @@ public class Student {
     private String name;
     private String email;
     private String password;
-    private String typeSignature;
-    //private Set<Curses> completedCurses;
-
-
+    @OneToOne(mappedBy = "student")
+    private Signature signature;
+    @ManyToMany
+    @JoinTable(name ="completed_curses",
+    joinColumns = @JoinColumn(name = "id_student"),
+    inverseJoinColumns = @JoinColumn(name = "id_curse"))
+    private Set<Curses> completedCurses;
+    @ManyToMany
+    @JoinTable(name ="student_certificate",
+            joinColumns = @JoinColumn(name = "id_student"),
+            inverseJoinColumns = @JoinColumn(name = "id_certificate"))
+    private Set<Certificate> certificate = new HashSet<>();
 }
