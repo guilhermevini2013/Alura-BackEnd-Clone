@@ -15,7 +15,7 @@ import java.util.Set;
 @DiscriminatorValue("VideoLesson")
 public class Curses extends Content{
     @OneToMany(mappedBy = "curse")
-    Set<VideoLesson> videoLessons = new HashSet<>();
+    private Set<VideoLesson> videoLessons = new HashSet<>();
     @ManyToOne
     private Trainings trainings;
 }
