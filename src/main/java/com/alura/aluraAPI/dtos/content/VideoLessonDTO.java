@@ -5,5 +5,6 @@ import jakarta.validation.constraints.Size;
 
 public record VideoLessonDTO(@JsonIgnore Long id,
                              @Size(max = 80, message = "Maximum of 80 characters") String nameLesson,
-                             String archive) {
+                             String archive,
+                             Integer duration) {
 }
