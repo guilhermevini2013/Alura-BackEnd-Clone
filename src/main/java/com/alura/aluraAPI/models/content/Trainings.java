@@ -1,5 +1,6 @@
 package com.alura.aluraAPI.models.content;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -16,6 +17,6 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("Training")
 public class Trainings extends Content{
-    @OneToMany(mappedBy = "trainings")
+    @OneToMany(mappedBy = "trainings",cascade = CascadeType.ALL)
     private Set<Curses> curses = new HashSet<>();
 }

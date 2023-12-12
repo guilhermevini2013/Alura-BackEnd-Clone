@@ -14,7 +14,7 @@ import java.util.Set;
 @Table(name = "curses")
 @DiscriminatorValue("VideoLesson")
 public class Curses extends Content{
-    @OneToMany(mappedBy = "curse")
+    @OneToMany(mappedBy = "curse",cascade = CascadeType.ALL)
     private Set<VideoLesson> videoLessons = new HashSet<>();
     @ManyToOne
     private Trainings trainings;
