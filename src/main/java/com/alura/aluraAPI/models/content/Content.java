@@ -6,13 +6,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "content")
 @DiscriminatorColumn(name = "Dtype")
-public class Content {
+public abstract class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
@@ -22,6 +23,6 @@ public class Content {
     protected LocalDate publicationDate;
     protected String description;
     protected Integer totalHours;
-    @OneToOne(mappedBy = "content")
+    @OneToOne(mappedBy = "content", cascade = CascadeType.ALL)
     private Certificate certificate;
 }
