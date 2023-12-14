@@ -20,6 +20,6 @@ public class Signature {
     private TypeSignature typeSignature;
     private Date initialDate;
     private Date finalDate;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Student student;
 }

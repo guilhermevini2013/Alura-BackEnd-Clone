@@ -25,4 +25,13 @@ public abstract class Content {
     protected Integer totalHours;
     @OneToOne(mappedBy = "content", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     private Certificate certificate;
+
+    public Content(String nameContent,String description,Integer totalHours ,Certificate certificate) {
+        this.nameContent = nameContent;
+        this.description = description;
+        this.totalStudent = 0l;
+        this.publicationDate = LocalDate.now();
+        this.totalHours = totalHours;
+        this.certificate = certificate;
+    }
 }

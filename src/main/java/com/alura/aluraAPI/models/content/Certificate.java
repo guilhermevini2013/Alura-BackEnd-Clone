@@ -1,5 +1,6 @@
 package com.alura.aluraAPI.models.content;
 
+import com.alura.aluraAPI.dtos.content.CertificateDTO;
 import com.alura.aluraAPI.models.person.Student;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -27,4 +28,7 @@ public class Certificate {
     private Content content;
     @ManyToMany(mappedBy = "certificate")
     private Set<Student> student = new HashSet<>();
+
+    public Certificate(CertificateDTO certificateDTO) {
+    }
 }
