@@ -1,5 +1,6 @@
 package com.alura.aluraAPI.models.content;
 
+import com.alura.aluraAPI.dtos.content.VideoLessonDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,10 @@ public class VideoLesson {
     private String archive;
     @ManyToOne(fetch = FetchType.LAZY)
     private Curse curse;
+
+    public VideoLesson(VideoLessonDTO videoLessonDTO, Curse curse) {
+        this.nameLesson = videoLessonDTO.nameLesson();
+        this.archive = videoLessonDTO.archive();
+        this.curse = curse;
+    }
 }

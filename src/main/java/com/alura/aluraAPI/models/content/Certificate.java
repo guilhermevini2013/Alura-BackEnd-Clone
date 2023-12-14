@@ -29,6 +29,8 @@ public class Certificate {
     @ManyToMany(mappedBy = "certificate")
     private Set<Student> student = new HashSet<>();
 
-    public Certificate(CertificateDTO certificateDTO) {
+    public Certificate(CertificateDTO certificateDTO, Curse curse) {
+        this.nameCertificate = certificateDTO.nameCertificate();
+        this.content = curse;
     }
 }

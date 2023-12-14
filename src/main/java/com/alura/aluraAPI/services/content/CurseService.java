@@ -1,6 +1,6 @@
 package com.alura.aluraAPI.services.content;
 
-import com.alura.aluraAPI.dtos.content.CursesDTO;
+import com.alura.aluraAPI.dtos.content.CurseDTO;
 import com.alura.aluraAPI.models.content.Curse;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ public class CurseService {
     public CurseService(ContentRepository contentRepository){
         this.contentRepository = contentRepository;
     }
-    public CursesDTO insert(CursesDTO cursesDTO){
+    public CurseDTO insert(CurseDTO cursesDTO){
         Curse entity = contentRepository.save(new Curse(cursesDTO));
         return null;
     }
