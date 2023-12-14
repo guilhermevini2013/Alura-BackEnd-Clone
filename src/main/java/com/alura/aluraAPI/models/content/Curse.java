@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,18 +20,18 @@ import java.util.Set;
 @DiscriminatorValue("VideoLesson")
 public class Curse extends Content {
     @OneToMany(mappedBy = "curse", cascade = CascadeType.ALL)
-    private Set<VideoLesson> videoLessons = new HashSet<>();
+    private List<VideoLesson> videoLessons = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Training trainings;
 
     public Curse(CurseDTO cursesDTO) {
         super(cursesDTO.nameContent(), cursesDTO.description());
-        super.certificate = new Certificate(cursesDTO.certificateDTO(),this);
         super.totalHours = calculateTotalHours(cursesDTO.videoLessonDTOList());
+        super.certificate = new Certificate(cursesDTO.certificateDTO(),this);
         cursesDTO.videoLessonDTOList().stream().forEach(x-> videoLessons.add(new VideoLesson(x,this)));
     }
 
     private Integer calculateTotalHours(List<VideoLessonDTO> videoList) {
-        return videoList.stream().mapToInt(x -> x.duration()).sum();
+        return videoList.stream().mapToInt(x -> x.duration()).sum() / 60;
     }
 }

@@ -15,6 +15,6 @@ public class CurseService {
     }
     public CurseDTO insert(CurseDTO cursesDTO){
         Curse entity = contentRepository.save(new Curse(cursesDTO));
-        return null;
+        return new CurseDTO(entity);
     }
 }

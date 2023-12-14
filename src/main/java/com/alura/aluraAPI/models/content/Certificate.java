@@ -26,11 +26,12 @@ public class Certificate {
     private Integer totalHours;
     @OneToOne(fetch = FetchType.LAZY)
     private Content content;
-    @ManyToMany(mappedBy = "certificate")
+    @OneToMany
     private Set<Student> student = new HashSet<>();
 
     public Certificate(CertificateDTO certificateDTO, Curse curse) {
         this.nameCertificate = certificateDTO.nameCertificate();
         this.content = curse;
+        this.totalHours = curse.getTotalHours();
     }
 }
