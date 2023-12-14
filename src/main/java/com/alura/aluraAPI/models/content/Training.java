@@ -16,7 +16,7 @@ import java.util.Set;
 @Getter
 @Entity
 @DiscriminatorValue("Training")
-public class Trainings extends Content{
+public class Training extends Content{
     @OneToMany(mappedBy = "trainings",cascade = CascadeType.ALL)
-    private Set<Curses> curses = new HashSet<>();
+    private Set<Curse> curses = new HashSet<>();
 }

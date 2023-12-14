@@ -16,6 +16,6 @@ public class VideoLesson {
     private Long id;
     private String nameLesson;
     private String archive;
-    @ManyToOne
-    private Curses curse;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Curse curse;
 }

@@ -23,7 +23,7 @@ public class Certificate {
     private Date initialDate;
     private Date finalDate;
     private Integer totalHours;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Content content;
     @ManyToMany(mappedBy = "certificate")
     private Set<Student> student = new HashSet<>();

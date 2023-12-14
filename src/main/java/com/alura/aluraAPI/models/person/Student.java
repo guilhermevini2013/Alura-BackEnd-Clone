@@ -1,7 +1,7 @@
 package com.alura.aluraAPI.models.person;
 
 import com.alura.aluraAPI.models.content.Certificate;
-import com.alura.aluraAPI.models.content.Curses;
+import com.alura.aluraAPI.models.content.Curse;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,13 +22,13 @@ public class Student {
     private String name;
     private String email;
     private String password;
-    @OneToOne(mappedBy = "student")
+    @OneToOne(mappedBy = "student", fetch = FetchType.LAZY)
     private Signature signature;
     @ManyToMany
     @JoinTable(name ="completed_curses",
     joinColumns = @JoinColumn(name = "id_student"),
     inverseJoinColumns = @JoinColumn(name = "id_curse"))
-    private Set<Curses> completedCurses;
+    private Set<Curse> completedCurses;
     @ManyToMany
     @JoinTable(name ="student_certificate",
             joinColumns = @JoinColumn(name = "id_student"),
