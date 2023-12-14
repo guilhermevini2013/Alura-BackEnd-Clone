@@ -21,13 +21,11 @@ public class Certificate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String nameCertificate;
-    private Date initialDate;
-    private Date finalDate;
     private Integer totalHours;
     @OneToOne(fetch = FetchType.LAZY)
     private Content content;
-    @OneToMany
-    private Set<Student> student = new HashSet<>();
+    @OneToMany(mappedBy = "certificate")
+    private Set<StudentCertificate> studentCertificates = new HashSet<>();
 
     public Certificate(CertificateDTO certificateDTO, Curse curse) {
         this.nameCertificate = certificateDTO.nameCertificate();

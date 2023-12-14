@@ -1,7 +1,7 @@
 package com.alura.aluraAPI.models.person;
 
-import com.alura.aluraAPI.models.content.Certificate;
 import com.alura.aluraAPI.models.content.Curse;
+import com.alura.aluraAPI.models.content.StudentCertificate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,9 +29,9 @@ public class Student {
     joinColumns = @JoinColumn(name = "id_student"),
     inverseJoinColumns = @JoinColumn(name = "id_curse"))
     private Set<Curse> completedCurses;
-    @ManyToMany
-    @JoinTable(name ="student_certificate",
-            joinColumns = @JoinColumn(name = "id_student"),
-            inverseJoinColumns = @JoinColumn(name = "id_certificate"))
-    private Set<Certificate> certificate = new HashSet<>();
+    @OneToMany(mappedBy = "student")
+//    @JoinTable(name ="student_certificate",
+//            joinColumns = @JoinColumn(name = "id_student"),
+//            inverseJoinColumns = @JoinColumn(name = "id_certificate"))
+    private Set<StudentCertificate> studentCertificates = new HashSet<>();
 }
