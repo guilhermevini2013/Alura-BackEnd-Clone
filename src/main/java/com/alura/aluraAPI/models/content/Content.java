@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDate;
 
@@ -12,7 +13,8 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @Table(name = "content")
-@DiscriminatorColumn(name = "Dtype")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "TypeContent")
 public abstract class Content {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

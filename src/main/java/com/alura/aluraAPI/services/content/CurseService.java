@@ -17,4 +17,8 @@ public class CurseService {
         Curse entity = contentRepository.save(new Curse(cursesDTO));
         return new CurseDTO(entity);
     }
+    public CurseDTO findByName(String name){
+        Curse entityFind = contentRepository.findByNameContent(name).orElseThrow(()-> new RuntimeException());
+        return new CurseDTO(entityFind);
+    }
 }
