@@ -19,9 +19,10 @@ public class CurseService {
         Curse entity = contentRepository.save(new Curse(cursesDTO));
         return new CurseDTO(entity);
     }
-    @Transactional
+    @Transactional(readOnly = true)
     public CurseDTO findByName(String name){
         Curse entityFind = contentRepository.findByNameContent(name).orElseThrow(()-> new RuntimeException());
+        System.out.println(entityFind.getClass());
         return new CurseDTO(entityFind);
     }
 }

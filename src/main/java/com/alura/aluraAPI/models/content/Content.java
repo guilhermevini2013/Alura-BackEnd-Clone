@@ -25,7 +25,7 @@ public abstract class Content {
     protected LocalDate publicationDate;
     protected String description;
     protected Integer totalHours;
-    @OneToOne(mappedBy = "content", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected Certificate certificate;
 
     public Content(String nameContent, String description) {

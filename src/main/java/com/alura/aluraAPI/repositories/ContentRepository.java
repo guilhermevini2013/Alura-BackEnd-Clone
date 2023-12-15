@@ -10,6 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface ContentRepository extends JpaRepository<Content,Long> {
-    @Query("select c from Content c where TYPE(c) = Curse and c.nameContent=:name")
+    @Query(value = "select c from Content c where TYPE(c) = Curse and c.nameContent=:name")
     Optional<Curse> findByNameContent(String name);
 }
