@@ -1,12 +1,12 @@
-package com.alura.aluraAPI.services.content;
+package com.alura.aluraAPI.services.contents;
 
-import com.alura.aluraAPI.dtos.content.CurseDTO;
+import com.alura.aluraAPI.dtos.content.insert.CurseDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
 import com.alura.aluraAPI.models.content.Curse;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 @Service
 public class CurseService {
     private ContentRepository contentRepository;
@@ -20,9 +20,8 @@ public class CurseService {
         return new CurseDTO(entity);
     }
     @Transactional(readOnly = true)
-    public CurseDTO findByName(String name){
+    public CurseReadDTO findByName(String name){
         Curse entityFind = contentRepository.findByNameContent(name).orElseThrow(()-> new RuntimeException());
-        System.out.println(entityFind.getClass());
-        return new CurseDTO(entityFind);
+        return new CurseReadDTO(entityFind);
     }
 }

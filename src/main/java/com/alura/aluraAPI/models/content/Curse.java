@@ -1,7 +1,7 @@
 package com.alura.aluraAPI.models.content;
 
-import com.alura.aluraAPI.dtos.content.CurseDTO;
-import com.alura.aluraAPI.dtos.content.VideoLessonDTO;
+import com.alura.aluraAPI.dtos.content.insert.CurseDTO;
+import com.alura.aluraAPI.dtos.content.insert.VideoLessonDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

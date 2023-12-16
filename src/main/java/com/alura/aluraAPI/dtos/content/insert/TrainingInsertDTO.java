@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.dtos.content;
+package com.alura.aluraAPI.dtos.content.insert;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotEmpty;

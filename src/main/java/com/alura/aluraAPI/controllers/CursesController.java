@@ -1,7 +1,8 @@
 package com.alura.aluraAPI.controllers;
 
-import com.alura.aluraAPI.dtos.content.CurseDTO;
-import com.alura.aluraAPI.services.content.CurseService;
+import com.alura.aluraAPI.dtos.content.insert.CurseDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
+import com.alura.aluraAPI.services.contents.CurseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,13 +18,13 @@ public class CursesController {
     private CurseService curseService;
 
     @PostMapping
-    public ResponseEntity<CurseDTO> insert(@RequestBody @Valid CurseDTO curseDTO) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid CurseDTO curseDTO) {
         curseDTO = curseService.insert(curseDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(curseDTO).toUri();
-        return ResponseEntity.created(uri).body(curseDTO);
+        return ResponseEntity.created(uri).build();
     }
     @GetMapping(value = "/{name}")
-    public ResponseEntity<CurseDTO> findByName(@PathVariable String name){
+    public ResponseEntity<CurseReadDTO> findByName(@PathVariable String name){
         return ResponseEntity.ok(curseService.findByName(name));
     }
 }

@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.dtos.content;
+package com.alura.aluraAPI.dtos.content.insert;
 
 import com.alura.aluraAPI.models.content.Certificate;
 import com.fasterxml.jackson.annotation.JsonIgnore;

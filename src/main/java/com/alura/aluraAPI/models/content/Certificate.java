@@ -1,13 +1,11 @@
 package com.alura.aluraAPI.models.content;
 
-import com.alura.aluraAPI.dtos.content.CertificateDTO;
-import com.alura.aluraAPI.models.person.Student;
+import com.alura.aluraAPI.dtos.content.insert.CertificateDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 

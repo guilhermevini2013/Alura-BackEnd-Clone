@@ -1,7 +1,7 @@
 package com.alura.aluraAPI.factory;
 
-import com.alura.aluraAPI.dtos.content.CertificateDTO;
-import com.alura.aluraAPI.dtos.content.CurseDTO;
+import com.alura.aluraAPI.dtos.content.insert.CertificateDTO;
+import com.alura.aluraAPI.dtos.content.insert.CurseDTO;
 import com.alura.aluraAPI.models.content.Curse;
 
 import java.util.ArrayList;

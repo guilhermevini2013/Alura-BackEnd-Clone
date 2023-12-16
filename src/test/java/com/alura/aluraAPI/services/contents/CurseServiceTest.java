@@ -1,14 +1,11 @@
-package com.alura.aluraAPI.services.content;
+package com.alura.aluraAPI.services.contents;
 
 import com.alura.aluraAPI.factory.Factory;
-import com.alura.aluraAPI.models.content.Content;
-import com.alura.aluraAPI.models.content.Curse;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
