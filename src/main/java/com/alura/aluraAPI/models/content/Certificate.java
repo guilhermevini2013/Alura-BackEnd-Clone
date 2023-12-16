@@ -6,9 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Getter
 @AllArgsConstructor
@@ -20,8 +17,6 @@ public class Certificate {
     private Long id;
     private String nameCertificate;
     private Integer totalHours;
-    @OneToMany(mappedBy = "certificate")
-    private Set<StudentCertificate> studentCertificates = new HashSet<>();
 
     public Certificate(CertificateDTO certificateDTO, Curse curse) {
         this.nameCertificate = certificateDTO.nameCertificate();

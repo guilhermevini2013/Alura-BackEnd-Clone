@@ -30,8 +30,5 @@ public class Student {
     inverseJoinColumns = @JoinColumn(name = "id_curse"))
     private Set<Curse> completedCurses;
     @OneToMany(mappedBy = "student")
-//    @JoinTable(name ="student_certificate",
-//            joinColumns = @JoinColumn(name = "id_student"),
-//            inverseJoinColumns = @JoinColumn(name = "id_certificate"))
     private Set<StudentCertificate> studentCertificates = new HashSet<>();
 }
