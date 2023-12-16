@@ -5,6 +5,9 @@ import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
 import com.alura.aluraAPI.services.contents.CurseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,8 +26,17 @@ public class CursesController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(curseDTO).toUri();
         return ResponseEntity.created(uri).build();
     }
+
     @GetMapping(value = "/{name}")
-    public ResponseEntity<CurseReadDTO> findByName(@PathVariable String name){
+    public ResponseEntity<CurseReadDTO> findByName(@PathVariable String name) {
         return ResponseEntity.ok(curseService.findByName(name));
+    }
+
+    @GetMapping
+    public ResponseEntity<Page<CurseReadDTO>> findAllCurse(@RequestParam(name = "pages", defaultValue = "0") Integer page,
+                                                           @RequestParam(name = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                           @RequestParam(name = "direction", defaultValue = "DESC") String direction,
+                                                           @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
+        return ResponseEntity.ok(curseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
 }
