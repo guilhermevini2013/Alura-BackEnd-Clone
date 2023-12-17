@@ -4,7 +4,9 @@ import com.alura.aluraAPI.dtos.content.insert.CurseDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
 import com.alura.aluraAPI.models.content.Curse;
 import com.alura.aluraAPI.repositories.ContentRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -29,5 +31,14 @@ public class CurseService {
     @Transactional(readOnly = true)
     public Page<CurseReadDTO> findAllCurse(PageRequest pageRequest){
         return contentRepository.findAllCurse(pageRequest).map(x->new CurseReadDTO(x));
+    }
+    @Transactional
+    public void delete(Long id){
+        try{
+            id = contentRepository.getReferenceById(id).getId();
+            contentRepository.deleteById(id);
+        }catch (DataIntegrityViolationException | EntityNotFoundException ex){
+            throw new RuntimeException();
+        }
     }
 }

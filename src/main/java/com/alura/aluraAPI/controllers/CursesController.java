@@ -39,4 +39,10 @@ public class CursesController {
                                                            @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
         return ResponseEntity.ok(curseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteByName(@PathVariable Long id) {
+        curseService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
