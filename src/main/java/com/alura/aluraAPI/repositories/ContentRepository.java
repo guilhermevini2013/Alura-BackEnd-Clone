@@ -12,8 +12,8 @@ import java.util.Optional;
 
 @Repository
 public interface ContentRepository extends JpaRepository<Content,Long> {
-    @Query(value = "select c from Content c where TYPE(c) = Curse and c.nameContent=:name")
-    Optional<Curse> findByNameContent(String name);
+    @Query(value = "select c from Content c where TYPE(c) = Curse and c.id=:id")
+    Optional<Curse> findByIdContent(Long id);
     @Query(value = "select c from Content c where TYPE(c) = Curse")
     Page<Curse> findAllCurse(PageRequest pageRequest);
 }

@@ -24,8 +24,8 @@ public class CurseService {
         return new CurseDTO(entity);
     }
     @Transactional(readOnly = true)
-    public CurseReadDTO findByName(String name){
-        Curse entityFind = contentRepository.findByNameContent(name).orElseThrow(()-> new RuntimeException());
+    public CurseReadDTO findById(Long id){
+        Curse entityFind = contentRepository.findByIdContent(id).orElseThrow(()-> new RuntimeException());
         return new CurseReadDTO(entityFind);
     }
     @Transactional(readOnly = true)
@@ -35,8 +35,11 @@ public class CurseService {
     @Transactional
     public void delete(Long id){
         try{
-            id = contentRepository.getReferenceById(id).getId();
-            contentRepository.deleteById(id);
+            if (contentRepository.existsById(id)){
+                contentRepository.deleteById(id);
+            }else {
+                throw new EntityNotFoundException();
+            }
         }catch (DataIntegrityViolationException | EntityNotFoundException ex){
             throw new RuntimeException();
         }

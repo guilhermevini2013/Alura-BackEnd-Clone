@@ -28,8 +28,8 @@ public class CursesController {
     }
 
     @GetMapping(value = "/{name}")
-    public ResponseEntity<CurseReadDTO> findByName(@PathVariable String name) {
-        return ResponseEntity.ok(curseService.findByName(name));
+    public ResponseEntity<CurseReadDTO> findByName(@PathVariable Long id) {
+        return ResponseEntity.ok(curseService.findById(id));
     }
 
     @GetMapping

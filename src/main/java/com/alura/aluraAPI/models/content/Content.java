@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDate;
 
@@ -34,4 +33,6 @@ public abstract class Content {
         this.totalStudent = 0l;
         this.publicationDate = LocalDate.now();
     }
+
+
 }
