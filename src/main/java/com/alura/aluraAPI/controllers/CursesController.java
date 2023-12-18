@@ -27,8 +27,8 @@ public class CursesController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping(value = "/{name}")
-    public ResponseEntity<CurseReadDTO> findByName(@PathVariable Long id) {
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CurseReadDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(curseService.findById(id));
     }
 
