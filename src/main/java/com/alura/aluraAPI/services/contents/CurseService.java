@@ -26,7 +26,7 @@ public class CurseService {
         this.curseFilter = new CurseFilter(contentRepository);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<CurseReadDTO> findByFilter(CurseSearchDTO searchDTO){
         return curseFilter.filter(searchDTO);
     }
