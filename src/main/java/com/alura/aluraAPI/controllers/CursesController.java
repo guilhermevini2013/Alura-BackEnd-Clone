@@ -2,6 +2,7 @@ package com.alura.aluraAPI.controllers;
 
 import com.alura.aluraAPI.dtos.content.insert.CurseDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.CurseSearchDTO;
 import com.alura.aluraAPI.services.contents.CurseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/curse")
@@ -38,6 +40,10 @@ public class CursesController {
                                                            @RequestParam(name = "direction", defaultValue = "DESC") String direction,
                                                            @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
         return ResponseEntity.ok(curseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
+    }
+    @GetMapping(value = "/filter")
+    public ResponseEntity<List<CurseReadDTO>> findAllCurse(@RequestBody CurseSearchDTO search){
+        return ResponseEntity.ok(curseService.findByFilter(search));
     }
 
     @DeleteMapping(value = "/{id}")
