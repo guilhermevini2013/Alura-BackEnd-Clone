@@ -24,7 +24,7 @@ public class CurseServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(contentRepository);
-        curseService= new CurseService(this.contentRepository);
+        curseService= new CurseService(this.contentRepository,null);
         when(contentRepository.save(any())).thenReturn(Factory.createCurse());
     }
     @Test
