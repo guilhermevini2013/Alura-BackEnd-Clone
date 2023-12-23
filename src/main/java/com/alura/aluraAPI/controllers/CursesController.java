@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -42,8 +43,10 @@ public class CursesController {
         return ResponseEntity.ok(curseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
     @GetMapping(value = "/filter")
-    public ResponseEntity<List<CurseReadDTO>> findAllCurse(@RequestBody CurseSearchDTO search){
-        return ResponseEntity.ok(curseService.findByFilter(search));
+    public ResponseEntity<List<CurseReadDTO>> findAllCurse(@RequestParam(name = "curse",required = false) String nameCurse,
+                                                           @RequestParam(name = "publicationDate",required = false)LocalDate date,
+                                                           @RequestParam(name = "assessment",required = false) Double assessment){
+        return ResponseEntity.ok(curseService.findByFilter(new CurseSearchDTO(nameCurse,date,assessment)));
     }
 
     @DeleteMapping(value = "/{id}")
