@@ -42,11 +42,12 @@ public class CursesController {
                                                            @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
         return ResponseEntity.ok(curseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
+
     @GetMapping(value = "/filter")
-    public ResponseEntity<List<CurseReadDTO>> findAllCurse(@RequestParam(name = "curse",required = false) String nameCurse,
-                                                           @RequestParam(name = "publicationDate",required = false)LocalDate date,
-                                                           @RequestParam(name = "assessment",required = false) Double assessment){
-        return ResponseEntity.ok(curseService.findByFilter(new CurseSearchDTO(nameCurse,date,assessment)));
+    public ResponseEntity<List<CurseReadDTO>> findAllCurse(@RequestParam(name = "curse", required = false) String nameCurse,
+                                                           @RequestParam(name = "publicationDate", required = false) LocalDate date,
+                                                           @RequestParam(name = "assessment", required = false) Double assessment) {
+        return ResponseEntity.ok(curseService.findByFilter(new CurseSearchDTO(nameCurse, date, assessment)));
     }
 
     @DeleteMapping(value = "/{id}")

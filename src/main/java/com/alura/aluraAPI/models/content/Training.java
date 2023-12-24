@@ -1,5 +1,6 @@
 package com.alura.aluraAPI.models.content;
 
+import com.alura.aluraAPI.dtos.content.insert.TrainingInsertDTO;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
@@ -19,4 +20,8 @@ import java.util.Set;
 public class Training extends Content{
     @OneToMany(mappedBy = "trainings",cascade = CascadeType.ALL)
     private Set<Curse> curses = new HashSet<>();
+
+    public Training(TrainingInsertDTO trainingInsertDTO) {
+        super(trainingInsertDTO.nameContent(), trainingInsertDTO.description());
+    }
 }
