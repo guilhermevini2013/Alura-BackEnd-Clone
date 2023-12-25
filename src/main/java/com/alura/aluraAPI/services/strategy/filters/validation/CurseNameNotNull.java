@@ -8,6 +8,7 @@ import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.strategy.filters.FilterSpecification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 
 @Component
@@ -22,8 +23,13 @@ public class CurseNameNotNull implements IValidatorFilterCurse{
 
     public void validate(CurseSearchDTO dto,Set<CurseReadDTO> listFilter){
         if (dto.nameContent()!=null) {
-            contentRepository.findAll(filterSpecification.filterByString("nameContent", dto.nameContent()))
-                    .forEach(x-> listFilter.add(new CurseReadDTO((Curse) x)));
+            List<Content> listContent = contentRepository.findAll(filterSpecification.filterByString("nameContent", dto.nameContent()));
+            for (Content content:listContent) {
+                if (content instanceof Curse){
+                    listFilter.add(new CurseReadDTO((Curse) content));
+                }
+            }
+
         }
     }
 }

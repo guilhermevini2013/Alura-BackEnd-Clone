@@ -8,6 +8,7 @@ import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.strategy.filters.FilterSpecification;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Set;
 @Component
 public class CursePublicationDateNotNull implements IValidatorFilterCurse{
@@ -21,8 +22,12 @@ public class CursePublicationDateNotNull implements IValidatorFilterCurse{
 
     public void validate(CurseSearchDTO dto,Set<CurseReadDTO> listFilter){
         if (dto.publicationDate() != null){
-            contentRepository.findAll(filterSpecification.filterByLocalDate("publicationDate", dto.publicationDate()))
-                    .forEach(x-> listFilter.add(new CurseReadDTO((Curse) x)));
+            List<Content> listContent = contentRepository.findAll(filterSpecification.filterByLocalDate("publicationDate", dto.publicationDate()));
+            for (Content content:listContent) {
+                if (content instanceof Curse){
+                    listFilter.add(new CurseReadDTO((Curse) content));
+                }
+            }
         }
     }
 }
