@@ -9,6 +9,9 @@ import com.alura.aluraAPI.services.exceptions.ValidationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Service
 public class TrainingService {
     private ContentRepository contentRepository;
@@ -25,19 +28,19 @@ public class TrainingService {
     }
 
     private void insertCursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO){
-        System.out.println(trainingInsertDTO.curses().size());
+        Set<Curse> curseList = new HashSet<>();
         if (trainingInsertDTO.curses().size() < 3){
             throw new ValidationException("Not enough courses");
         }
         for (Long idCurse: trainingInsertDTO.curses()) {
             Curse curse = contentRepository.findByIdContent(idCurse).orElse(null);
             if (curse != null && curse.getTrainings() == null){
-                curse.setTrainings(entity);
-                entity.getCurses().add(curse);
+                curseList.add(curse);
             }else {
-                throw new ValidationException("Course already in use");
+                throw new ValidationException("Course already in use or doesn't exist");
             }
         }
+        curseList.forEach(curse -> entity.getCurses().add(curse.setTrainings(entity)));
     }
 
 }

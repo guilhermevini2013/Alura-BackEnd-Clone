@@ -32,7 +32,8 @@ public class Curse extends Content {
         return videoList.stream().mapToInt(x -> x.duration()).sum() / 60;
     }
 
-    public void setTrainings(Training trainings) {
+    public Curse setTrainings(Training trainings) {
         this.trainings = trainings;
+        return this;
     }
 }
