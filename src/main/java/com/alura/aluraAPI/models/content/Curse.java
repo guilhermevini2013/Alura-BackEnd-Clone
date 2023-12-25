@@ -31,4 +31,8 @@ public class Curse extends Content {
     private Integer calculateTotalHours(List<VideoLessonDTO> videoList) {
         return videoList.stream().mapToInt(x -> x.duration()).sum() / 60;
     }
+
+    public void setTrainings(Training trainings) {
+        this.trainings = trainings;
+    }
 }

@@ -7,7 +7,7 @@ import com.alura.aluraAPI.models.content.Curse;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
-import com.alura.aluraAPI.services.filters.CurseFilter;
+import com.alura.aluraAPI.services.strategy.filters.CurseFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;

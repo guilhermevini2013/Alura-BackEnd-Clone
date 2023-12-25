@@ -1,8 +1,8 @@
-package com.alura.aluraAPI.services.filters;
+package com.alura.aluraAPI.services.strategy.filters;
 
 import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CurseSearchDTO;
-import com.alura.aluraAPI.services.filters.validations.IValidatorFilterCurse;
+import com.alura.aluraAPI.services.strategy.filters.validation.IValidatorFilterCurse;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;

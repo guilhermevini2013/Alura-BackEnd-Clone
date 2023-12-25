@@ -1,27 +1,27 @@
-package com.alura.aluraAPI.services.filters.validations;
+package com.alura.aluraAPI.services.strategy.filters.validation;
 
 import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CurseSearchDTO;
 import com.alura.aluraAPI.models.content.Content;
 import com.alura.aluraAPI.models.content.Curse;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.filters.FilterSpecification;
+import com.alura.aluraAPI.services.strategy.filters.FilterSpecification;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 @Component
-public class CurseAssementNotNull implements IValidatorFilterCurse{
+public class CursePublicationDateNotNull implements IValidatorFilterCurse{
     private ContentRepository contentRepository;
     private FilterSpecification<Content> filterSpecification;
 
-    public CurseAssementNotNull(ContentRepository contentRepository, FilterSpecification<Content> filterSpecification) {
+    public CursePublicationDateNotNull(ContentRepository contentRepository, FilterSpecification<Content> filterSpecification) {
         this.contentRepository = contentRepository;
         this.filterSpecification = filterSpecification;
     }
 
     public void validate(CurseSearchDTO dto,Set<CurseReadDTO> listFilter){
-        if (dto.assessment() != null){
-            contentRepository.findAll(filterSpecification.filterByDouble("assessment", dto.assessment()))
+        if (dto.publicationDate() != null){
+            contentRepository.findAll(filterSpecification.filterByLocalDate("publicationDate", dto.publicationDate()))
                     .forEach(x-> listFilter.add(new CurseReadDTO((Curse) x)));
         }
     }

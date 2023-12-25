@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.services.filters.validations;
+package com.alura.aluraAPI.services.strategy.filters.validation;
 
 import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CurseSearchDTO;

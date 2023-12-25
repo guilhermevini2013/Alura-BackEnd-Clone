@@ -1,11 +1,11 @@
-package com.alura.aluraAPI.services.filters.validations;
+package com.alura.aluraAPI.services.strategy.filters.validation;
 
 import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CurseSearchDTO;
 import com.alura.aluraAPI.models.content.Content;
 import com.alura.aluraAPI.models.content.Curse;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.filters.FilterSpecification;
+import com.alura.aluraAPI.services.strategy.filters.FilterSpecification;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
