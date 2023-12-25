@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,5 +24,9 @@ public class Training extends Content{
 
     public Training(TrainingInsertDTO trainingInsertDTO) {
         super(trainingInsertDTO.nameContent(), trainingInsertDTO.description());
+    }
+    public void calculatedTime(){
+        IntStream intStream = curses.stream().mapToInt(x -> x.getVideoLessons().stream().mapToInt(y -> y.getDuration()).sum());
+        super.totalHours = intStream.sum();
     }
 }

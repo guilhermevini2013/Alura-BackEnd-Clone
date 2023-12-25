@@ -18,7 +18,7 @@ import java.util.List;
 public class Curse extends Content {
     @OneToMany(mappedBy = "curse", cascade = CascadeType.ALL)
     private List<VideoLesson> videoLessons = new ArrayList<>();
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Training trainings;
 
     public Curse(CurseDTO cursesDTO) {

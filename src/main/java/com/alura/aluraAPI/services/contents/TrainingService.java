@@ -23,6 +23,7 @@ public class TrainingService {
     public TrainingReadDTO insert(TrainingInsertDTO trainingInsertDTO){
         Training entity = new Training(trainingInsertDTO);
         insertCursesInTraining(entity,trainingInsertDTO);
+        entity.calculatedTime();
         entity = contentRepository.save(entity);
         return new TrainingReadDTO(entity);
     }
