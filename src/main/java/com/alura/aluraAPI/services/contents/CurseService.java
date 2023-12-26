@@ -42,13 +42,13 @@ public class CurseService {
 
     @Transactional(readOnly = true)
     public CourseReadDTO findById(Long id) {
-        Course entityFind = contentRepository.findByIdContent(id).orElseThrow(() -> new ResourceNotFoundException("Id not found: " + id));
+        Course entityFind = contentRepository.findByIdCourse(id).orElseThrow(() -> new ResourceNotFoundException("Id not found: " + id));
         return new CourseReadDTO(entityFind);
     }
 
     @Transactional(readOnly = true)
     public Page<CourseReadDTO> findAllCurse(PageRequest pageRequest) {
-        return contentRepository.findAllCourse(pageRequest).map(x -> new CourseReadDTO(x));
+        return contentRepository.findAllCourse(pageRequest).map(course -> new CourseReadDTO(course));
     }
 
     @Transactional

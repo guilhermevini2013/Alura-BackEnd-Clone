@@ -7,6 +7,8 @@ import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.calculates.CalculateTimeTrainingStrategy;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,14 +33,17 @@ public class TrainingService {
         entity = contentRepository.save(entity);
         return new TrainingReadDTO(entity);
     }
-
+    @Transactional(readOnly = true)
+    public Page<TrainingReadDTO> findAllTraining(PageRequest pageRequest){
+        return contentRepository.findAllTraining(pageRequest).map(training -> new TrainingReadDTO(training));
+    }
     private void addCoursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO) {
         Set<Course> courseList = new HashSet<>();
         if (trainingInsertDTO.curses().size() < 3) {
             throw new ValidationException("Not enough courses");
         }
         for (Long idCourse : trainingInsertDTO.curses()) {
-            Course course = contentRepository.findByIdContent(idCourse).orElse(null);
+            Course course = contentRepository.findByIdCourse(idCourse).orElse(null);
             if (course != null && course.getTrainings() == null) {
                 courseList.add(course);
             } else {
