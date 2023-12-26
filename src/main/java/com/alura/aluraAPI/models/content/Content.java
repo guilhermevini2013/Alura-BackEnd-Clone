@@ -34,5 +34,7 @@ public abstract class Content {
         this.publicationDate = LocalDate.now();
     }
 
-
+    public void setTotalHours(Integer totalHours) {
+        this.totalHours = totalHours;
+    }
 }

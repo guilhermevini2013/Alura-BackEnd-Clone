@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class CalculateTimeCourseStrategy implements ICalculable<Course> {
 
     @Override
-    public Integer calculateTime(Course course) {
-        return course.getVideoLessons().stream().mapToInt(lesson -> lesson.getDuration()).sum() / 60;
+    public void calculateTime(Course course) {
+        course.setTotalHours(course.getVideoLessons().stream().mapToInt(lesson -> lesson.getDuration()).sum() / 60);
     }
 }

@@ -9,9 +9,9 @@ import java.util.stream.IntStream;
 public class CalculateTimeTrainingStrategy implements ICalculable<Training> {
 
     @Override
-    public Integer calculateTime(Training training) {
+    public void calculateTime(Training training) {
         IntStream intStream = training.getCourses().stream()
                 .mapToInt(x -> x.getVideoLessons().stream().mapToInt(y -> y.getDuration()).sum());
-        return intStream.sum();
+        training.setTotalHours(intStream.sum());
     }
 }

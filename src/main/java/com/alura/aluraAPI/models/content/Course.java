@@ -30,7 +30,7 @@ public class Course extends Content {
         super.certificate = new Certificate(cursesDTO.certificateDTO(), this);
         cursesDTO.videoLessonDTOList().stream().forEach(x -> videoLessons.add(new VideoLesson(x, this)));
         this.calculable = timeCourse;
-        super.totalHours = calculable.calculateTime(this);
+        calculable.calculateTime(this);
     }
 
     public List<VideoLesson> getVideoLessons() {
@@ -41,4 +41,5 @@ public class Course extends Content {
         this.trainings = trainings;
         return this;
     }
+
 }

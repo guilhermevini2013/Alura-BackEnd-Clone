@@ -26,6 +26,6 @@ public class Training extends Content{
         this.calculable = timeTraining;
     }
     public void calculatedTime(){
-        this.totalHours = calculable.calculateTime(this);
+        calculable.calculateTime(this);
     }
 }
