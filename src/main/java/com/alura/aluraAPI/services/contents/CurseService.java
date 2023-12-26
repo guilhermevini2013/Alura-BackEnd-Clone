@@ -5,7 +5,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.CourseReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CourseSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.calculates.CalculateTimeCourse;
+import com.alura.aluraAPI.services.calculates.CalculateTimeCourseStrategy;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.strategy.filters.CurseFilter;
@@ -21,9 +21,9 @@ import java.util.List;
 public class CurseService {
     private final ContentRepository contentRepository;
     private final CurseFilter curseFilter;
-    private final CalculateTimeCourse timeCourse;
+    private final CalculateTimeCourseStrategy timeCourse;
 
-    public CurseService(ContentRepository contentRepository, CurseFilter curseFilter, CalculateTimeCourse timeCourse) {
+    public CurseService(ContentRepository contentRepository, CurseFilter curseFilter, CalculateTimeCourseStrategy timeCourse) {
         this.contentRepository = contentRepository;
         this.curseFilter = curseFilter;
         this.timeCourse = timeCourse;

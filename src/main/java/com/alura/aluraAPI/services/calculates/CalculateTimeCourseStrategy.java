@@ -4,7 +4,7 @@ import com.alura.aluraAPI.models.content.Course;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CalculateTimeCourse implements ICalculable<Course> {
+public class CalculateTimeCourseStrategy implements ICalculable<Course> {
 
     @Override
     public Integer calculateTime(Course course) {

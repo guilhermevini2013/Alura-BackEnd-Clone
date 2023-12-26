@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.stream.IntStream;
 
 @Component
-public class CalculateTimeTraining implements ICalculable<Training> {
+public class CalculateTimeTrainingStrategy implements ICalculable<Training> {
 
     @Override
     public Integer calculateTime(Training training) {

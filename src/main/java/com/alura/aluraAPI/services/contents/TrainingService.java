@@ -5,7 +5,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.TrainingReadDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.calculates.CalculateTimeTraining;
+import com.alura.aluraAPI.services.calculates.CalculateTimeTrainingStrategy;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,9 +16,9 @@ import java.util.Set;
 @Service
 public class TrainingService {
     private ContentRepository contentRepository;
-    private CalculateTimeTraining timeTraining;
+    private CalculateTimeTrainingStrategy timeTraining;
 
-    public TrainingService(ContentRepository contentRepository, CalculateTimeTraining timeTraining) {
+    public TrainingService(ContentRepository contentRepository, CalculateTimeTrainingStrategy timeTraining) {
         this.contentRepository = contentRepository;
         this.timeTraining = timeTraining;
     }

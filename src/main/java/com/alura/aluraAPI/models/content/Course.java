@@ -1,7 +1,7 @@
 package com.alura.aluraAPI.models.content;
 
 import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
-import com.alura.aluraAPI.services.calculates.CalculateTimeCourse;
+import com.alura.aluraAPI.services.calculates.CalculateTimeCourseStrategy;
 import com.alura.aluraAPI.services.calculates.ICalculable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -25,7 +25,7 @@ public class Course extends Content {
     @Transient
     private ICalculable<Course> calculable;
 
-    public Course(CourseDTO cursesDTO, CalculateTimeCourse timeCourse) {
+    public Course(CourseDTO cursesDTO, CalculateTimeCourseStrategy timeCourse) {
         super(cursesDTO.nameContent(), cursesDTO.description());
         super.certificate = new Certificate(cursesDTO.certificateDTO(), this);
         cursesDTO.videoLessonDTOList().stream().forEach(x -> videoLessons.add(new VideoLesson(x, this)));

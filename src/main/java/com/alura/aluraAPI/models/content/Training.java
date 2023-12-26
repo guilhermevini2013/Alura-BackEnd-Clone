@@ -1,7 +1,7 @@
 package com.alura.aluraAPI.models.content;
 
 import com.alura.aluraAPI.dtos.content.insert.TrainingInsertDTO;
-import com.alura.aluraAPI.services.calculates.CalculateTimeTraining;
+import com.alura.aluraAPI.services.calculates.CalculateTimeTrainingStrategy;
 import com.alura.aluraAPI.services.calculates.ICalculable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,7 +21,7 @@ public class Training extends Content{
     private Set<Course> courses = new HashSet<>();
     @Transient
     private ICalculable<Training> calculable;
-    public Training(TrainingInsertDTO trainingInsertDTO, CalculateTimeTraining timeTraining) {
+    public Training(TrainingInsertDTO trainingInsertDTO, CalculateTimeTrainingStrategy timeTraining) {
         super(trainingInsertDTO.nameContent(), trainingInsertDTO.description());
         this.calculable = timeTraining;
     }
