@@ -21,18 +21,18 @@ import java.util.List;
 @RequestMapping(value = "/course")
 public class CourseController {
     @Autowired
-    private CurseService curseService;
+    private CurseService courseService;
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody @Valid CourseDTO courseDTO) {
-        courseDTO = curseService.insert(courseDTO);
+        courseDTO = courseService.insert(courseDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(courseDTO).toUri();
         return ResponseEntity.created(uri).build();
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<CourseReadDTO> findById(@PathVariable Long id) {
-        return ResponseEntity.ok(curseService.findById(id));
+        return ResponseEntity.ok(courseService.findById(id));
     }
 
     @GetMapping
@@ -40,19 +40,19 @@ public class CourseController {
                                                             @RequestParam(name = "linesPerPage", defaultValue = "10") Integer linesPerPage,
                                                             @RequestParam(name = "direction", defaultValue = "DESC") String direction,
                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
-        return ResponseEntity.ok(curseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
+        return ResponseEntity.ok(courseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
 
     @GetMapping(value = "/filter")
     public ResponseEntity<List<CourseReadDTO>> findAllCourse(@RequestParam(name = "course", required = false) String nameCourse,
                                                             @RequestParam(name = "publicationDate", required = false) LocalDate date,
                                                             @RequestParam(name = "assessment", required = false) Double assessment) {
-        return ResponseEntity.ok(curseService.findByFilter(new CourseSearchDTO(nameCourse, date, assessment)));
+        return ResponseEntity.ok(courseService.findByFilter(new CourseSearchDTO(nameCourse, date, assessment)));
     }
 
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> deleteByName(@PathVariable Long id) {
-        curseService.delete(id);
+        courseService.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

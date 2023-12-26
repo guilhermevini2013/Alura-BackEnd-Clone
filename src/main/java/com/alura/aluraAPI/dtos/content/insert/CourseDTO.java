@@ -11,7 +11,7 @@ import java.util.List;
 
 public record CourseDTO(@JsonIgnore Long id,
                         @Size(max = 80, min = 20, message = "Maximum of 80 characters and minimum of 20") String nameContent,
-                        @Size(min = 40, message = "minimum of 100 characters") String description,
+                        @Size(min = 20, message = "minimum of 100 characters") String description,
                         @NotEmpty List<VideoLessonDTO> videoLessonDTOList,
                         @NotNull CertificateDTO certificateDTO) {
     public CourseDTO(Long id, String nameContent, String description, CertificateDTO certificateDTO) {

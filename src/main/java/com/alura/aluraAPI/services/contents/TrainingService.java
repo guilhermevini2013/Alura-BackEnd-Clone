@@ -5,6 +5,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.TrainingReadDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
+import com.alura.aluraAPI.services.calculates.CalculateTimeTraining;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,30 +16,32 @@ import java.util.Set;
 @Service
 public class TrainingService {
     private ContentRepository contentRepository;
+    private CalculateTimeTraining timeTraining;
 
-    public TrainingService(ContentRepository contentRepository) {
+    public TrainingService(ContentRepository contentRepository, CalculateTimeTraining timeTraining) {
         this.contentRepository = contentRepository;
+        this.timeTraining = timeTraining;
     }
 
     @Transactional
-    public TrainingReadDTO insert(TrainingInsertDTO trainingInsertDTO){
-        Training entity = new Training(trainingInsertDTO);
-        addCoursesInTraining(entity,trainingInsertDTO);
+    public TrainingReadDTO insert(TrainingInsertDTO trainingInsertDTO) {
+        Training entity = new Training(trainingInsertDTO, timeTraining);
+        addCoursesInTraining(entity, trainingInsertDTO);
         entity.calculatedTime();
         entity = contentRepository.save(entity);
         return new TrainingReadDTO(entity);
     }
 
-    private void addCoursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO){
+    private void addCoursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO) {
         Set<Course> courseList = new HashSet<>();
-        if (trainingInsertDTO.curses().size() < 3){
+        if (trainingInsertDTO.curses().size() < 3) {
             throw new ValidationException("Not enough courses");
         }
-        for (Long idCourse: trainingInsertDTO.curses()) {
+        for (Long idCourse : trainingInsertDTO.curses()) {
             Course course = contentRepository.findByIdContent(idCourse).orElse(null);
-            if (course != null && course.getTrainings() == null){
+            if (course != null && course.getTrainings() == null) {
                 courseList.add(course);
-            }else {
+            } else {
                 throw new ValidationException("Course already in use or doesn't exist");
             }
         }

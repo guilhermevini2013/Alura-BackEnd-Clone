@@ -5,6 +5,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.CourseReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.CourseSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.repositories.ContentRepository;
+import com.alura.aluraAPI.services.calculates.CalculateTimeCourse;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.strategy.filters.CurseFilter;
@@ -18,40 +19,46 @@ import java.util.List;
 
 @Service
 public class CurseService {
-    private ContentRepository contentRepository;
-    private CurseFilter curseFilter;
+    private final ContentRepository contentRepository;
+    private final CurseFilter curseFilter;
+    private final CalculateTimeCourse timeCourse;
 
-    public CurseService(ContentRepository contentRepository, CurseFilter curseFilter) {
+    public CurseService(ContentRepository contentRepository, CurseFilter curseFilter, CalculateTimeCourse timeCourse) {
         this.contentRepository = contentRepository;
         this.curseFilter = curseFilter;
+        this.timeCourse = timeCourse;
     }
 
     @Transactional(readOnly = true)
-    public List<CourseReadDTO> findByFilter(CourseSearchDTO searchDTO){
+    public List<CourseReadDTO> findByFilter(CourseSearchDTO searchDTO) {
         return curseFilter.filter(searchDTO);
     }
+
     @Transactional
-    public CourseDTO insert(CourseDTO cursesDTO){
-        Course entity = contentRepository.save(new Course(cursesDTO));
+    public CourseDTO insert(CourseDTO cursesDTO) {
+        Course entity = contentRepository.save(new Course(cursesDTO, timeCourse));
         return new CourseDTO(entity);
     }
+
     @Transactional(readOnly = true)
-    public CourseReadDTO findById(Long id){
-        Course entityFind = contentRepository.findByIdContent(id).orElseThrow(()-> new ResourceNotFoundException("Id not found: " + id));
+    public CourseReadDTO findById(Long id) {
+        Course entityFind = contentRepository.findByIdContent(id).orElseThrow(() -> new ResourceNotFoundException("Id not found: " + id));
         return new CourseReadDTO(entityFind);
     }
+
     @Transactional(readOnly = true)
-    public Page<CourseReadDTO> findAllCurse(PageRequest pageRequest){
-        return contentRepository.findAllCourse(pageRequest).map(x->new CourseReadDTO(x));
+    public Page<CourseReadDTO> findAllCurse(PageRequest pageRequest) {
+        return contentRepository.findAllCourse(pageRequest).map(x -> new CourseReadDTO(x));
     }
+
     @Transactional
-    public void delete(Long id){
-        try{
-            if (!contentRepository.existsById(id)){
+    public void delete(Long id) {
+        try {
+            if (!contentRepository.existsById(id)) {
                 throw new ResourceNotFoundException("Id not found: " + id);
             }
             contentRepository.deleteById(id);
-        }catch (DataIntegrityViolationException ex){
+        } catch (DataIntegrityViolationException ex) {
             throw new DataBaseException("Integrity Violation");
         }
     }

@@ -1,13 +1,15 @@
 package com.alura.aluraAPI.models.content;
 
 import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
-import com.alura.aluraAPI.dtos.content.insert.VideoLessonDTO;
+import com.alura.aluraAPI.services.calculates.CalculateTimeCourse;
+import com.alura.aluraAPI.services.calculates.ICalculable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -20,16 +22,19 @@ public class Course extends Content {
     private List<VideoLesson> videoLessons = new ArrayList<>();
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     private Training trainings;
+    @Transient
+    private ICalculable<Course> calculable;
 
-    public Course(CourseDTO cursesDTO) {
+    public Course(CourseDTO cursesDTO, CalculateTimeCourse timeCourse) {
         super(cursesDTO.nameContent(), cursesDTO.description());
-        super.totalHours = calculateTotalHours(cursesDTO.videoLessonDTOList());
         super.certificate = new Certificate(cursesDTO.certificateDTO(), this);
         cursesDTO.videoLessonDTOList().stream().forEach(x -> videoLessons.add(new VideoLesson(x, this)));
+        this.calculable = timeCourse;
+        super.totalHours = calculable.calculateTime(this);
     }
 
-    private Integer calculateTotalHours(List<VideoLessonDTO> videoList) {
-        return videoList.stream().mapToInt(x -> x.duration()).sum() / 60;
+    public List<VideoLesson> getVideoLessons() {
+        return Collections.unmodifiableList(videoLessons);
     }
 
     public Course setTrainings(Training trainings) {

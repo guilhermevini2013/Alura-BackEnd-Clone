@@ -1,17 +1,15 @@
 package com.alura.aluraAPI.models.content;
 
 import com.alura.aluraAPI.dtos.content.insert.TrainingInsertDTO;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import com.alura.aluraAPI.services.calculates.CalculateTimeTraining;
+import com.alura.aluraAPI.services.calculates.ICalculable;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,12 +19,13 @@ import java.util.stream.IntStream;
 public class Training extends Content{
     @OneToMany(mappedBy = "trainings",cascade = CascadeType.ALL)
     private Set<Course> courses = new HashSet<>();
-
-    public Training(TrainingInsertDTO trainingInsertDTO) {
+    @Transient
+    private ICalculable<Training> calculable;
+    public Training(TrainingInsertDTO trainingInsertDTO, CalculateTimeTraining timeTraining) {
         super(trainingInsertDTO.nameContent(), trainingInsertDTO.description());
+        this.calculable = timeTraining;
     }
     public void calculatedTime(){
-        IntStream intStream = courses.stream().mapToInt(x -> x.getVideoLessons().stream().mapToInt(y -> y.getDuration()).sum());
-        super.totalHours = intStream.sum();
+        this.totalHours = calculable.calculateTime(this);
     }
 }
