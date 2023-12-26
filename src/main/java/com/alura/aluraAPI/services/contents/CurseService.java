@@ -8,7 +8,6 @@ import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.strategy.filters.CurseFilter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,11 +20,12 @@ import java.util.List;
 public class CurseService {
     private ContentRepository contentRepository;
     private CurseFilter curseFilter;
-    @Autowired
+
     public CurseService(ContentRepository contentRepository, CurseFilter curseFilter) {
         this.contentRepository = contentRepository;
         this.curseFilter = curseFilter;
     }
+
     @Transactional(readOnly = true)
     public List<CourseReadDTO> findByFilter(CourseSearchDTO searchDTO){
         return curseFilter.filter(searchDTO);
@@ -42,7 +42,7 @@ public class CurseService {
     }
     @Transactional(readOnly = true)
     public Page<CourseReadDTO> findAllCurse(PageRequest pageRequest){
-        return contentRepository.findAllCurse(pageRequest).map(x->new CourseReadDTO(x));
+        return contentRepository.findAllCourse(pageRequest).map(x->new CourseReadDTO(x));
     }
     @Transactional
     public void delete(Long id){

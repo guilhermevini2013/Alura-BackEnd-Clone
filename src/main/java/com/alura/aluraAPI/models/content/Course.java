@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@DiscriminatorValue("Curse")
+@DiscriminatorValue("Course")
 public class Course extends Content {
     @OneToMany(mappedBy = "course", cascade = CascadeType.ALL)
     private List<VideoLesson> videoLessons = new ArrayList<>();

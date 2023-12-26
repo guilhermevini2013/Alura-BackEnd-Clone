@@ -6,7 +6,6 @@ import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,9 +13,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@RequiredArgsConstructor
 public class TrainingService {
     private ContentRepository contentRepository;
+
+    public TrainingService(ContentRepository contentRepository) {
+        this.contentRepository = contentRepository;
+    }
 
     @Transactional
     public TrainingReadDTO insert(TrainingInsertDTO trainingInsertDTO){

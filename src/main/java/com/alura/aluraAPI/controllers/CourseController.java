@@ -44,10 +44,10 @@ public class CourseController {
     }
 
     @GetMapping(value = "/filter")
-    public ResponseEntity<List<CourseReadDTO>> findAllCurse(@RequestParam(name = "curse", required = false) String nameCurse,
+    public ResponseEntity<List<CourseReadDTO>> findAllCourse(@RequestParam(name = "course", required = false) String nameCourse,
                                                             @RequestParam(name = "publicationDate", required = false) LocalDate date,
                                                             @RequestParam(name = "assessment", required = false) Double assessment) {
-        return ResponseEntity.ok(curseService.findByFilter(new CourseSearchDTO(nameCurse, date, assessment)));
+        return ResponseEntity.ok(curseService.findByFilter(new CourseSearchDTO(nameCourse, date, assessment)));
     }
 
     @DeleteMapping(value = "/{id}")
