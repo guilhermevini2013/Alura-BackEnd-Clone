@@ -18,7 +18,7 @@ public class Certificate {
     private String nameCertificate;
     private Integer totalHours;
 
-    public Certificate(CertificateDTO certificateDTO, Curse curse) {
+    public Certificate(CertificateDTO certificateDTO, Course curse) {
         this.nameCertificate = certificateDTO.nameCertificate();
         this.totalHours = curse.getTotalHours();
     }

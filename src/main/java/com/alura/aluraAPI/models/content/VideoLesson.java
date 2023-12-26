@@ -19,12 +19,12 @@ public class VideoLesson {
     private String archive;
     private Integer duration;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Curse curse;
+    private Course course;
 
-    public VideoLesson(VideoLessonDTO videoLessonDTO, Curse curse) {
+    public VideoLesson(VideoLessonDTO videoLessonDTO, Course curse) {
         this.nameLesson = videoLessonDTO.nameLesson();
         this.archive = videoLessonDTO.archive();
-        this.curse = curse;
+        this.course = curse;
         this.duration = videoLessonDTO.duration();
     }
 }

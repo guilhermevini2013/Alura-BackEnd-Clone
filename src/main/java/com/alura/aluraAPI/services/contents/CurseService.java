@@ -1,9 +1,9 @@
 package com.alura.aluraAPI.services.contents;
 
-import com.alura.aluraAPI.dtos.content.insert.CurseDTO;
-import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
-import com.alura.aluraAPI.dtos.content.readOnly.CurseSearchDTO;
-import com.alura.aluraAPI.models.content.Curse;
+import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.CourseReadDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.CourseSearchDTO;
+import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
@@ -27,22 +27,22 @@ public class CurseService {
         this.curseFilter = curseFilter;
     }
     @Transactional(readOnly = true)
-    public List<CurseReadDTO> findByFilter(CurseSearchDTO searchDTO){
+    public List<CourseReadDTO> findByFilter(CourseSearchDTO searchDTO){
         return curseFilter.filter(searchDTO);
     }
     @Transactional
-    public CurseDTO insert(CurseDTO cursesDTO){
-        Curse entity = contentRepository.save(new Curse(cursesDTO));
-        return new CurseDTO(entity);
+    public CourseDTO insert(CourseDTO cursesDTO){
+        Course entity = contentRepository.save(new Course(cursesDTO));
+        return new CourseDTO(entity);
     }
     @Transactional(readOnly = true)
-    public CurseReadDTO findById(Long id){
-        Curse entityFind = contentRepository.findByIdContent(id).orElseThrow(()-> new ResourceNotFoundException("Id not found: " + id));
-        return new CurseReadDTO(entityFind);
+    public CourseReadDTO findById(Long id){
+        Course entityFind = contentRepository.findByIdContent(id).orElseThrow(()-> new ResourceNotFoundException("Id not found: " + id));
+        return new CourseReadDTO(entityFind);
     }
     @Transactional(readOnly = true)
-    public Page<CurseReadDTO> findAllCurse(PageRequest pageRequest){
-        return contentRepository.findAllCurse(pageRequest).map(x->new CurseReadDTO(x));
+    public Page<CourseReadDTO> findAllCurse(PageRequest pageRequest){
+        return contentRepository.findAllCurse(pageRequest).map(x->new CourseReadDTO(x));
     }
     @Transactional
     public void delete(Long id){

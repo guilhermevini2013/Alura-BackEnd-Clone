@@ -1,7 +1,7 @@
 package com.alura.aluraAPI.services.strategy.filters;
 
-import com.alura.aluraAPI.dtos.content.readOnly.CurseReadDTO;
-import com.alura.aluraAPI.dtos.content.readOnly.CurseSearchDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.CourseReadDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.CourseSearchDTO;
 import com.alura.aluraAPI.services.strategy.filters.validation.IValidatorFilterCurse;
 import org.springframework.stereotype.Component;
 
@@ -16,8 +16,8 @@ public class CurseFilter {
         this.validatorFilterCurses = validatorFilterCurses;
     }
 
-    public List<CurseReadDTO> filter(CurseSearchDTO dto){
-        Set<CurseReadDTO> listFilter = new HashSet<>();
+    public List<CourseReadDTO> filter(CourseSearchDTO dto){
+        Set<CourseReadDTO> listFilter = new HashSet<>();
         validatorFilterCurses.forEach(validator -> validator.validate(dto,listFilter));
         return listFilter.stream().toList();
     }

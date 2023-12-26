@@ -20,13 +20,13 @@ import java.util.stream.IntStream;
 @DiscriminatorValue("Training")
 public class Training extends Content{
     @OneToMany(mappedBy = "trainings",cascade = CascadeType.ALL)
-    private Set<Curse> curses = new HashSet<>();
+    private Set<Course> courses = new HashSet<>();
 
     public Training(TrainingInsertDTO trainingInsertDTO) {
         super(trainingInsertDTO.nameContent(), trainingInsertDTO.description());
     }
     public void calculatedTime(){
-        IntStream intStream = curses.stream().mapToInt(x -> x.getVideoLessons().stream().mapToInt(y -> y.getDuration()).sum());
+        IntStream intStream = courses.stream().mapToInt(x -> x.getVideoLessons().stream().mapToInt(y -> y.getDuration()).sum());
         super.totalHours = intStream.sum();
     }
 }

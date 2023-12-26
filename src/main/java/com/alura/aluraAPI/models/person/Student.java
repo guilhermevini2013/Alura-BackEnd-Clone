@@ -1,6 +1,6 @@
 package com.alura.aluraAPI.models.person;
 
-import com.alura.aluraAPI.models.content.Curse;
+import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.StudentCertificate;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -30,7 +30,7 @@ public class Student
     @JoinTable(name ="completed_curses",
     joinColumns = @JoinColumn(name = "id_student"),
     inverseJoinColumns = @JoinColumn(name = "id_curse"))
-    private Set<Curse> completedCurses;
+    private Set<Course> completedCurses;
     @OneToMany(mappedBy = "student")
     private Set<StudentCertificate> studentCertificates = new HashSet<>();
     @Enumerated(EnumType.STRING)
