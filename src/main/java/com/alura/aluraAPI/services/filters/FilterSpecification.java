@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.services.strategy.filters;
+package com.alura.aluraAPI.services.filters;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;

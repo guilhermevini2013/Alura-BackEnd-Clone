@@ -2,27 +2,32 @@ package com.alura.aluraAPI.services.contents;
 
 import com.alura.aluraAPI.dtos.content.insert.TrainingInsertDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.TrainingReadDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.TrainingSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.calculates.CalculateTimeTrainingStrategy;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
+import com.alura.aluraAPI.services.filters.TrainingFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
 public class TrainingService {
     private ContentRepository contentRepository;
     private CalculateTimeTrainingStrategy timeTraining;
+    private TrainingFilter trainingFilter;
 
-    public TrainingService(ContentRepository contentRepository, CalculateTimeTrainingStrategy timeTraining) {
+    public TrainingService(ContentRepository contentRepository, CalculateTimeTrainingStrategy timeTraining, TrainingFilter trainingFilter) {
         this.contentRepository = contentRepository;
         this.timeTraining = timeTraining;
+        this.trainingFilter = trainingFilter;
     }
 
     @Transactional
@@ -36,6 +41,10 @@ public class TrainingService {
     @Transactional(readOnly = true)
     public Page<TrainingReadDTO> findAllTraining(PageRequest pageRequest){
         return contentRepository.findAllTraining(pageRequest).map(training -> new TrainingReadDTO(training));
+    }
+    @Transactional(readOnly = true)
+    public List<TrainingReadDTO> findByFilter(TrainingSearchDTO dto){
+        return trainingFilter.filter(dto);
     }
     private void addCoursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO) {
         Set<Course> courseList = new HashSet<>();
@@ -52,5 +61,4 @@ public class TrainingService {
         }
         courseList.forEach(course -> entity.getCourses().add(course.setTrainings(entity)));
     }
-
 }
