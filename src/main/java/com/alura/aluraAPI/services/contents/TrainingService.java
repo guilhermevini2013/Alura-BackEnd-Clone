@@ -1,14 +1,14 @@
 package com.alura.aluraAPI.services.contents;
 
 import com.alura.aluraAPI.dtos.content.insert.TrainingInsertDTO;
-import com.alura.aluraAPI.dtos.content.readOnly.TrainingReadDTO;
-import com.alura.aluraAPI.dtos.content.readOnly.TrainingSearchDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.calculates.CalculateTimeTrainingStrategy;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
-import com.alura.aluraAPI.services.filters.TrainingFilter;
+import com.alura.aluraAPI.services.filters.ContentFilter;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -20,32 +20,35 @@ import java.util.Set;
 
 @Service
 public class TrainingService {
+    private final ContentFilter trainingFilter;
+    private final CalculateTimeTrainingStrategy timeTraining;
     private ContentRepository contentRepository;
-    private CalculateTimeTrainingStrategy timeTraining;
-    private TrainingFilter trainingFilter;
 
-    public TrainingService(ContentRepository contentRepository, CalculateTimeTrainingStrategy timeTraining, TrainingFilter trainingFilter) {
+    public TrainingService(ContentRepository contentRepository, CalculateTimeTrainingStrategy timeTraining, ContentFilter curseFilter) {
         this.contentRepository = contentRepository;
         this.timeTraining = timeTraining;
-        this.trainingFilter = trainingFilter;
+        this.trainingFilter = curseFilter;
     }
 
     @Transactional
-    public TrainingReadDTO insert(TrainingInsertDTO trainingInsertDTO) {
+    public ContentReadDTO insert(TrainingInsertDTO trainingInsertDTO) {
         Training entity = new Training(trainingInsertDTO, timeTraining);
         addCoursesInTraining(entity, trainingInsertDTO);
         entity.calculatedTime();
         entity = contentRepository.save(entity);
-        return new TrainingReadDTO(entity);
+        return new ContentReadDTO(entity);
     }
+
     @Transactional(readOnly = true)
-    public Page<TrainingReadDTO> findAllTraining(PageRequest pageRequest){
-        return contentRepository.findAllTraining(pageRequest).map(training -> new TrainingReadDTO(training));
+    public Page<ContentReadDTO> findAllTraining(PageRequest pageRequest) {
+        return contentRepository.findAllTraining(pageRequest).map(training -> new ContentReadDTO(training));
     }
+
     @Transactional(readOnly = true)
-    public List<TrainingReadDTO> findByFilter(TrainingSearchDTO dto){
-        return trainingFilter.filter(dto);
+    public List<ContentReadDTO> findByFilter(ContentSearchDTO dto) {
+        return trainingFilter.filter(dto, new Training());
     }
+
     private void addCoursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO) {
         Set<Course> courseList = new HashSet<>();
         if (trainingInsertDTO.curses().size() < 3) {

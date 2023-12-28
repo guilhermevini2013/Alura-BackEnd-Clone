@@ -1,8 +1,8 @@
 package com.alura.aluraAPI.controllers;
 
 import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
-import com.alura.aluraAPI.dtos.content.readOnly.CourseReadDTO;
-import com.alura.aluraAPI.dtos.content.readOnly.CourseSearchDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
+import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.services.contents.CurseService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,12 +31,12 @@ public class CourseController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CourseReadDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<ContentReadDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.findById(id));
     }
 
     @GetMapping
-    public ResponseEntity<Page<CourseReadDTO>> findAllCurse(@RequestParam(name = "pages", defaultValue = "0") Integer page,
+    public ResponseEntity<Page<ContentReadDTO>> findAllCurse(@RequestParam(name = "pages", defaultValue = "0") Integer page,
                                                             @RequestParam(name = "linesPerPage", defaultValue = "10") Integer linesPerPage,
                                                             @RequestParam(name = "direction", defaultValue = "DESC") String direction,
                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
@@ -44,10 +44,10 @@ public class CourseController {
     }
 
     @GetMapping(value = "/filter")
-    public ResponseEntity<List<CourseReadDTO>> findAllCourse(@RequestParam(name = "course", required = false) String nameCourse,
+    public ResponseEntity<List<ContentReadDTO>> findAllCourse(@RequestParam(name = "course", required = false) String nameCourse,
                                                             @RequestParam(name = "publicationDate", required = false) LocalDate date,
                                                             @RequestParam(name = "assessment", required = false) Double assessment) {
-        return ResponseEntity.ok(courseService.findByFilter(new CourseSearchDTO(nameCourse, date, assessment)));
+        return ResponseEntity.ok(courseService.findByFilter(new ContentSearchDTO(nameCourse, date, assessment)));
     }
 
     @DeleteMapping(value = "/{id}")
