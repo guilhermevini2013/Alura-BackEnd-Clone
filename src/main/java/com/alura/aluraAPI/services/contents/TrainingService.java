@@ -7,8 +7,11 @@ import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.calculates.CalculateTimeTrainingStrategy;
+import com.alura.aluraAPI.services.exceptions.DataBaseException;
+import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.alura.aluraAPI.services.filters.ContentFilter;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -47,6 +50,21 @@ public class TrainingService {
     @Transactional(readOnly = true)
     public List<ContentReadDTO> findByFilter(ContentSearchDTO dto) {
         return trainingFilter.filter(dto, new Training());
+    }
+
+    @Transactional
+    public void deleteById(Long id) {
+        try {
+            Training entityFind = contentRepository.findByIdTraining(id).orElseThrow(() -> new ResourceNotFoundException("Training Not Found"));
+            removeTrainingInCourse(entityFind);
+            contentRepository.delete(entityFind);
+        } catch (DataIntegrityViolationException ex) {
+            throw new DataBaseException("Integrity Violation");
+        }
+    }
+
+    private void removeTrainingInCourse(Training training) {
+        training.getCourses().forEach(course -> course.setTrainings(null));
     }
 
     private void addCoursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO) {

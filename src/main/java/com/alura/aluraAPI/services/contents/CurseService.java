@@ -42,7 +42,7 @@ public class CurseService {
 
     @Transactional(readOnly = true)
     public ContentReadDTO findById(Long id) {
-        Course entityFind = contentRepository.findByIdCourse(id).orElseThrow(() -> new ResourceNotFoundException("Id not found: " + id));
+        Course entityFind = contentRepository.findByIdCourse(id).orElseThrow(() -> new ResourceNotFoundException("Course Not Found"));
         return new ContentReadDTO(entityFind);
     }
 
@@ -55,7 +55,7 @@ public class CurseService {
     public void delete(Long id) {
         try {
             if (!contentRepository.existsById(id)) {
-                throw new ResourceNotFoundException("Id not found: " + id);
+                throw new ResourceNotFoundException("Course Not Found");
             }
             contentRepository.deleteById(id);
         } catch (DataIntegrityViolationException ex) {

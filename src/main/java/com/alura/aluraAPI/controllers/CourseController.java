@@ -5,7 +5,6 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.services.contents.CurseService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -20,8 +19,11 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/course")
 public class CourseController {
-    @Autowired
     private CurseService courseService;
+
+    public CourseController(CurseService courseService) {
+        this.courseService = courseService;
+    }
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody @Valid CourseDTO courseDTO) {
@@ -37,16 +39,16 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<Page<ContentReadDTO>> findAllCurse(@RequestParam(name = "pages", defaultValue = "0") Integer page,
-                                                            @RequestParam(name = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-                                                            @RequestParam(name = "direction", defaultValue = "DESC") String direction,
-                                                            @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
+                                                             @RequestParam(name = "linesPerPage", defaultValue = "10") Integer linesPerPage,
+                                                             @RequestParam(name = "direction", defaultValue = "DESC") String direction,
+                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
         return ResponseEntity.ok(courseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
 
     @GetMapping(value = "/filter")
     public ResponseEntity<List<ContentReadDTO>> findAllCourse(@RequestParam(name = "course", required = false) String nameCourse,
-                                                            @RequestParam(name = "publicationDate", required = false) LocalDate date,
-                                                            @RequestParam(name = "assessment", required = false) Double assessment) {
+                                                              @RequestParam(name = "publicationDate", required = false) LocalDate date,
+                                                              @RequestParam(name = "assessment", required = false) Double assessment) {
         return ResponseEntity.ok(courseService.findByFilter(new ContentSearchDTO(nameCourse, date, assessment)));
     }
 

@@ -17,7 +17,7 @@ import java.util.Set;
 @Entity
 @DiscriminatorValue("Training")
 public class Training extends Content{
-    @OneToMany(mappedBy = "trainings",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "trainings",cascade = CascadeType.PERSIST)
     private Set<Course> courses = new HashSet<>();
     @Transient
     private ICalculable<Training> calculable;

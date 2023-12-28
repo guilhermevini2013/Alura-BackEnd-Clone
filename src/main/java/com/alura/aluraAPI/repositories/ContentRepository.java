@@ -20,4 +20,6 @@ public interface ContentRepository extends JpaRepository<Content,Long>, JpaSpeci
     Page<Course> findAllCourse(PageRequest pageRequest);
     @Query(value = "select c from Content c where TYPE(c) = Training ")
     Page<Training> findAllTraining(PageRequest pageRequest);
+    @Query(value = "select c from Content c where TYPE(c) = Training and c.id=:id")
+    Optional<Training> findByIdTraining(Long id);
 }
