@@ -62,4 +62,5 @@ public class CurseService {
             throw new DataBaseException("Integrity Violation");
         }
     }
+
 }
