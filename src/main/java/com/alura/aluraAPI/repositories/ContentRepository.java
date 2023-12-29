@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface ContentRepository extends JpaRepository<Content,Long>, JpaSpecificationExecutor<Content> {
-    @Query(value = "select c from Content c where TYPE(c) = Course and c.id=:id")
+    @Query(value = "select c from Course c where c.id = :id and c.trainings is null")
     Optional<Course> findByIdCourse(Long id);
     @Query(value = "select c from Content c where TYPE(c) = Course ")
     Page<Course> findAllCourse(PageRequest pageRequest);

@@ -74,7 +74,7 @@ public class TrainingService {
         }
         for (Long idCourse : trainingInsertDTO.curses()) {
             Course course = contentRepository.findByIdCourse(idCourse).orElse(null);
-            if (course != null && course.getTrainings() == null) {
+            if (course != null) {
                 courseList.add(course);
             } else {
                 throw new ValidationException("Course already in use or doesn't exist");
