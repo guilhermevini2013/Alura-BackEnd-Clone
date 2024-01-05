@@ -34,4 +34,5 @@ public class Student {
     @Enumerated(EnumType.STRING)
     private TypeRole typeRole;
 
+
 }
