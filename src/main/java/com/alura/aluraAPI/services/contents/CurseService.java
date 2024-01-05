@@ -53,7 +53,6 @@ public class CurseService {
 
     @Transactional
     public void delete(Long id) {
-        //seila
         try {
             if (!contentRepository.existsById(id)) {
                 throw new ResourceNotFoundException("Course Not Found");
