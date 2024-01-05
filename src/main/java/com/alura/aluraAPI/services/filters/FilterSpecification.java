@@ -6,9 +6,9 @@ import org.springframework.stereotype.Component;
 import java.time.LocalDate;
 @Component
 public class FilterSpecification<T> {
-    public Specification<T> filterByString(String nameAttribute, String value){
+    public <T> Specification<T> filterByString(String nameAttribute, String value) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.like(root.get(nameAttribute),"%"+value+"%");
+                criteriaBuilder.like(criteriaBuilder.lower(root.get(nameAttribute)), "%" + value.toLowerCase() + "%");
     }
     public Specification<T> filterByDouble(String doubleAttribute, Double value){
         return (root, query, criteriaBuilder) ->
