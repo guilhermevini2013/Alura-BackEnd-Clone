@@ -16,6 +16,7 @@ public class ContentFilter {
 
     public ContentFilter(Set<IValidatorFilterContent> validatorFilterCurses) {
         this.validatorFilterCurses = validatorFilterCurses;
+        
     }
 
     public List<ContentReadDTO> filter(ContentSearchDTO dto, Content content) {
