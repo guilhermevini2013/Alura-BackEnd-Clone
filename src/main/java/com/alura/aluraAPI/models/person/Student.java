@@ -6,7 +6,10 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,11 +18,12 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Student {
+public class Student implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    @Column(unique = true)
     private String email;
     private String password;
     @OneToOne(mappedBy = "student", fetch = FetchType.LAZY)
@@ -31,6 +35,39 @@ public class Student {
     private Set<Course> completedCurses;
     @OneToMany(mappedBy = "student")
     private Set<StudentCertificate> studentCertificates = new HashSet<>();
-    @Enumerated(EnumType.STRING)
-    private TypeRole typeRole;
+    @ManyToMany
+    @JoinTable(name = "student_role",
+    joinColumns = @JoinColumn(name = "id_student"),
+    inverseJoinColumns = @JoinColumn(name = "id_sole"))
+    private Set<TypeRole> roles = new HashSet<>();
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return roles;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
