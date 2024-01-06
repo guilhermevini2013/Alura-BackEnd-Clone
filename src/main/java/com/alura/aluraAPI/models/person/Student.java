@@ -33,6 +33,4 @@ public class Student {
     private Set<StudentCertificate> studentCertificates = new HashSet<>();
     @Enumerated(EnumType.STRING)
     private TypeRole typeRole;
-
-
 }
