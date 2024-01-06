@@ -38,7 +38,7 @@ public class Student implements UserDetails {
     @ManyToMany
     @JoinTable(name = "student_role",
     joinColumns = @JoinColumn(name = "id_student"),
-    inverseJoinColumns = @JoinColumn(name = "id_sole"))
+    inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<TypeRole> roles = new HashSet<>();
 
     @Override

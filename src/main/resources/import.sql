@@ -13,3 +13,7 @@ INSERT INTO video_lesson (archive, course_id, duration, name_lesson) VALUES ('/j
 insert into certificate (name_certificate,total_hours) values ('C# e suas difi',10);
 INSERT INTO content (assessment, certificate_id, description, name_content, publication_date, total_hours, total_student, type_content) VALUES (3, 4, 'Cool curse', 'C# - POO', '2023-12-19', 10, 0, 'Course');
 INSERT INTO video_lesson (archive, course_id, duration, name_lesson) VALUES ('/java', 4, 100, 'POO em JAVA');
+
+INSERT INTO role (authority)VALUES ('ROLE_STUDENT');
+INSERT INTO student (name, email, password)VALUES ('John Doe', 'john.doe@example.com', 'password123');
+insert into student_role(id_student,id_role) values (1,1)
