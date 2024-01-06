@@ -58,8 +58,11 @@ public class AuthorizationServerConfig {
     @Value("${security.jwt.duration}")
     private Integer jwtDurationSeconds;
 
-    @Autowired
     private UserDetailsService userDetailsService;
+
+    public AuthorizationServerConfig(UserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
     private static RSAKey generateRsa() {
         KeyPair keyPair = generateRsaKey();

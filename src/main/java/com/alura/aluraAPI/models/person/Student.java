@@ -1,7 +1,9 @@
 package com.alura.aluraAPI.models.person;
 
+import com.alura.aluraAPI.dtos.person.insert.StudentInsertDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.StudentCertificate;
+import com.alura.aluraAPI.services.calculates.CalculateTimeSignatureStrategy;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,20 +30,31 @@ public class Student implements UserDetails {
     @Column(unique = true)
     private String email;
     private String password;
-    @OneToOne(mappedBy = "student", fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Signature signature;
     @ManyToMany
-    @JoinTable(name ="completed_curses",
-    joinColumns = @JoinColumn(name = "id_student"),
-    inverseJoinColumns = @JoinColumn(name = "id_curse"))
+    @JoinTable(name = "completed_curses",
+            joinColumns = @JoinColumn(name = "id_student"),
+            inverseJoinColumns = @JoinColumn(name = "id_curse"))
     private Set<Course> completedCurses;
     @OneToMany(mappedBy = "student")
     private Set<StudentCertificate> studentCertificates = new HashSet<>();
     @ManyToMany
     @JoinTable(name = "student_role",
-    joinColumns = @JoinColumn(name = "id_student"),
-    inverseJoinColumns = @JoinColumn(name = "id_role"))
+            joinColumns = @JoinColumn(name = "id_student"),
+            inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<TypeRole> roles = new HashSet<>();
+
+    public Student(StudentInsertDTO studentInsertDTO, CalculateTimeSignatureStrategy timeSignatureStrategy) {
+        this.name = studentInsertDTO.name();
+        this.email = studentInsertDTO.email();
+        this.password = studentInsertDTO.password();
+        this.signature = new Signature(studentInsertDTO.typeSignature(), timeSignatureStrategy);
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public void addRole(TypeRole role) {
         this.roles.add(role);

@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.controllers;
+package com.alura.aluraAPI.controllers.content;
 
 import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;

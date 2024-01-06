@@ -10,18 +10,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
 @Service
-public class UserDetailsImpl implements UserDetailsService {
+public class UserServiceDetailsImpl implements UserDetailsService {
     private StudentRepository studentRepository;
 
-    public UserDetailsImpl(StudentRepository studentRepository) {
+    public UserServiceDetailsImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         List<UserDetailsProjection> result = studentRepository.searchUserAndRolesByEmail(username);
         if (result.size() == 0) {
             throw new UsernameNotFoundException("Email not found");
