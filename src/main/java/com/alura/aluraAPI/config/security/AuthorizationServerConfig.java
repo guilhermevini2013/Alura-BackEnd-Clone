@@ -124,10 +124,10 @@ public class AuthorizationServerConfig {
 
     @Bean
     public TokenSettings tokenSettings() {
-		return TokenSettings.builder()
-			.accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
-			.accessTokenTimeToLive(Duration.ofSeconds(jwtDurationSeconds))
-			.build();
+        return TokenSettings.builder()
+                .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
+                .accessTokenTimeToLive(Duration.ofSeconds(jwtDurationSeconds))
+                .build();
     }
 
     @Bean
@@ -156,9 +156,9 @@ public class AuthorizationServerConfig {
             CustomUserAuthorities user = (CustomUserAuthorities) principal.getDetails();
             List<String> authorities = user.getAuthorities().stream().map(x -> x.getAuthority()).toList();
             if (context.getTokenType().getValue().equals("access_token")) {
-				context.getClaims()
-					.claim("authorities", authorities)
-					.claim("username", user.getUsername());
+                context.getClaims()
+                        .claim("authorities", authorities)
+                        .claim("username", user.getUsername());
             }
         };
     }

@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,6 +15,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@Setter
 @Table(name = "student")
 @Getter
 @NoArgsConstructor
@@ -40,6 +42,10 @@ public class Student implements UserDetails {
     joinColumns = @JoinColumn(name = "id_student"),
     inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<TypeRole> roles = new HashSet<>();
+
+    public void addRole(TypeRole role) {
+        this.roles.add(role);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
