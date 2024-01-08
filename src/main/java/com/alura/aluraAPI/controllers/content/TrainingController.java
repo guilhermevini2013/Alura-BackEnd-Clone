@@ -27,7 +27,6 @@ public class TrainingController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> insert(@RequestBody TrainingInsertDTO trainingInsertDTO) {
         ContentReadDTO inserted = trainingService.insert(trainingInsertDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(inserted).toUri();
@@ -35,7 +34,6 @@ public class TrainingController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
     public ResponseEntity<Page<ContentReadDTO>> findAllTraining(@RequestParam(name = "page", defaultValue = "0") Integer page,
                                                                 @RequestParam(name = "linesPerPage", defaultValue = "15") Integer linesPerPage,
                                                                 @RequestParam(name = "direction", defaultValue = "ASC") String direction,
@@ -44,7 +42,6 @@ public class TrainingController {
     }
 
     @GetMapping(value = "/filter")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
     public ResponseEntity<List<ContentReadDTO>> findAllCourse(@RequestParam(name = "training", required = false) String nameCourse,
                                                               @RequestParam(name = "publicationDate", required = false) LocalDate date,
                                                               @RequestParam(name = "assessment", required = false) Double assessment) {
@@ -52,7 +49,6 @@ public class TrainingController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         trainingService.deleteById(id);
         return ResponseEntity.noContent().build();

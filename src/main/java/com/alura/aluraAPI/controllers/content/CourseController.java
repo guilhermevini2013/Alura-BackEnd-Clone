@@ -27,7 +27,6 @@ public class CourseController {
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> insert(@RequestBody @Valid CourseDTO courseDTO) {
         courseDTO = courseService.insert(courseDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(courseDTO).toUri();
@@ -35,13 +34,11 @@ public class CourseController {
     }
 
     @GetMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<ContentReadDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.findById(id));
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
     public ResponseEntity<Page<ContentReadDTO>> findAllCurse(@RequestParam(name = "pages", defaultValue = "0") Integer page,
                                                              @RequestParam(name = "linesPerPage", defaultValue = "10") Integer linesPerPage,
                                                              @RequestParam(name = "direction", defaultValue = "DESC") String direction,
@@ -50,7 +47,6 @@ public class CourseController {
     }
 
     @GetMapping(value = "/filter")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_STUDENT')")
     public ResponseEntity<List<ContentReadDTO>> findAllCourse(@RequestParam(name = "course", required = false) String nameCourse,
                                                               @RequestParam(name = "publicationDate", required = false) LocalDate date,
                                                               @RequestParam(name = "assessment", required = false) Double assessment) {
@@ -58,7 +54,6 @@ public class CourseController {
     }
 
     @DeleteMapping(value = "/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deleteByName(@PathVariable Long id) {
         courseService.delete(id);
         return ResponseEntity.noContent().build();
