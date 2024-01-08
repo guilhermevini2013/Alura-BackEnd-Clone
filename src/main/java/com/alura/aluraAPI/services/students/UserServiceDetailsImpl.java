@@ -21,9 +21,6 @@ public class UserServiceDetailsImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         List<UserDetailsProjection> result = studentRepository.searchUserAndRolesByEmail(username);
-        if (result.size() == 0) {
-            throw new UsernameNotFoundException("Email not found");
-        }
         Student user = new Student();
         user.setEmail(result.get(0).getUsername());
         user.setPassword(result.get(0).getPassword());

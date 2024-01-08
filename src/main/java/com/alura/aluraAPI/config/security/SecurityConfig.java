@@ -28,9 +28,10 @@ public class SecurityConfig {
         return http
                 .cors(x-> x.disable())
                 .csrf(x-> x.disable())
-                .authorizeHttpRequests(x-> x.requestMatchers(HttpMethod.GET,"/course").hasRole("ADMIN")
+                .authorizeHttpRequests(x-> x
                         .requestMatchers(HttpMethod.POST,"/student/create").permitAll()
                         .requestMatchers(HttpMethod.POST,"/student/login").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/course/{id}").hasRole("ADMIN")
                         .anyRequest().permitAll())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
