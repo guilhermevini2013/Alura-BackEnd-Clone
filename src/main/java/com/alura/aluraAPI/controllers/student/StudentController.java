@@ -19,14 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = "/student")
 public class StudentController {
     private StudentService studentService;
-    @Autowired
+
     private AuthenticationManager authenticationManager;
-    @Autowired
+
     private TokenService tokenService;
 
-    public StudentController(StudentService studentService) {
+    public StudentController(StudentService studentService, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.studentService = studentService;
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
+
     @PostMapping(value = "/create")
     public ResponseEntity<Void> create(@RequestBody StudentInsertDTO studentInsertDTO){
         studentService.create(studentInsertDTO);
