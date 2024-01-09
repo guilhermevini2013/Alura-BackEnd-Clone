@@ -5,6 +5,7 @@ import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.StudentCertificate;
 import com.alura.aluraAPI.services.calculates.CalculateTimeSignatureStrategy;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class Student implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Column(unique = true)
+    @Email
     private String email;
     private String password;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

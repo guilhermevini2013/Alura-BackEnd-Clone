@@ -1,6 +1,7 @@
 package com.alura.aluraAPI.config.security;
 
 import com.alura.aluraAPI.repositories.StudentRepository;
+import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.token.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -29,7 +30,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if(token != null){
             String login = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(login).orElseThrow();
+            UserDetails user = userRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
