@@ -20,14 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class StudentController {
     private StudentService studentService;
 
-    private AuthenticationManager authenticationManager;
-
-    private TokenService tokenService;
-
-    public StudentController(StudentService studentService, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public StudentController(StudentService studentService) {
         this.studentService = studentService;
-        this.authenticationManager = authenticationManager;
-        this.tokenService = tokenService;
     }
 
     @PostMapping(value = "/create")
@@ -37,9 +31,7 @@ public class StudentController {
     }
     @PostMapping(value = "/login")
     public ResponseEntity<LoginResponse> login(@RequestBody StudentLoadDTO studentLoadDTO){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(studentLoadDTO.email(),studentLoadDTO.password());
-        var auth = authenticationManager.authenticate(usernamePassword);
-        var token = tokenService.generateToken((Student) auth.getPrincipal());
-        return ResponseEntity.ok(new LoginResponse(token));
+        LoginResponse loginToken = studentService.login(studentLoadDTO);
+        return ResponseEntity.ok(loginToken);
     }
 }
