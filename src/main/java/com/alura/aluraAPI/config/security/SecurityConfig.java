@@ -1,6 +1,5 @@
 package com.alura.aluraAPI.config.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -43,21 +42,24 @@ public class SecurityConfig {
     }
 
     private void configureRoutesStudentSecurity(HttpSecurity http) throws Exception {
+        String role = "STUDENT";
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET,"/course").hasRole("STUDENT")
-                .requestMatchers(HttpMethod.GET,"/training").hasRole("STUDENT")
-                .requestMatchers(HttpMethod.GET,"/course/filter").hasRole("STUDENT")
-                .requestMatchers(HttpMethod.GET,"/training/filter").hasRole("STUDENT"));
+                .requestMatchers(HttpMethod.GET, "/course").hasRole(role)
+                .requestMatchers(HttpMethod.GET, "/training").hasRole(role)
+                .requestMatchers(HttpMethod.GET, "/course/filter").hasRole(role)
+                .requestMatchers(HttpMethod.GET, "/training/filter").hasRole(role));
     }
 
     private void configureRoutesAdminSecurity(HttpSecurity http) throws Exception {
+        String role = "ADMIN";
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/course/id/").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/h2/**").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/course").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/course").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.POST, "/training").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/training").hasRole("ADMIN"));
+                .requestMatchers(HttpMethod.GET, "/training/id/").hasRole(role)
+                .requestMatchers(HttpMethod.GET, "/course/id/").hasRole(role)
+                .requestMatchers(HttpMethod.GET, "/h2/**").hasRole(role)
+                .requestMatchers(HttpMethod.POST, "/course").hasRole(role)
+                .requestMatchers(HttpMethod.DELETE, "/course").hasRole(role)
+                .requestMatchers(HttpMethod.POST, "/training").hasRole(role)
+                .requestMatchers(HttpMethod.DELETE, "/training").hasRole(role));
     }
 
     @Bean

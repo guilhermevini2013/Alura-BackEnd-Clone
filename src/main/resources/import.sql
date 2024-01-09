@@ -16,5 +16,5 @@ INSERT INTO video_lesson (archive, course_id, duration, name_lesson) VALUES ('/j
 
 INSERT INTO role (authority)VALUES ('ROLE_ADMIN');
 INSERT INTO role (authority)VALUES ('ROLE_STUDENT');
-INSERT INTO student (name, email, password)VALUES ('John Doe', 'john.doe@example.com', '$2a$10$fY8g0tVQGK9O22P9t68fuulxx3cttASJ56wxlX2qpBckP3rizajfi');
+INSERT INTO student (name, email, password)VALUES ('admin', 'admin@admin', '$2a$10$LgBSfmfg26Ic7HZ7t1jKOeIxAq7y53VXjXg6yN2ehu7FfR1TNIP2q');
 insert into student_role(id_student,id_role) values (1,1);

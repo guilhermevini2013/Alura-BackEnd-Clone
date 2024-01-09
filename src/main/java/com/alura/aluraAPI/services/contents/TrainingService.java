@@ -48,6 +48,12 @@ public class TrainingService {
     }
 
     @Transactional(readOnly = true)
+    public ContentReadDTO findById(Long id) {
+        Training entityFound = contentRepository.findByIdTraining(id).orElseThrow(() -> new ResourceNotFoundException("Id not found"));
+        return new ContentReadDTO(entityFound);
+    }
+
+    @Transactional(readOnly = true)
     public List<ContentReadDTO> findByFilter(ContentSearchDTO dto) {
         return trainingFilter.filter(dto, new Training());
     }

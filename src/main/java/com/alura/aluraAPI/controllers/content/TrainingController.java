@@ -40,6 +40,11 @@ public class TrainingController {
         return ResponseEntity.ok(trainingService.findAllTraining(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
 
+    @GetMapping(value = "/id/{id}")
+    public ResponseEntity<ContentReadDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(trainingService.findById(id));
+    }
+
     @GetMapping(value = "/filter")
     public ResponseEntity<List<ContentReadDTO>> findAllCourse(@RequestParam(name = "training", required = false) String nameCourse,
                                                               @RequestParam(name = "publicationDate", required = false) LocalDate date,
