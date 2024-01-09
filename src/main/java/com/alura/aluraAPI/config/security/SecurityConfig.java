@@ -25,24 +25,50 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        this.configureRoutesAdminSecurity(http);
+        this.configureRoutesStudentSecurity(http);
+        this.configureRoutesPublicSecurity(http);
         return http
-                .cors(x-> x.disable())
-                .csrf(x-> x.disable())
-                .authorizeHttpRequests(x-> x
-                        .requestMatchers(HttpMethod.POST,"/student/create").permitAll()
-                        .requestMatchers(HttpMethod.POST,"/student/login").permitAll()
-                        .requestMatchers(HttpMethod.GET,"/course/{id}").hasRole("ADMIN")
-                        .anyRequest().permitAll())
+                .cors(x -> x.disable())
+                .csrf(x -> x.disable())
+                .headers(x -> x.frameOptions(y -> y.disable()))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+    private void configureRoutesPublicSecurity(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.POST, "/student/create").permitAll()
+                .requestMatchers(HttpMethod.POST, "/student/login").permitAll()
+                .anyRequest().authenticated());
+    }
+
+    private void configureRoutesStudentSecurity(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.GET,"/course").hasRole("STUDENT")
+                .requestMatchers(HttpMethod.GET,"/training").hasRole("STUDENT")
+                .requestMatchers(HttpMethod.GET,"/course/filter").hasRole("STUDENT")
+                .requestMatchers(HttpMethod.GET,"/training/filter").hasRole("STUDENT"));
+    }
+
+    private void configureRoutesAdminSecurity(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests(auth -> auth
+                .requestMatchers(HttpMethod.GET, "/course/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/h2/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/course").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/course").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST, "/training").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/training").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/training/{id}").hasRole("ADMIN"));
+    }
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
