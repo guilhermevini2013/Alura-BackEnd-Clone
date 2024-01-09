@@ -32,7 +32,7 @@ public class CourseController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping(value = "/{id}")
+    @GetMapping(value = "/id/{id}")
     public ResponseEntity<ContentReadDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(courseService.findById(id));
     }

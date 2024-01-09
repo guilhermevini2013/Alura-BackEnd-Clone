@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.ObservationAuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,13 +52,12 @@ public class SecurityConfig {
 
     private void configureRoutesAdminSecurity(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/course/{id}").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET, "/course/id/").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET, "/h2/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/course").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/course").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/training").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.DELETE, "/training").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET, "/training/{id}").hasRole("ADMIN"));
+                .requestMatchers(HttpMethod.DELETE, "/training").hasRole("ADMIN"));
     }
 
     @Bean
