@@ -56,6 +56,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.GET, "/training/id/").hasRole(role)
                 .requestMatchers(HttpMethod.GET, "/course/id/").hasRole(role)
                 .requestMatchers(HttpMethod.GET, "/h2/**").hasRole(role)
+                .requestMatchers(HttpMethod.POST, "/h2/**").hasRole(role)
                 .requestMatchers(HttpMethod.POST, "/course").hasRole(role)
                 .requestMatchers(HttpMethod.DELETE, "/course").hasRole(role)
                 .requestMatchers(HttpMethod.POST, "/training").hasRole(role)

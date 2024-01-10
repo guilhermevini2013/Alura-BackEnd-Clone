@@ -45,12 +45,22 @@ public class Student implements UserDetails {
             joinColumns = @JoinColumn(name = "id_student"),
             inverseJoinColumns = @JoinColumn(name = "id_role"))
     private Set<TypeRole> roles = new HashSet<>();
+    @Column(name = "isNonExpired")
+    private Boolean isAccountNonExpired;
+    @Column(name = "isNonLocked")
+    private Boolean isAccountNonLocked;
+    private Boolean isCredentialsNonExpired;
+    private Boolean isEnabled;
 
     public Student(StudentInsertDTO studentInsertDTO, CalculateTimeSignatureStrategy timeSignatureStrategy) {
         this.name = studentInsertDTO.name();
         this.email = studentInsertDTO.email();
         this.password = studentInsertDTO.password();
         this.signature = new Signature(studentInsertDTO.typeSignature(), timeSignatureStrategy);
+        this.isAccountNonExpired = true;
+        this.isAccountNonLocked = true;
+        this.isCredentialsNonExpired = true;
+        this.isEnabled = true;
     }
 
     public void setPassword(String password) {
@@ -73,21 +83,21 @@ public class Student implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return this.isAccountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return this.isAccountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return this.isCredentialsNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return this.isEnabled;
     }
 }
