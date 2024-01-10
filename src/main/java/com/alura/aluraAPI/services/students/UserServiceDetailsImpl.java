@@ -4,6 +4,7 @@ import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.models.person.TypeRole;
 import com.alura.aluraAPI.projections.UserDetailsProjection;
 import com.alura.aluraAPI.repositories.StudentRepository;
+import com.alura.aluraAPI.services.exceptions.ValidationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -24,6 +25,7 @@ public class UserServiceDetailsImpl implements UserDetailsService {
         List<UserDetailsProjection> result = studentRepository.searchUserAndRolesByEmail(username);
         Student user = new Student();
         this.setAttributesInStudent(result, user);
+        this.validateStudent(user);
         return user;
     }
 
@@ -37,5 +39,10 @@ public class UserServiceDetailsImpl implements UserDetailsService {
         for (UserDetailsProjection projection : result) {
             student.addRole(new TypeRole(projection.getRoleId(), projection.getAuthority()));
         }
+    }
+
+    private void validateStudent(Student student) {
+        if (!student.getIsAccountNonExpired() || !student.getIsAccountNonLocked() || !student.getIsEnabled() || !student.getIsCredentialsNonExpired())
+            throw new ValidationException("Account unreachable");
     }
 }
