@@ -44,10 +44,10 @@ public class SecurityConfig {
     private void configureRoutesStudentSecurity(HttpSecurity http) throws Exception {
         String role = "STUDENT";
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers(HttpMethod.GET, "/course").hasRole(role)
-                .requestMatchers(HttpMethod.GET, "/training").hasRole(role)
-                .requestMatchers(HttpMethod.GET, "/course/filter").hasRole(role)
-                .requestMatchers(HttpMethod.GET, "/training/filter").hasRole(role));
+                .requestMatchers(HttpMethod.GET, "/course").hasAnyRole(role, "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/training").hasAnyRole(role, "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/course/filter").hasAnyRole(role, "ADMIN")
+                .requestMatchers(HttpMethod.GET, "/training/filter").hasAnyRole(role, "ADMIN"));
     }
 
     private void configureRoutesAdminSecurity(HttpSecurity http) throws Exception {
