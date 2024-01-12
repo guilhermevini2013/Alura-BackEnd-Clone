@@ -5,7 +5,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.calculates.CalculateTimeCourseStrategy;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeCourseStrategy;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.ContentFilter;

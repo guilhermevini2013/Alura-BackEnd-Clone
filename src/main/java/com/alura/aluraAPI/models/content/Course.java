@@ -1,8 +1,8 @@
 package com.alura.aluraAPI.models.content;
 
 import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
-import com.alura.aluraAPI.services.calculates.CalculateTimeCourseStrategy;
-import com.alura.aluraAPI.services.calculates.ICalculable;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeCourseStrategy;
+import com.alura.aluraAPI.services.strategies.calculates.ICalculable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

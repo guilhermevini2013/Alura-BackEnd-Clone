@@ -6,7 +6,7 @@ import com.alura.aluraAPI.dtos.person.read.LoginResponse;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.repositories.RoleRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
-import com.alura.aluraAPI.services.calculates.CalculateTimeSignatureStrategy;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureStrategy;
 import com.alura.aluraAPI.services.token.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

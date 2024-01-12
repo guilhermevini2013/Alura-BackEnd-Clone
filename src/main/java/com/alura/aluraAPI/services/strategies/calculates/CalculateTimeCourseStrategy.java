@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.services.calculates;
+package com.alura.aluraAPI.services.strategies.calculates;
 
 import com.alura.aluraAPI.models.content.Course;
 import org.springframework.stereotype.Component;

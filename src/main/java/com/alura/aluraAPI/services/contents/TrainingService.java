@@ -6,7 +6,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.calculates.CalculateTimeTrainingStrategy;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeTrainingStrategy;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.exceptions.ValidationException;

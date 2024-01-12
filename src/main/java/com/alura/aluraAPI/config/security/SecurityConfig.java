@@ -27,7 +27,7 @@ public class SecurityConfig {
         this.configureRoutesStudentSecurity(http);
         this.configureRoutesPublicSecurity(http);
         return http
-                .cors(x -> x.disable())
+                .cors(x -> x.setBuilder(http))
                 .csrf(x -> x.disable())
                 .headers(x -> x.frameOptions(y -> y.disable()))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
@@ -60,7 +60,9 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/course").hasRole(role)
                 .requestMatchers(HttpMethod.DELETE, "/course").hasRole(role)
                 .requestMatchers(HttpMethod.POST, "/training").hasRole(role)
-                .requestMatchers(HttpMethod.DELETE, "/training").hasRole(role));
+                .requestMatchers(HttpMethod.DELETE, "/training").hasRole(role)
+                .requestMatchers(HttpMethod.POST, "/admin/**").hasRole(role)
+                .requestMatchers(HttpMethod.GET, "/admin/**").hasRole(role));
     }
 
     @Bean

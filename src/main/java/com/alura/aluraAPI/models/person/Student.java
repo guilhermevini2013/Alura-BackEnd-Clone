@@ -3,7 +3,7 @@ package com.alura.aluraAPI.models.person;
 import com.alura.aluraAPI.dtos.person.insert.StudentInsertDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.StudentCertificate;
-import com.alura.aluraAPI.services.calculates.CalculateTimeSignatureStrategy;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureStrategy;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;

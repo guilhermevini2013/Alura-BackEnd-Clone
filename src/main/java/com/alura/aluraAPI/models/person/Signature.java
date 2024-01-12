@@ -1,8 +1,7 @@
 package com.alura.aluraAPI.models.person;
 
-import com.alura.aluraAPI.models.content.Course;
-import com.alura.aluraAPI.services.calculates.CalculateTimeSignatureStrategy;
-import com.alura.aluraAPI.services.calculates.ICalculable;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureStrategy;
+import com.alura.aluraAPI.services.strategies.calculates.ICalculable;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
