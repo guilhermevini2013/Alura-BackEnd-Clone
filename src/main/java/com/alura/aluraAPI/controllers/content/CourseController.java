@@ -39,9 +39,9 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<Page<ContentReadDTO>> findAllCurse(@RequestParam(name = "pages", defaultValue = "0") Integer page,
-                                                             @RequestParam(name = "linesPerPage", defaultValue = "10") Integer linesPerPage,
-                                                             @RequestParam(name = "direction", defaultValue = "DESC") String direction,
-                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate") String orderBy) {
+                                                             @RequestParam(name = "linesPerPage", defaultValue = "15",required = false) Integer linesPerPage,
+                                                             @RequestParam(name = "direction", defaultValue = "DESC",required = false) String direction,
+                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate",required = false) String orderBy) {
         return ResponseEntity.ok(courseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
 
