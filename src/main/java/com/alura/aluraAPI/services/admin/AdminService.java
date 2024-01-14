@@ -1,11 +1,14 @@
 package com.alura.aluraAPI.services.admin;
 
+import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.models.warn.Blocked;
 import com.alura.aluraAPI.repositories.BlockedRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeBlockedStrategy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,5 +36,10 @@ public class AdminService {
         Student entity = studentRepository.findById(idAccount).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         entity.setIsAccountNonLocked(true);
         blockedRepository.deleteByIdStudentBlocked(entity);
+    }
+    @Transactional(readOnly = true)
+    public Page<AccountBlockedDTO> findAllAccountBlocked(PageRequest request){
+        // otimizar essa funcao
+        return blockedRepository.findAll(request).map(entity-> new AccountBlockedDTO(entity));
     }
 }

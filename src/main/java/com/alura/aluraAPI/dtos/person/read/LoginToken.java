@@ -1,4 +1,4 @@
 package com.alura.aluraAPI.dtos.person.read;
 
-public record LoginResponse (String token){
+public record LoginToken(String token){
 }

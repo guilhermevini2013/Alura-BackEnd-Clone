@@ -1,6 +1,11 @@
 package com.alura.aluraAPI.controllers.admin;
 
+import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
 import com.alura.aluraAPI.services.admin.AdminService;
+import lombok.Getter;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,5 +28,12 @@ public class AdminController {
     public ResponseEntity<String> unBlockAccount(@PathVariable Long id) {
         adminService.unBlockAccount(id);
         return ResponseEntity.ok("Id " + id + " successfully Unblocked");
+    }
+    @GetMapping(value = "/block")
+    public ResponseEntity<Page<AccountBlockedDTO>> findAllAccountBlocked(@RequestParam(name = "pages", defaultValue = "0") Integer page,
+                                                      @RequestParam(name = "linesPerPage", defaultValue = "20",required = false) Integer linesPerPage,
+                                                      @RequestParam(name = "direction", defaultValue = "DESC",required = false) String direction,
+                                                      @RequestParam(name = "orderBy", defaultValue = "publicationDate",required = false) String orderBy) {
+        return ResponseEntity.ok(adminService.findAllAccountBlocked(PageRequest.of(page,linesPerPage, Sort.Direction.valueOf(direction),orderBy)));
     }
 }

@@ -2,7 +2,7 @@ package com.alura.aluraAPI.services.students;
 
 import com.alura.aluraAPI.dtos.person.insert.StudentInsertDTO;
 import com.alura.aluraAPI.dtos.person.insert.StudentLoadDTO;
-import com.alura.aluraAPI.dtos.person.read.LoginResponse;
+import com.alura.aluraAPI.dtos.person.read.LoginToken;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.repositories.RoleRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
@@ -40,10 +40,10 @@ public class StudentService {
         studentRepository.save(student);
     }
     @Transactional
-    public LoginResponse login(StudentLoadDTO studentLoadDTO){
+    public LoginToken login(StudentLoadDTO studentLoadDTO){
         var usernamePassword = new UsernamePasswordAuthenticationToken(studentLoadDTO.email(),studentLoadDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((Student) auth.getPrincipal());
-        return new LoginResponse(token);
+        return new LoginToken(token);
     }
 }

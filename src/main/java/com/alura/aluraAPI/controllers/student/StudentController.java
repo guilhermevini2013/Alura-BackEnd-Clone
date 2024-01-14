@@ -2,14 +2,9 @@ package com.alura.aluraAPI.controllers.student;
 
 import com.alura.aluraAPI.dtos.person.insert.StudentInsertDTO;
 import com.alura.aluraAPI.dtos.person.insert.StudentLoadDTO;
-import com.alura.aluraAPI.dtos.person.read.LoginResponse;
-import com.alura.aluraAPI.models.person.Student;
+import com.alura.aluraAPI.dtos.person.read.LoginToken;
 import com.alura.aluraAPI.services.students.StudentService;
-import com.alura.aluraAPI.services.token.TokenService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +25,8 @@ public class StudentController {
         return ResponseEntity.ok().build();
     }
     @PostMapping(value = "/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody StudentLoadDTO studentLoadDTO){
-        LoginResponse loginToken = studentService.login(studentLoadDTO);
+    public ResponseEntity<LoginToken> login(@RequestBody StudentLoadDTO studentLoadDTO){
+        LoginToken loginToken = studentService.login(studentLoadDTO);
         return ResponseEntity.ok(loginToken);
     }
 }
