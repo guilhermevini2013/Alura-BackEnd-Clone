@@ -19,7 +19,7 @@ public class Blocked {
     @Id
     @GeneratedValue
     private Long id;
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Student idStudentBlocked;
     private Integer timeInHours;
     private Date expirationDate;

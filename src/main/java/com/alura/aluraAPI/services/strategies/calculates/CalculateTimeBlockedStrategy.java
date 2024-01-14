@@ -9,6 +9,7 @@ import java.util.Date;
 
 @Component
 public class CalculateTimeBlockedStrategy implements ICalculable<Blocked> {
+
     @Override
     public void calculateTime(Blocked blocked) {
         Date initialDate = Date.from(Instant.now());

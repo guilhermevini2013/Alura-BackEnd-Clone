@@ -27,4 +27,11 @@ public class AdminService {
         entity.setIsAccountNonLocked(false);
         blockedRepository.save(new Blocked(entity, time, calculateTimeBlockedStrategy));
     }
+
+    @Transactional
+    public void unBlockAccount(Long idAccount) {
+        Student entity = studentRepository.findById(idAccount).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+        entity.setIsAccountNonLocked(true);
+        blockedRepository.deleteByIdStudentBlocked(entity);
+    }
 }
