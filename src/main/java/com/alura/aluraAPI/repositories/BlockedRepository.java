@@ -3,7 +3,6 @@ package com.alura.aluraAPI.repositories;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.models.warn.Blocked;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 @Repository

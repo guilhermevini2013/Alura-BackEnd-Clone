@@ -22,4 +22,8 @@ public interface ContentRepository extends JpaRepository<Content,Long>, JpaSpeci
     Page<Training> findAllTraining(PageRequest pageRequest);
     @Query(value = "select c from Content c where TYPE(c) = Training and c.id=:id")
     Optional<Training> findByIdTraining(Long id);
+    @Query(value = "select count(c) from Content c where TYPE(c) = Training ")
+    Integer countTraining();
+    @Query(value = "select count(c) from Content c where TYPE(c) = Course ")
+    Integer countCourse();
 }

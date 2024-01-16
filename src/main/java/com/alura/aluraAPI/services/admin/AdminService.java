@@ -1,5 +1,6 @@
 package com.alura.aluraAPI.services.admin;
 
+import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.models.warn.Blocked;
@@ -17,11 +18,13 @@ public class AdminService {
     private StudentRepository studentRepository;
     private BlockedRepository blockedRepository;
     private CalculateTimeBlockedStrategy calculateTimeBlockedStrategy;
+    private DashBoardComponent dashBoardComponent;
 
-    public AdminService(StudentRepository studentRepository, BlockedRepository blockedRepository, CalculateTimeBlockedStrategy calculateTimeBlockedStrategy) {
+    public AdminService(StudentRepository studentRepository, BlockedRepository blockedRepository, CalculateTimeBlockedStrategy calculateTimeBlockedStrategy, DashBoardComponent dashBoardComponent) {
         this.studentRepository = studentRepository;
         this.blockedRepository = blockedRepository;
         this.calculateTimeBlockedStrategy = calculateTimeBlockedStrategy;
+        this.dashBoardComponent = dashBoardComponent;
     }
 
     @Transactional
@@ -39,7 +42,9 @@ public class AdminService {
     }
     @Transactional(readOnly = true)
     public Page<AccountBlockedDTO> findAllAccountBlocked(PageRequest request){
-        // otimizar essa funcao
         return blockedRepository.findAll(request).map(entity-> new AccountBlockedDTO(entity));
+    }
+    public DashBoardReadDTO getDashboard(){
+        return dashBoardComponent.getValues();
     }
 }
