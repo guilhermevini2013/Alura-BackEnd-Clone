@@ -2,6 +2,7 @@ package com.alura.aluraAPI.controllers.admin;
 
 import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
+import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
 import com.alura.aluraAPI.services.admin.AdminService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -41,5 +42,12 @@ public class AdminController {
     @GetMapping(value = "/dashboard")
     public ResponseEntity<DashBoardReadDTO> getDashboard() {
         return ResponseEntity.ok(adminService.getDashboard());
+    }
+    @GetMapping(value = "/unblocked")
+    public ResponseEntity<Page<AccountUnBlockedDTO>> findAllStudentUnblock(@RequestParam(name = "pages", defaultValue = "0") Integer page,
+                                                                           @RequestParam(name = "linesPerPage", defaultValue = "20", required = false) Integer linesPerPage,
+                                                                           @RequestParam(name = "direction", defaultValue = "DESC", required = false) String direction,
+                                                                           @RequestParam(name = "orderBy", defaultValue = "id", required = false) String orderBy) {
+        return ResponseEntity.ok(adminService.findAllAccountUnBlocked(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
 }

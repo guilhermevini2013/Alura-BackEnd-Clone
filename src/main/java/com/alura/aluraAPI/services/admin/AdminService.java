@@ -2,6 +2,7 @@ package com.alura.aluraAPI.services.admin;
 
 import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
+import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.models.warn.Blocked;
 import com.alura.aluraAPI.repositories.BlockedRepository;
@@ -40,11 +41,18 @@ public class AdminService {
         entity.setIsAccountNonLocked(true);
         blockedRepository.deleteByIdStudentBlocked(entity);
     }
+
     @Transactional(readOnly = true)
-    public Page<AccountBlockedDTO> findAllAccountBlocked(PageRequest request){
-        return blockedRepository.findAll(request).map(entity-> new AccountBlockedDTO(entity));
+    public Page<AccountBlockedDTO> findAllAccountBlocked(PageRequest request) {
+        return blockedRepository.findAll(request).map(entity -> new AccountBlockedDTO(entity));
     }
-    public DashBoardReadDTO getDashboard(){
+
+    @Transactional(readOnly = true)
+    public Page<AccountUnBlockedDTO> findAllAccountUnBlocked(PageRequest request) {
+        return studentRepository.findAllStudentNotBlocked(request).map(account -> new AccountUnBlockedDTO(account));
+    }
+
+    public DashBoardReadDTO getDashboard() {
         return dashBoardComponent.getValues();
     }
 }
