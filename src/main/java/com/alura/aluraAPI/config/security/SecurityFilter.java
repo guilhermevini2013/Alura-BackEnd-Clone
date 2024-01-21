@@ -1,7 +1,9 @@
 package com.alura.aluraAPI.config.security;
 
+import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
+import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.alura.aluraAPI.services.token.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -15,6 +17,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.util.Date;
+
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
     TokenService tokenService;

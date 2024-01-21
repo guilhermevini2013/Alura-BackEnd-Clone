@@ -28,7 +28,7 @@ public class Student implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    @Email
+    @Column(unique = true)
     private String email;
     private String password;
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)

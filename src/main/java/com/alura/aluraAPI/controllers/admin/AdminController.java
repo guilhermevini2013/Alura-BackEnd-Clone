@@ -33,8 +33,8 @@ public class AdminController {
 
     @GetMapping(value = "/blocked")
     public ResponseEntity<Page<AccountBlockedDTO>> findAllAccountBlocked(@RequestParam(name = "pages", defaultValue = "0") Integer page,
-                                                                         @RequestParam(name = "linesPerPage", defaultValue = "20", required = false) Integer linesPerPage,
-                                                                         @RequestParam(name = "direction", defaultValue = "DESC", required = false) String direction,
+                                                                         @RequestParam(name = "linesPerPage", defaultValue = "15", required = false) Integer linesPerPage,
+                                                                         @RequestParam(name = "direction", defaultValue = "ASC", required = false) String direction,
                                                                          @RequestParam(name = "orderBy", defaultValue = "id", required = false) String orderBy) {
         return ResponseEntity.ok(adminService.findAllAccountBlocked(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
@@ -45,8 +45,8 @@ public class AdminController {
     }
     @GetMapping(value = "/unblocked")
     public ResponseEntity<Page<AccountUnBlockedDTO>> findAllStudentUnblock(@RequestParam(name = "pages", defaultValue = "0") Integer page,
-                                                                           @RequestParam(name = "linesPerPage", defaultValue = "20", required = false) Integer linesPerPage,
-                                                                           @RequestParam(name = "direction", defaultValue = "DESC", required = false) String direction,
+                                                                           @RequestParam(name = "linesPerPage", defaultValue = "15", required = false) Integer linesPerPage,
+                                                                           @RequestParam(name = "direction", defaultValue = "ASC", required = false) String direction,
                                                                            @RequestParam(name = "orderBy", defaultValue = "id", required = false) String orderBy) {
         return ResponseEntity.ok(adminService.findAllAccountUnBlocked(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }

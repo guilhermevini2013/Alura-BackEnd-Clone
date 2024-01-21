@@ -6,6 +6,8 @@ import com.alura.aluraAPI.dtos.person.read.LoginToken;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.repositories.RoleRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
+import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
+import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureStrategy;
 import com.alura.aluraAPI.services.token.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +15,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.Instant;
+import java.util.Date;
 
 @Service
 public class StudentService {
@@ -39,11 +44,22 @@ public class StudentService {
         student.setPassword(passwordEncoder.encode(studentInsertDTO.password()));
         studentRepository.save(student);
     }
+
     @Transactional
-    public LoginToken login(StudentLoadDTO studentLoadDTO){
-        var usernamePassword = new UsernamePasswordAuthenticationToken(studentLoadDTO.email(),studentLoadDTO.password());
+    public LoginToken login(StudentLoadDTO studentLoadDTO) {
+        verifySignature(studentLoadDTO);
+        var usernamePassword = new UsernamePasswordAuthenticationToken(studentLoadDTO.email(), studentLoadDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((Student) auth.getPrincipal());
         return new LoginToken(token);
+    }
+
+    private void verifySignature(StudentLoadDTO studentLoadDTO) {
+        Student student = studentRepository.findByEmail(studentLoadDTO.email()).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
+        Date finalDate = student.getSignature().getFinalDate();
+        Date nowDate = Date.from(Instant.now());
+        if (nowDate.compareTo(finalDate) > 0) {
+            throw new ValidationException("Signature expired: " + finalDate);
+        }
     }
 }
