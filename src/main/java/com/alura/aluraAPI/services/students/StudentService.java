@@ -9,6 +9,7 @@ import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureStrategy;
+import com.alura.aluraAPI.services.strategies.verify.IVerify;
 import com.alura.aluraAPI.services.token.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class StudentService {
@@ -27,14 +29,16 @@ public class StudentService {
     private PasswordEncoder passwordEncoder;
     private AuthenticationManager authenticationManager;
     private TokenService tokenService;
+    private List<IVerify> verifyList;
 
-    public StudentService(StudentRepository studentRepository, RoleRepository roleRepository, CalculateTimeSignatureStrategy timeSignatureStrategy, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public StudentService(StudentRepository studentRepository, RoleRepository roleRepository, CalculateTimeSignatureStrategy timeSignatureStrategy, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService, List<IVerify> verifyList) {
         this.studentRepository = studentRepository;
         this.roleRepository = roleRepository;
         this.timeSignatureStrategy = timeSignatureStrategy;
         this.passwordEncoder = passwordEncoder;
         this.authenticationManager = authenticationManager;
         this.tokenService = tokenService;
+        this.verifyList = verifyList;
     }
 
     @Transactional
@@ -47,19 +51,13 @@ public class StudentService {
 
     @Transactional
     public LoginToken login(StudentLoadDTO studentLoadDTO) {
-        verifySignature(studentLoadDTO);
+        Student student = studentRepository.findByEmail(studentLoadDTO.email()).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
+        verifyList.forEach(strategy-> strategy.verify(student));
         var usernamePassword = new UsernamePasswordAuthenticationToken(studentLoadDTO.email(), studentLoadDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((Student) auth.getPrincipal());
         return new LoginToken(token);
     }
 
-    private void verifySignature(StudentLoadDTO studentLoadDTO) {
-        Student student = studentRepository.findByEmail(studentLoadDTO.email()).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
-        Date finalDate = student.getSignature().getFinalDate();
-        Date nowDate = Date.from(Instant.now());
-        if (nowDate.compareTo(finalDate) > 0) {
-            throw new ValidationException("Signature expired: " + finalDate);
-        }
-    }
+
 }
