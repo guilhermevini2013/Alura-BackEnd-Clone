@@ -21,4 +21,8 @@ public class FilterSpecification<T> {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.equal(root.get(localDateAttribute), value);
     }
+    public Specification<T> filterByInteger(String longerAttribute, Long value) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(root.get(longerAttribute), value);
+    }
 }
