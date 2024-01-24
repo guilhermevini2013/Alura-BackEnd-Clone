@@ -18,12 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class CurseService {
+public class CourseService {
     private final ContentRepository contentRepository;
     private final ContentFilter curseFilter;
     private final CalculateTimeCourseStrategy timeCourse;
 
-    public CurseService(ContentRepository contentRepository, ContentFilter curseFilter, CalculateTimeCourseStrategy timeCourse) {
+    public CourseService(ContentRepository contentRepository, ContentFilter curseFilter, CalculateTimeCourseStrategy timeCourse) {
         this.contentRepository = contentRepository;
         this.curseFilter = curseFilter;
         this.timeCourse = timeCourse;

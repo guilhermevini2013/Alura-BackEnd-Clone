@@ -58,6 +58,4 @@ public class StudentService {
         var token = tokenService.generateToken((Student) auth.getPrincipal());
         return new LoginToken(token);
     }
-
-
 }
