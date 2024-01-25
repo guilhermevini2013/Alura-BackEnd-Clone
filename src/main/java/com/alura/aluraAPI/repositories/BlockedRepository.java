@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface BlockedRepository extends JpaRepository<Blocked,Long> {
+public interface BlockedRepository extends JpaRepository<Blocked, Long> {
     void deleteByIdStudentBlocked(Student student);
+
     Optional<Blocked> findByIdStudentBlocked(Student student);
 }

@@ -1,11 +1,13 @@
 package com.alura.aluraAPI.repositories;
 
 import com.alura.aluraAPI.models.person.Student;
+import com.alura.aluraAPI.models.warn.Blocked;
 import com.alura.aluraAPI.projections.UserDetailsProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -13,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StudentRepository extends JpaRepository<Student, Long> {
+public interface StudentRepository extends JpaRepository<Student, Long> , JpaSpecificationExecutor<Student> {
     @Query(nativeQuery = true, value = """
             	SELECT student.email AS username, student.password
             	, student.is_Non_Locked, student.is_Non_Expired

@@ -3,12 +3,15 @@ package com.alura.aluraAPI.controllers.admin;
 import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
+import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
 import com.alura.aluraAPI.services.admin.AdminService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -43,11 +46,18 @@ public class AdminController {
     public ResponseEntity<DashBoardReadDTO> getDashboard() {
         return ResponseEntity.ok(adminService.getDashboard());
     }
+
     @GetMapping(value = "/unblocked")
     public ResponseEntity<Page<AccountUnBlockedDTO>> findAllStudentUnblock(@RequestParam(name = "pages", defaultValue = "0") Integer page,
                                                                            @RequestParam(name = "linesPerPage", defaultValue = "15", required = false) Integer linesPerPage,
                                                                            @RequestParam(name = "direction", defaultValue = "ASC", required = false) String direction,
                                                                            @RequestParam(name = "orderBy", defaultValue = "id", required = false) String orderBy) {
         return ResponseEntity.ok(adminService.findAllAccountUnBlocked(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
+    }
+
+    @GetMapping(value = "/student/filter")
+    public ResponseEntity<List<AccountUnBlockedDTO>> findByFilter(@RequestParam(name = "id", required = false) Long id,
+                                                                  @RequestParam(name = "name", required = false) String name) {
+        return ResponseEntity.ok(adminService.findByFilter(new SearchStudentDTO(name,id)));
     }
 }

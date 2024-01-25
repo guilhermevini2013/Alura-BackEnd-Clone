@@ -52,7 +52,7 @@ public class StudentService {
     @Transactional
     public LoginToken login(StudentLoadDTO studentLoadDTO) {
         Student student = studentRepository.findByEmail(studentLoadDTO.email()).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
-        verifyList.forEach(strategy-> strategy.verify(student));
+        //verifyList.forEach(strategy-> strategy.verify(student));
         var usernamePassword = new UsernamePasswordAuthenticationToken(studentLoadDTO.email(), studentLoadDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((Student) auth.getPrincipal());
