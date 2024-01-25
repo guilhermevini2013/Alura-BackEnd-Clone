@@ -3,7 +3,7 @@ package com.alura.aluraAPI.controllers.content;
 import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
-import com.alura.aluraAPI.services.contents.CurseService;
+import com.alura.aluraAPI.services.contents.CourseService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,9 +19,9 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/course")
 public class CourseController {
-    private CurseService courseService;
+    private CourseService courseService;
 
-    public CourseController(CurseService courseService) {
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
