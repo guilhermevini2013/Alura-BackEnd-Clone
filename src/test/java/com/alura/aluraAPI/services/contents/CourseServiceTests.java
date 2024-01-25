@@ -1,22 +1,26 @@
 package com.alura.aluraAPI.services.contents;
 
+import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
+import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.repositories.ContentRepository;
+import com.alura.aluraAPI.services.exceptions.DataBaseException;
+import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
+import com.alura.aluraAPI.services.factory.CourseFactory;
 import com.alura.aluraAPI.services.filters.ContentFilter;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeCourseStrategy;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
 import org.springframework.dao.DataIntegrityViolationException;
 
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @MockitoSettings(strictness = Strictness.LENIENT)
@@ -31,15 +35,52 @@ public class CourseServiceTests {
     @Mock
     private CalculateTimeCourseStrategy calculateTimeCourseStrategy;
     private Long idExists;
+    private Long idNotExists;
+    private Long idIntegrity;
+    private ContentReadDTO contentReadDTO;
+    private Course course;
+
     @BeforeEach
     void setUp() {
         idExists = 1l;
+        idNotExists = 2l;
+        idIntegrity = 3l;
+        course = CourseFactory.createValidCourse();
+        contentReadDTO = CourseFactory.createValidContentReadDTO();
+        when(contentRepository.findByIdCourse(idExists)).thenReturn(Optional.of(course));
         when(contentRepository.existsById(idExists)).thenReturn(true);
+        when(contentRepository.existsById(idNotExists)).thenReturn(false);
+        doThrow(DataIntegrityViolationException.class).when(contentRepository).deleteById(idIntegrity);
     }
+
     @Test
-    public void deleteShouldDeleteCourseAndNotThrowExceptionWhenIdExistsAndIntegrityNotViolation(){
-        assertDoesNotThrow(()-> courseService.delete(idExists));
-        verify(contentRepository,times(1)).existsById(idExists);
-        verify(contentRepository,times(1)).deleteById(idExists);
+    public void findByIdShouldReturnCourseAndNotThrowExceptionWhenIdExists() {
+        contentReadDTO = courseService.findById(idExists);
+        assertEquals(course.getNameContent(), contentReadDTO.getNameContent());
+        verify(contentRepository, times(1)).findByIdCourse(idExists);
+        verifyNoMoreInteractions(contentRepository);
+    }
+
+    @Test
+    public void deleteShouldThrowDataIntegrityViolationExceptionAndNotDeleteWhenIdExistsButCourseHaveIntegrity() {
+        when(contentRepository.existsById(idIntegrity)).thenReturn(true);
+        assertThrows(DataBaseException.class, () -> courseService.delete(idIntegrity));
+        verify(contentRepository, times(1)).existsById(idIntegrity);
+        verify(contentRepository, times(1)).deleteById(idIntegrity);
+    }
+
+    @Test
+    public void deleteShouldThrowResourceNotFoundExceptionAndNotDeleteCourseWhenIdNotExists() {
+        assertThrows(ResourceNotFoundException.class, () -> courseService.delete(idNotExists));
+        verify(contentRepository, times(1)).existsById(idNotExists);
+        verifyNoMoreInteractions(contentRepository);
+    }
+
+    @Test
+    public void deleteShouldDeleteCourseAndNotThrowExceptionWhenIdExistsAndIntegrityNotViolation() {
+        assertDoesNotThrow(() -> courseService.delete(idExists));
+        verify(contentRepository, times(1)).existsById(idExists);
+        verify(contentRepository, times(1)).deleteById(idExists);
+        verifyNoMoreInteractions(contentRepository);
     }
 }
