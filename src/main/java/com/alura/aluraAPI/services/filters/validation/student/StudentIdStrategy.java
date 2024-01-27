@@ -24,7 +24,7 @@ public class StudentIdStrategy implements IValidatorFilterStudent {
     @Override
     public void validate(SearchStudentDTO studentDTO, Set<AccountUnBlockedDTO> listFilter) {
         if (studentDTO.id() != null) {
-            List<Student> entities = studentRepository.findAllStudentNotBlocked(studentSpecification.filterByInteger("id", studentDTO.id()));
+            List<Student> entities = studentRepository.findAllStudentNotBlocked(studentDTO.id());
             entities.forEach(entity -> listFilter.add(new AccountUnBlockedDTO(entity)));
         }
     }

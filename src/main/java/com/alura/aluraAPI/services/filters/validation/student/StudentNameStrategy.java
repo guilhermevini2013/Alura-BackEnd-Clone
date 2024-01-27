@@ -24,7 +24,7 @@ public class StudentNameStrategy implements IValidatorFilterStudent {
     @Override
     public void validate(SearchStudentDTO studentDTO, Set<AccountUnBlockedDTO> listFilter) {
         if (studentDTO.name() != null) {
-            List<Student> entities = studentRepository.findAllStudentNotBlocked(filterSpecification.filterByString("name", studentDTO.name()));
+            List<Student> entities = studentRepository.findAllStudentNotBlocked(studentDTO.name());
             entities.forEach(entity -> listFilter.add(new AccountUnBlockedDTO(entity)));
         }
     }
