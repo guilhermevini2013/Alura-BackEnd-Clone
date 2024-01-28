@@ -5,6 +5,6 @@ import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
 
 import java.util.Set;
 
-public interface IValidatorFilterStudent {
-    void validate(SearchStudentDTO studentDTO, Set<AccountUnBlockedDTO> listFilter);
+public interface IValidatorFilterStudent<T> {
+    void validate(SearchStudentDTO studentDTO, Set<T> listFilter);
 }

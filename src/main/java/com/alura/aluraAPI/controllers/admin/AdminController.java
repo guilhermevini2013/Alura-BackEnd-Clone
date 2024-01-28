@@ -2,6 +2,7 @@ package com.alura.aluraAPI.controllers.admin;
 
 import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
+import com.alura.aluraAPI.dtos.person.read.AccountStudentDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
 import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
 import com.alura.aluraAPI.services.admin.AdminService;
@@ -56,8 +57,9 @@ public class AdminController {
     }
 
     @GetMapping(value = "/student/filter")
-    public ResponseEntity<List<AccountUnBlockedDTO>> findByFilter(@RequestParam(name = "id", required = false) Long id,
-                                                                  @RequestParam(name = "name", required = false) String name) {
-        return ResponseEntity.ok(adminService.findByFilter(new SearchStudentDTO(name,id)));
+    public ResponseEntity<List<AccountStudentDTO>> findByFilter(@RequestParam(name = "id", required = false) Long id,
+                                                                @RequestParam(name = "name", required = false) String name,
+                                                                @RequestParam(name = "typeStudent") String typeStudent) {
+        return ResponseEntity.ok(adminService.findUnblockByFilter(new SearchStudentDTO(name,id),typeStudent));
     }
 }

@@ -2,6 +2,7 @@ package com.alura.aluraAPI.services.admin;
 
 import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
+import com.alura.aluraAPI.dtos.person.read.AccountStudentDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
 import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
 import com.alura.aluraAPI.models.person.Student;
@@ -58,8 +59,8 @@ public class AdminService {
         return studentRepository.findAllStudentNotBlocked(request).map(account -> new AccountUnBlockedDTO(account));
     }
 
-    public List<AccountUnBlockedDTO> findByFilter(SearchStudentDTO studentDTO) {
-        return studentFilter.filter(studentDTO);
+    public List<AccountStudentDTO> findUnblockByFilter(SearchStudentDTO studentDTO, String typeStudent) {
+        return studentFilter.filter(studentDTO,typeStudent);
     }
 
     public DashBoardReadDTO getDashboard() {
