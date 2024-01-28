@@ -34,7 +34,4 @@ public interface StudentRepository extends JpaRepository<Student, Long>, JpaSpec
     @Query("SELECT s FROM Student s LEFT JOIN Blocked b ON s.id = b.idStudentBlocked.id WHERE s.signature IS NOT NULL AND b.idStudentBlocked IS NULL AND s.name LIKE CONCAT('%', :name, '%')")
     List<Student> findAllStudentNotBlocked(String name);
 
-    @Query("SELECT s FROM Student s LEFT JOIN Blocked b ON s.id = b.idStudentBlocked.id WHERE s.signature IS NOT NULL AND b.idStudentBlocked IS NOT NULL AND s.name LIKE CONCAT('%', :name, '%')")
-    List<Student> findAllStudentBlocked(String name);
-
 }

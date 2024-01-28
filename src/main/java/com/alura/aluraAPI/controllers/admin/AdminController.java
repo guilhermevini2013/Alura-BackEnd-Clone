@@ -6,6 +6,7 @@ import com.alura.aluraAPI.dtos.person.read.AccountStudentDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
 import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
 import com.alura.aluraAPI.services.admin.AdminService;
+import com.alura.aluraAPI.services.email.EmailService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,9 +19,11 @@ import java.util.List;
 @RequestMapping(value = "/admin")
 public class AdminController {
     private AdminService adminService;
+    private EmailService emailService;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, EmailService emailService) {
         this.adminService = adminService;
+        this.emailService = emailService;
     }
 
     @PostMapping(value = "/block/{id}")
