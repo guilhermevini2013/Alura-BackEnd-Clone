@@ -12,12 +12,12 @@ public class EmailService {
     public EmailService(EmailInitializer emailInitializer) {
         this.emailInitializer = emailInitializer;
     }
+
     public void sendEmail() throws EmailException {
         Email email = emailInitializer.getSenderEmail();
         email.setSubject("");
         email.setMsg("");
         email.addTo("");
         email.send();
-
     }
 }
