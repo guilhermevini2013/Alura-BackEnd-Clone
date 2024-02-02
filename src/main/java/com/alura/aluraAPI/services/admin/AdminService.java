@@ -1,19 +1,22 @@
 package com.alura.aluraAPI.services.admin;
 
 import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
-import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
-import com.alura.aluraAPI.dtos.person.read.AccountStudentDTO;
-import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
-import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
+import com.alura.aluraAPI.dtos.person.insert.PersonLoadDTO;
+import com.alura.aluraAPI.dtos.person.read.*;
+import com.alura.aluraAPI.models.person.Admin;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.models.warn.Blocked;
+import com.alura.aluraAPI.repositories.AdminRepository;
 import com.alura.aluraAPI.repositories.BlockedRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.StudentFilter;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeBlockedStrategy;
+import com.alura.aluraAPI.services.token.TokenService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +25,23 @@ import java.util.List;
 @Service
 public class AdminService {
     private StudentRepository studentRepository;
+    private AdminRepository adminRepository;
     private BlockedRepository blockedRepository;
     private CalculateTimeBlockedStrategy calculateTimeBlockedStrategy;
     private DashBoardComponent dashBoardComponent;
     private StudentFilter studentFilter;
+    private AuthenticationManager authenticationManager;
+    private TokenService tokenService;
 
-    public AdminService(StudentRepository studentRepository, BlockedRepository blockedRepository, CalculateTimeBlockedStrategy calculateTimeBlockedStrategy, DashBoardComponent dashBoardComponent, StudentFilter studentFilter) {
+    public AdminService(StudentRepository studentRepository, AdminRepository adminRepository, BlockedRepository blockedRepository, CalculateTimeBlockedStrategy calculateTimeBlockedStrategy, DashBoardComponent dashBoardComponent, StudentFilter studentFilter, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.studentRepository = studentRepository;
+        this.adminRepository = adminRepository;
         this.blockedRepository = blockedRepository;
         this.calculateTimeBlockedStrategy = calculateTimeBlockedStrategy;
         this.dashBoardComponent = dashBoardComponent;
         this.studentFilter = studentFilter;
+        this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     @Transactional
@@ -65,5 +74,12 @@ public class AdminService {
 
     public DashBoardReadDTO getDashboard() {
         return dashBoardComponent.getValues();
+    }
+    public LoginToken loginAdmin(PersonLoadDTO personLoadDTO){
+        adminRepository.findByEmail(personLoadDTO.email()).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
+        var usernamePassword = new UsernamePasswordAuthenticationToken(personLoadDTO.email(), personLoadDTO.password());
+        var auth = authenticationManager.authenticate(usernamePassword);
+        var token = tokenService.generateToken((Admin) auth.getPrincipal());
+        return new LoginToken(token);
     }
 }

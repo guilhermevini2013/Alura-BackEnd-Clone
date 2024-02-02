@@ -1,6 +1,7 @@
 package com.alura.aluraAPI.config.security;
 
 import com.alura.aluraAPI.models.person.Student;
+import com.alura.aluraAPI.repositories.AdminRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
@@ -24,10 +25,12 @@ import java.util.Date;
 public class SecurityFilter extends OncePerRequestFilter {
     TokenService tokenService;
     StudentRepository userRepository;
+    AdminRepository adminRepository;
 
-    public SecurityFilter(TokenService tokenService, StudentRepository userRepository) {
+    public SecurityFilter(TokenService tokenService, StudentRepository userRepository, AdminRepository adminRepository) {
         this.tokenService = tokenService;
         this.userRepository = userRepository;
+        this.adminRepository = adminRepository;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if(token != null){
             String login = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
+            UserDetails user = adminRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

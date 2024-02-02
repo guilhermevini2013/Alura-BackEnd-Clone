@@ -7,6 +7,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -29,6 +30,7 @@ public class SecurityConfig {
         return http
                 .cors(x -> x.setBuilder(http))
                 .csrf(x -> x.disable())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .headers(x -> x.frameOptions(y -> y.disable()))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
@@ -38,6 +40,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> auth
                 .requestMatchers(HttpMethod.POST, "/student/create").permitAll()
                 .requestMatchers(HttpMethod.POST, "/student/login").permitAll()
+                .requestMatchers(HttpMethod.POST,"/admin/login").permitAll()
                 .anyRequest().authenticated());
     }
 
@@ -61,7 +64,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/course").hasRole(role)
                 .requestMatchers(HttpMethod.POST, "/training").hasRole(role)
                 .requestMatchers(HttpMethod.DELETE, "/training").hasRole(role)
-                .requestMatchers(HttpMethod.POST, "/admin/**").hasRole(role)
+                .requestMatchers(HttpMethod.POST, "/admin/block/").hasRole(role)
+                .requestMatchers(HttpMethod.POST, "/admin/unblock/").hasRole(role)
                 .requestMatchers(HttpMethod.GET, "/admin/**").hasRole(role));
     }
 

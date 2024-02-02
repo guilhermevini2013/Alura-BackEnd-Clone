@@ -1,5 +1,6 @@
 package com.alura.aluraAPI.services.token;
 
+import com.alura.aluraAPI.models.person.Admin;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.auth0.jwt.JWT;
@@ -18,6 +19,19 @@ public class TokenService {
     private String secret;
 
     public String generateToken(Student user){
+        try{
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            String token = JWT.create()
+                    .withIssuer("auth-api")
+                    .withSubject(user.getEmail())
+                    .withExpiresAt(genExpirationDate())
+                    .sign(algorithm);
+            return token;
+        } catch (JWTCreationException exception) {
+            throw new RuntimeException("Error while generating token", exception);
+        }
+    }
+    public String generateToken(Admin user){
         try{
             Algorithm algorithm = Algorithm.HMAC256(secret);
             String token = JWT.create()

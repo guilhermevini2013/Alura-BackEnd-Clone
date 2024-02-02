@@ -1,10 +1,8 @@
 package com.alura.aluraAPI.controllers.admin;
 
 import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
-import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
-import com.alura.aluraAPI.dtos.person.read.AccountStudentDTO;
-import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
-import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
+import com.alura.aluraAPI.dtos.person.insert.PersonLoadDTO;
+import com.alura.aluraAPI.dtos.person.read.*;
 import com.alura.aluraAPI.services.admin.AdminService;
 import com.alura.aluraAPI.services.email.EmailService;
 import org.springframework.data.domain.Page;
@@ -24,6 +22,11 @@ public class AdminController {
     public AdminController(AdminService adminService, EmailService emailService) {
         this.adminService = adminService;
         this.emailService = emailService;
+    }
+
+    @PostMapping(value = "/login")
+    public ResponseEntity<LoginToken> loginAdmin(@RequestBody PersonLoadDTO personLoadDTO) {
+        return ResponseEntity.ok(adminService.loginAdmin(personLoadDTO));
     }
 
     @PostMapping(value = "/block/{id}")
@@ -63,6 +66,6 @@ public class AdminController {
     public ResponseEntity<List<AccountStudentDTO>> findByFilter(@RequestParam(name = "id", required = false) Long id,
                                                                 @RequestParam(name = "name", required = false) String name,
                                                                 @RequestParam(name = "typeStudent") String typeStudent) {
-        return ResponseEntity.ok(adminService.findUnblockByFilter(new SearchStudentDTO(name,id),typeStudent));
+        return ResponseEntity.ok(adminService.findUnblockByFilter(new SearchStudentDTO(name, id), typeStudent));
     }
 }
