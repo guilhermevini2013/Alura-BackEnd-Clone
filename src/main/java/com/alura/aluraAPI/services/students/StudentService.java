@@ -3,6 +3,7 @@ package com.alura.aluraAPI.services.students;
 import com.alura.aluraAPI.dtos.person.insert.StudentInsertDTO;
 import com.alura.aluraAPI.dtos.person.insert.PersonLoadDTO;
 import com.alura.aluraAPI.dtos.person.read.LoginToken;
+import com.alura.aluraAPI.models.person.Admin;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.repositories.RoleRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;

@@ -38,7 +38,12 @@ public class SecurityFilter extends OncePerRequestFilter {
         var token = this.recoverToken(request);
         if(token != null){
             String login = tokenService.validateToken(token);
-            UserDetails user = adminRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
+            UserDetails user = null;
+            try{
+                user = adminRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
+            }catch (ResourceNotFoundException ex){
+                user = userRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
+            }
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

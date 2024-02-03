@@ -16,5 +16,5 @@ INSERT INTO video_lesson (archive, course_id, duration, name_lesson) VALUES ('/j
 
 INSERT INTO role (authority)VALUES ('ROLE_ADMIN');
 INSERT INTO role (authority)VALUES ('ROLE_STUDENT');
-INSERT INTO admin (email, password,is_Non_Locked,is_Non_Expired,is_Credentials_Non_Expired,is_Enabled) values ('admin@admin','$2a$10$LgBSfmfg26Ic7HZ7t1jKOeIxAq7y53VXjXg6yN2ehu7FfR1TNIP2q',true,true,true,true);
-insert into admin_role(id_admin,id_role) values (1,1);
+INSERT INTO admin (id,email, password,is_Non_Locked,is_Non_Expired,is_Credentials_Non_Expired,is_Enabled) values (1,'admin@admin','$2a$10$LgBSfmfg26Ic7HZ7t1jKOeIxAq7y53VXjXg6yN2ehu7FfR1TNIP2q',true,true,true,true);
+insert into user_role(id_user,id_role) values (1,1);
