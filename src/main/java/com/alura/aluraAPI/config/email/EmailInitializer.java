@@ -22,7 +22,7 @@ public class EmailInitializer {
         simpleEmail.setHostName(HOST);
         simpleEmail.setSmtpPort(PORT);
         simpleEmail.setAuthenticator(new DefaultAuthenticator(SENDER_EMAIL, SENDER_PASSWORD));
-        simpleEmail.setStartTLSEnabled(true);  // Use true para TLS
+        simpleEmail.setStartTLSEnabled(true);
         simpleEmail.setFrom(SENDER_EMAIL);
         return simpleEmail;
     }
