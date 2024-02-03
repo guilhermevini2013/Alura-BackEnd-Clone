@@ -4,6 +4,7 @@ import com.alura.aluraAPI.dtos.content.insert.TrainingInsertDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.services.contents.TrainingService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -17,13 +18,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/training")
+@RequiredArgsConstructor
 public class TrainingController {
 
-    private TrainingService trainingService;
-
-    public TrainingController(TrainingService trainingService) {
-        this.trainingService = trainingService;
-    }
+    private final TrainingService trainingService;
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody TrainingInsertDTO trainingInsertDTO) {

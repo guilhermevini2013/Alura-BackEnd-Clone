@@ -5,6 +5,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.services.contents.CourseService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -18,12 +19,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/course")
+@RequiredArgsConstructor
 public class CourseController {
-    private CourseService courseService;
-
-    public CourseController(CourseService courseService) {
-        this.courseService = courseService;
-    }
+    private final CourseService courseService;
 
     @PostMapping
     public ResponseEntity<Void> insert(@RequestBody @Valid CourseDTO courseDTO) {
@@ -39,9 +37,9 @@ public class CourseController {
 
     @GetMapping
     public ResponseEntity<Page<ContentReadDTO>> findAllCurse(@RequestParam(name = "pages", defaultValue = "0") Integer page,
-                                                             @RequestParam(name = "linesPerPage", defaultValue = "15",required = false) Integer linesPerPage,
-                                                             @RequestParam(name = "direction", defaultValue = "DESC",required = false) String direction,
-                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate",required = false) String orderBy) {
+                                                             @RequestParam(name = "linesPerPage", defaultValue = "15", required = false) Integer linesPerPage,
+                                                             @RequestParam(name = "direction", defaultValue = "DESC", required = false) String direction,
+                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate", required = false) String orderBy) {
         return ResponseEntity.ok(courseService.findAllCurse(PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy)));
     }
 

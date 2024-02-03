@@ -9,6 +9,7 @@ import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeCourseStra
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.ContentFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,16 +19,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CourseService {
     private final ContentRepository contentRepository;
     private final ContentFilter curseFilter;
     private final CalculateTimeCourseStrategy timeCourse;
-
-    public CourseService(ContentRepository contentRepository, ContentFilter curseFilter, CalculateTimeCourseStrategy timeCourse) {
-        this.contentRepository = contentRepository;
-        this.curseFilter = curseFilter;
-        this.timeCourse = timeCourse;
-    }
 
     @Transactional(readOnly = true)
     public List<ContentReadDTO> findByFilter(ContentSearchDTO searchDTO) {

@@ -11,6 +11,7 @@ import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.alura.aluraAPI.services.filters.ContentFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,16 +23,11 @@ import java.util.List;
 import java.util.Set;
 
 @Service
+@RequiredArgsConstructor
 public class TrainingService {
     private final ContentFilter trainingFilter;
     private final CalculateTimeTrainingStrategy timeTraining;
-    private ContentRepository contentRepository;
-
-    public TrainingService(ContentRepository contentRepository, CalculateTimeTrainingStrategy timeTraining, ContentFilter curseFilter) {
-        this.contentRepository = contentRepository;
-        this.timeTraining = timeTraining;
-        this.trainingFilter = curseFilter;
-    }
+    private final ContentRepository contentRepository;
 
     @Transactional
     public ContentReadDTO insert(TrainingInsertDTO trainingInsertDTO) {

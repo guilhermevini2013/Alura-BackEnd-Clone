@@ -13,6 +13,7 @@ import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.StudentFilter;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeBlockedStrategy;
 import com.alura.aluraAPI.services.token.TokenService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -23,26 +24,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AdminService {
-    private StudentRepository studentRepository;
-    private AdminRepository adminRepository;
-    private BlockedRepository blockedRepository;
-    private CalculateTimeBlockedStrategy calculateTimeBlockedStrategy;
-    private DashBoardComponent dashBoardComponent;
-    private StudentFilter studentFilter;
-    private AuthenticationManager authenticationManager;
-    private TokenService tokenService;
-
-    public AdminService(StudentRepository studentRepository, AdminRepository adminRepository, BlockedRepository blockedRepository, CalculateTimeBlockedStrategy calculateTimeBlockedStrategy, DashBoardComponent dashBoardComponent, StudentFilter studentFilter, AuthenticationManager authenticationManager, TokenService tokenService) {
-        this.studentRepository = studentRepository;
-        this.adminRepository = adminRepository;
-        this.blockedRepository = blockedRepository;
-        this.calculateTimeBlockedStrategy = calculateTimeBlockedStrategy;
-        this.dashBoardComponent = dashBoardComponent;
-        this.studentFilter = studentFilter;
-        this.authenticationManager = authenticationManager;
-        this.tokenService = tokenService;
-    }
+    private final StudentRepository studentRepository;
+    private final AdminRepository adminRepository;
+    private final BlockedRepository blockedRepository;
+    private final CalculateTimeBlockedStrategy calculateTimeBlockedStrategy;
+    private final DashBoardComponent dashBoardComponent;
+    private final StudentFilter studentFilter;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
     @Transactional
     public void blockAccount(Long idAccount, Integer time) {

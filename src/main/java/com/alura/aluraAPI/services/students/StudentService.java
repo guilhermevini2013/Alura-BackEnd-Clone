@@ -11,6 +11,7 @@ import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureStrategy;
 import com.alura.aluraAPI.services.strategies.verify.IVerify;
 import com.alura.aluraAPI.services.token.TokenService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,24 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class StudentService {
-    private StudentRepository studentRepository;
-    private RoleRepository roleRepository;
-    private CalculateTimeSignatureStrategy timeSignatureStrategy;
-    private PasswordEncoder passwordEncoder;
-    private AuthenticationManager authenticationManager;
-    private TokenService tokenService;
-    private List<IVerify> verifyList;
-
-    public StudentService(StudentRepository studentRepository, RoleRepository roleRepository, CalculateTimeSignatureStrategy timeSignatureStrategy, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager, TokenService tokenService, List<IVerify> verifyList) {
-        this.studentRepository = studentRepository;
-        this.roleRepository = roleRepository;
-        this.timeSignatureStrategy = timeSignatureStrategy;
-        this.passwordEncoder = passwordEncoder;
-        this.authenticationManager = authenticationManager;
-        this.tokenService = tokenService;
-        this.verifyList = verifyList;
-    }
+    private final StudentRepository studentRepository;
+    private final RoleRepository roleRepository;
+    private final CalculateTimeSignatureStrategy timeSignatureStrategy;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
+    private final List<IVerify> verifyList;
 
     @Transactional
     public void create(StudentInsertDTO studentInsertDTO) {
@@ -50,7 +42,7 @@ public class StudentService {
     @Transactional
     public LoginToken login(PersonLoadDTO studentLoadDTO) {
         Student student = studentRepository.findByEmail(studentLoadDTO.email()).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
-        //verifyList.forEach(strategy-> strategy.verify(student));
+        verifyList.forEach(strategy-> strategy.verify(student));
         var usernamePassword = new UsernamePasswordAuthenticationToken(studentLoadDTO.email(), studentLoadDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((Student) auth.getPrincipal());

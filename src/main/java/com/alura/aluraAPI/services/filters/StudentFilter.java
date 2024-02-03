@@ -6,6 +6,7 @@ import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
 import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
 import com.alura.aluraAPI.services.filters.validation.student.StudentBlockNameStrategy;
 import com.alura.aluraAPI.services.filters.validation.student.StudentNameStrategy;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.HashSet;
@@ -13,14 +14,10 @@ import java.util.List;
 import java.util.Set;
 
 @Component
+@RequiredArgsConstructor
 public class StudentFilter {
-    private StudentBlockNameStrategy studentBlockNameStrategy;
-    private StudentNameStrategy studentNameStrategy;
-
-    public StudentFilter(StudentBlockNameStrategy studentBlockNameStrategy, StudentNameStrategy studentNameStrategy) {
-        this.studentBlockNameStrategy = studentBlockNameStrategy;
-        this.studentNameStrategy = studentNameStrategy;
-    }
+    private final StudentBlockNameStrategy studentBlockNameStrategy;
+    private final StudentNameStrategy studentNameStrategy;
 
     public List<AccountStudentDTO> filter(SearchStudentDTO studentDTO, String typeStudent) {
         if (typeStudent.equalsIgnoreCase("block")){

@@ -8,7 +8,7 @@ import java.time.Instant;
 import java.util.Date;
 
 @Service
-public class SignatureVerifyStretagy implements IVerify {
+public class SignatureVerifyStrategy implements IVerify {
 
     @Override
     public void verify(Student student) {

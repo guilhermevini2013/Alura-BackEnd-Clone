@@ -6,19 +6,16 @@ import com.alura.aluraAPI.models.content.Content;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.filters.FilterSpecification;
 import com.alura.aluraAPI.services.filters.validation.IValidatorFilterContent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
 @Component
+@RequiredArgsConstructor
 public class ContentAssessmentNotNullStrategy implements IValidatorFilterContent<ContentSearchDTO,ContentReadDTO> {
-    private ContentRepository contentRepository;
-    private FilterSpecification<Content> filterSpecification;
-
-    public ContentAssessmentNotNullStrategy(ContentRepository contentRepository, FilterSpecification<Content> filterSpecification) {
-        this.contentRepository = contentRepository;
-        this.filterSpecification = filterSpecification;
-    }
+    private final ContentRepository contentRepository;
+    private final FilterSpecification<Content> filterSpecification;
 
     @Override
     public void validate(ContentSearchDTO dto, Set<ContentReadDTO> listFilter, Content contentInstance) {
