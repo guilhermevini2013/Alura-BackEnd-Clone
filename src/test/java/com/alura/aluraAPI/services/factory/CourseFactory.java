@@ -18,7 +18,7 @@ public class CourseFactory {
         return new VideoLessonDTO(1l,"java aula 1","/java",10);
     }
     public static CourseDTO createValidCourseDTO(){
-        return new CourseDTO(1l,"Java","muito bom", List.of(createValidVideoLessonDTO()),new CertificateDTO(1l,"java completo"));
+        return new CourseDTO(1l,"Java","muito bom", List.of(createValidVideoLessonDTO()),new CertificateDTO(1l,"java completo"),1l);
     }
     public static Course createValidCourse(){
         return new Course(createValidCourseDTO(),new CalculateTimeCourseStrategy());

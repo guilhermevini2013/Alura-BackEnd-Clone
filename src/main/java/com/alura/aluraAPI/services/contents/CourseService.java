@@ -3,12 +3,14 @@ package com.alura.aluraAPI.services.contents;
 import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
+import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.content.Course;
+import com.alura.aluraAPI.repositories.CategoryRepository;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeCourseStrategy;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.ContentFilter;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeCourseStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ public class CourseService {
     private final ContentRepository contentRepository;
     private final ContentFilter curseFilter;
     private final CalculateTimeCourseStrategy timeCourse;
+    private final CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true)
     public List<ContentReadDTO> findByFilter(ContentSearchDTO searchDTO) {
@@ -33,6 +36,7 @@ public class CourseService {
     @Transactional
     public CourseDTO insert(CourseDTO cursesDTO) {
         Course entity = contentRepository.save(new Course(cursesDTO, timeCourse));
+        addCategoryInCourse(entity, cursesDTO.id());
         return new CourseDTO(entity);
     }
 
@@ -59,4 +63,8 @@ public class CourseService {
         }
     }
 
+    private void addCategoryInCourse(Course entity, Long idCategory) {
+        Category courseFound = categoryRepository.findById(idCategory).orElseThrow(() -> new ResourceNotFoundException("Category Not found"));
+        entity.setCategory(courseFound);
+    }
 }

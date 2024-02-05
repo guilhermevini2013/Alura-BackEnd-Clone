@@ -26,6 +26,8 @@ public abstract class Content {
     protected Integer totalHours;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected Certificate certificate;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Category category;
 
     public Content(String nameContent, String description) {
         this.nameContent = nameContent;
@@ -33,7 +35,9 @@ public abstract class Content {
         this.totalStudent = 0l;
         this.publicationDate = LocalDate.now();
     }
-
+    public void setCategory(Category category) {
+        this.category = category;
+    }
     public void setTotalHours(Integer totalHours) {
         this.totalHours = totalHours;
     }
