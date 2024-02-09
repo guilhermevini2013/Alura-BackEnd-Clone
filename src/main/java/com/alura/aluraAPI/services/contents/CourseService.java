@@ -36,7 +36,7 @@ public class CourseService {
     @Transactional
     public CourseDTO insert(CourseDTO cursesDTO) {
         Course entity = contentRepository.save(new Course(cursesDTO, timeCourse));
-        addCategoryInCourse(entity, cursesDTO.id());
+        addCategoryInCourse(entity, cursesDTO.idCategory());
         return new CourseDTO(entity);
     }
 
