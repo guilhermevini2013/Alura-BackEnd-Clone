@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class CategoryReadDTO {
+    private Long id;
     private String nameCategory;
 
     public CategoryReadDTO(Category category) {
+        this.id = category.getId();
         this.nameCategory = category.getName();
     }
 }

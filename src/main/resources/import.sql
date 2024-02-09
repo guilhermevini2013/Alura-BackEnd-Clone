@@ -1,3 +1,7 @@
+insert into categories (name) values ('Programming');
+insert into categories (name) values ('Front-End');
+insert into categories (name) values ('Data science');
+insert into categories (name) values ('Mobile');
 insert into certificate (name_certificate,total_hours) values ('java',10);
 INSERT INTO content (assessment, certificate_id, description, name_content, publication_date, total_hours, total_student, type_content) VALUES (2, 1, 'Cool curse', 'java', '2023-12-16', 10, 0, 'Course');
 INSERT INTO video_lesson (archive, course_id, duration, name_lesson) VALUES ('/java', 1, 11, 'POO em JAVA');
