@@ -1,10 +1,14 @@
 package com.alura.aluraAPI.services.contents;
 
+import com.alura.aluraAPI.dtos.content.insert.CourseDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
+import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.content.Course;
+import com.alura.aluraAPI.repositories.CategoryRepository;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
+import com.alura.aluraAPI.services.factory.CategoryFactory;
 import com.alura.aluraAPI.services.factory.CourseFactory;
 import com.alura.aluraAPI.services.filters.ContentFilter;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeCourseStrategy;
@@ -33,31 +37,60 @@ public class CourseServiceTests {
     @Mock
     private ContentFilter contentFilter;
     @Mock
+    private CategoryRepository categoryRepository;
+    @Mock
     private CalculateTimeCourseStrategy calculateTimeCourseStrategy;
     private Long idExists;
     private Long idNotExists;
     private Long idIntegrity;
+    private Long idCategoryExists;
     private ContentReadDTO contentReadDTO;
     private Course course;
+    private Category category;
 
     @BeforeEach
     void setUp() {
         idExists = 1l;
         idNotExists = 2l;
         idIntegrity = 3l;
+        idCategoryExists = 1l;
         course = CourseFactory.createValidCourse();
+        category = CategoryFactory.createValidCategory();
         contentReadDTO = CourseFactory.createValidContentReadDTO();
         when(contentRepository.findByIdCourse(idExists)).thenReturn(Optional.of(course));
         when(contentRepository.existsById(idExists)).thenReturn(true);
         when(contentRepository.existsById(idNotExists)).thenReturn(false);
         doThrow(DataIntegrityViolationException.class).when(contentRepository).deleteById(idIntegrity);
+        doThrow(ResourceNotFoundException.class).when(contentRepository).findByIdCourse(idNotExists);
+        when(contentRepository.save(any())).thenReturn(course);
+        when(categoryRepository.findById(idCategoryExists)).thenReturn(Optional.of(category));
+    }
+
+    @Test
+    public void insertShouldInsertedCourseInDataBaseAndReturnCourseDTOAndCategoryRepositoryNotThrowException() {
+        CourseDTO validCourseDTO = CourseFactory.createValidCourseDTO();
+        CourseDTO entityDTO = courseService.insert(validCourseDTO);
+        assertEquals(entityDTO.nameContent(), validCourseDTO.nameContent());
+        verify(contentRepository, times(1)).save(any());
+        verify(categoryRepository, times(1)).findById(idCategoryExists);
+        verifyNoMoreInteractions(contentRepository);
+        verifyNoMoreInteractions(categoryRepository);
+        assertDoesNotThrow(() -> courseService.insert(validCourseDTO));
+    }
+
+    @Test
+    public void findByIdShouldThrowResourceNotFoundExceptionAndNotReturnCourseWhenIdNotExists() {
+        assertThrows(ResourceNotFoundException.class, () -> courseService.findById(idNotExists));
+        verify(contentRepository, times(1)).findByIdCourse(idNotExists);
+        verifyNoMoreInteractions(contentRepository);
     }
 
     @Test
     public void findByIdShouldReturnCourseAndNotThrowExceptionWhenIdExists() {
+        assertDoesNotThrow(() -> courseService.findById(idExists));
         contentReadDTO = courseService.findById(idExists);
         assertEquals(course.getNameContent(), contentReadDTO.getNameContent());
-        verify(contentRepository, times(1)).findByIdCourse(idExists);
+        verify(contentRepository, times(2)).findByIdCourse(idExists);
         verifyNoMoreInteractions(contentRepository);
     }
 
