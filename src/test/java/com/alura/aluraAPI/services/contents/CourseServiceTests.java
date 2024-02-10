@@ -44,6 +44,7 @@ public class CourseServiceTests {
     private Long idNotExists;
     private Long idIntegrity;
     private Long idCategoryExists;
+    private Long idCategoryNotExists;
     private ContentReadDTO contentReadDTO;
     private Course course;
     private Category category;
@@ -54,6 +55,7 @@ public class CourseServiceTests {
         idNotExists = 2l;
         idIntegrity = 3l;
         idCategoryExists = 1l;
+        idCategoryNotExists = 2l;
         course = CourseFactory.createValidCourse();
         category = CategoryFactory.createValidCategory();
         contentReadDTO = CourseFactory.createValidContentReadDTO();
@@ -64,6 +66,17 @@ public class CourseServiceTests {
         doThrow(ResourceNotFoundException.class).when(contentRepository).findByIdCourse(idNotExists);
         when(contentRepository.save(any())).thenReturn(course);
         when(categoryRepository.findById(idCategoryExists)).thenReturn(Optional.of(category));
+        doThrow(ResourceNotFoundException.class).when(categoryRepository).findById(idCategoryNotExists);
+    }
+
+    @Test
+    public void insertShouldNotInsertedCourseInDataBaseAndThrowResourceNotFoundExceptionAndRollBackWhenIdCategoryNotExists() {
+        CourseDTO invalidCourseDTO = CourseFactory.createInValidCourseDTO();
+        assertThrows(ResourceNotFoundException.class, () -> courseService.insert(invalidCourseDTO));
+        verify(contentRepository, times(1)).save(any());
+        verify(categoryRepository, times(1)).findById(idCategoryNotExists);
+        verifyNoMoreInteractions(contentRepository);
+        verifyNoMoreInteractions(categoryRepository);
     }
 
     @Test

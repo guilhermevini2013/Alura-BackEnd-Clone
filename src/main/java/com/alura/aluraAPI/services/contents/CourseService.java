@@ -33,7 +33,7 @@ public class CourseService {
         return curseFilter.filter(searchDTO, new Course());
     }
 
-    @Transactional
+    @Transactional(rollbackFor = ResourceNotFoundException.class)
     public CourseDTO insert(CourseDTO cursesDTO) {
         Course entity = contentRepository.save(new Course(cursesDTO, timeCourse));
         addCategoryInCourse(entity, cursesDTO.idCategory());
