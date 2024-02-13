@@ -9,6 +9,7 @@ import com.alura.aluraAPI.models.warn.Blocked;
 import com.alura.aluraAPI.repositories.AdminRepository;
 import com.alura.aluraAPI.repositories.BlockedRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
+import com.alura.aluraAPI.services.email.EmailService;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.StudentFilter;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeBlockedStrategy;
@@ -34,12 +35,15 @@ public class AdminService {
     private final StudentFilter studentFilter;
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
+    private final EmailService emailService;
 
     @Transactional
     public void blockAccount(Long idAccount, Integer time) {
         Student entity = studentRepository.findById(idAccount).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         entity.setIsAccountNonLocked(false);
-        blockedRepository.save(new Blocked(entity, time, calculateTimeBlockedStrategy));
+        Blocked blockedSaved = blockedRepository.save(new Blocked(entity, time, calculateTimeBlockedStrategy));
+        emailService.sendEmailToStudent(entity.getEmail(), "Conta bloqueada", "Ola " + entity.getName() + " sua conta foi bloqueada ate a data de: "+ blockedSaved.getExpirationDate());
+
     }
 
     @Transactional
@@ -47,6 +51,7 @@ public class AdminService {
         Student entity = studentRepository.findById(idAccount).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         entity.setIsAccountNonLocked(true);
         blockedRepository.deleteByIdStudentBlocked(entity);
+        emailService.sendEmailToStudent(entity.getEmail(), "Conta bloqueada", "Ola " + entity.getName() + " sua conta foi desbloqueada");
     }
 
     @Transactional(readOnly = true)
