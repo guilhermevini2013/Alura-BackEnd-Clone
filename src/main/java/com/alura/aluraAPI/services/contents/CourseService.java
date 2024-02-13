@@ -7,6 +7,7 @@ import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.repositories.CategoryRepository;
 import com.alura.aluraAPI.repositories.ContentRepository;
+import com.alura.aluraAPI.services.email.EmailService;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.ContentFilter;
@@ -27,6 +28,7 @@ public class CourseService {
     private final ContentFilter curseFilter;
     private final CalculateTimeCourseStrategy timeCourse;
     private final CategoryRepository categoryRepository;
+    private final EmailService emailService;
 
     @Transactional(readOnly = true)
     public List<ContentReadDTO> findByFilter(ContentSearchDTO searchDTO) {
@@ -37,6 +39,8 @@ public class CourseService {
     public CourseDTO insert(CourseDTO cursesDTO) {
         Course entity = contentRepository.save(new Course(cursesDTO, timeCourse));
         addCategoryInCourse(entity, cursesDTO.idCategory());
+        emailService.sendEmailAllStudent("Novo curso na PLATAFORMA!", "Ola, venha conhecer nosso curso de: "
+                + entity.getNameContent() + "\n para a área de atuação de: " + entity.getCategory().getName());
         return new CourseDTO(entity);
     }
 

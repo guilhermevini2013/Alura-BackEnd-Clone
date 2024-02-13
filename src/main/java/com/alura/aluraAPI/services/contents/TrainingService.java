@@ -6,11 +6,12 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
 import com.alura.aluraAPI.repositories.ContentRepository;
-import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeTrainingStrategy;
+import com.alura.aluraAPI.services.email.EmailService;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.alura.aluraAPI.services.filters.ContentFilter;
+import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeTrainingStrategy;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -28,6 +29,7 @@ public class TrainingService {
     private final ContentFilter trainingFilter;
     private final CalculateTimeTrainingStrategy timeTraining;
     private final ContentRepository contentRepository;
+    private final EmailService emailService;
 
     @Transactional
     public ContentReadDTO insert(TrainingInsertDTO trainingInsertDTO) {
@@ -35,6 +37,8 @@ public class TrainingService {
         addCoursesInTraining(entity, trainingInsertDTO);
         entity.calculatedTime();
         entity = contentRepository.save(entity);
+        emailService.sendEmailAllStudent("Nova formacao de " + entity.getCategory().getName() + " na PLATAFORMA!", "Ola, venha conhecer nossa formacao de: "
+                + entity.getNameContent() + "\n para a área de atuação de: " + entity.getCategory().getName());
         return new ContentReadDTO(entity);
     }
 
