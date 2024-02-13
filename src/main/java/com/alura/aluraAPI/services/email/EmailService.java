@@ -1,21 +1,22 @@
 package com.alura.aluraAPI.services.email;
 
-import com.alura.aluraAPI.config.email.EmailInitializer;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.EmailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class EmailService {
-    private final EmailInitializer emailInitializer;
+    private final JavaMailSender javaMailSender;
+    private final String EMAIL_FROM = "aluraclone@gmail.com";
 
-    public void sendEmail() throws EmailException {
-        Email email = emailInitializer.getSenderEmail();
-        email.setSubject("");
-        email.setMsg("");
-        email.addTo("");
-        email.send();
+    public void sendEmailToStudent(String emailStudent, String title, String content) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom(EMAIL_FROM);
+        message.setTo(emailStudent);
+        message.setSubject(title);
+        message.setText(content);
+        javaMailSender.send(message);
     }
 }

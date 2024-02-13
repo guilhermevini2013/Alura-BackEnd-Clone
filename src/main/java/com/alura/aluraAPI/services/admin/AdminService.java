@@ -60,14 +60,15 @@ public class AdminService {
     }
 
     public List<AccountStudentDTO> findUnblockByFilter(SearchStudentDTO studentDTO, String typeStudent) {
-        return studentFilter.filter(studentDTO,typeStudent);
+        return studentFilter.filter(studentDTO, typeStudent);
     }
 
     public DashBoardReadDTO getDashboard() {
         return dashBoardComponent.getValues();
     }
-    public LoginToken loginAdmin(PersonLoadDTO personLoadDTO){
-        adminRepository.findByEmail(personLoadDTO.email()).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
+
+    public LoginToken loginAdmin(PersonLoadDTO personLoadDTO) {
+        adminRepository.findByEmail(personLoadDTO.email()).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
         var usernamePassword = new UsernamePasswordAuthenticationToken(personLoadDTO.email(), personLoadDTO.password());
         var auth = authenticationManager.authenticate(usernamePassword);
         var token = tokenService.generateToken((Admin) auth.getPrincipal());

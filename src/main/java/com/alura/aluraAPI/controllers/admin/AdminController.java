@@ -4,7 +4,6 @@ import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.insert.PersonLoadDTO;
 import com.alura.aluraAPI.dtos.person.read.*;
 import com.alura.aluraAPI.services.admin.AdminService;
-import com.alura.aluraAPI.services.email.EmailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +18,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AdminController {
     private final AdminService adminService;
-    private final EmailService emailService;
 
     @PostMapping(value = "/login")
     public ResponseEntity<LoginToken> loginAdmin(@RequestBody PersonLoadDTO personLoadDTO) {

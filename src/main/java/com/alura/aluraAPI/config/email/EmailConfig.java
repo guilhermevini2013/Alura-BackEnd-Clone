@@ -1,14 +1,26 @@
 package com.alura.aluraAPI.config.email;
 
-import org.apache.commons.mail.Email;
-import org.apache.commons.mail.SimpleEmail;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+
+import java.util.Properties;
 
 @Configuration
 public class EmailConfig {
     @Bean
-    public Email getInstance(){
-        return new SimpleEmail();
+    public JavaMailSender getJavaMailSender() {
+        JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
+        mailSender.setHost("smtp.gmail.com");
+        mailSender.setPort(587);
+        mailSender.setUsername("aluraclone@gmail.com");
+        mailSender.setPassword("xkqq svrg vdaa pvov");
+        Properties props = mailSender.getJavaMailProperties();
+        props.put("mail.transport.protocol", "smtp");
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.debug", "false");
+        return mailSender;
     }
 }
