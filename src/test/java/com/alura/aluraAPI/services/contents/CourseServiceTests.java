@@ -6,6 +6,7 @@ import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.repositories.CategoryRepository;
 import com.alura.aluraAPI.repositories.ContentRepository;
+import com.alura.aluraAPI.services.email.EmailService;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.factory.CategoryFactory;
@@ -40,6 +41,8 @@ public class CourseServiceTests {
     private CategoryRepository categoryRepository;
     @Mock
     private CalculateTimeCourseStrategy calculateTimeCourseStrategy;
+    @Mock
+    private  EmailService emailService;
     private Long idExists;
     private Long idNotExists;
     private Long idIntegrity;
