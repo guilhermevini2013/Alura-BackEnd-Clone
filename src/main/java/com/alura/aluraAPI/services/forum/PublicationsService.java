@@ -28,6 +28,11 @@ public class PublicationsService {
         return true;
     }
 
+    public void deleteById(Long idPublication) {
+        Publications publications = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+        publications.getStudent().getPublications().removeIf(publication -> publication.getId() == idPublication);
+        publicationsRepository.save(publications);
+    }
     private void insertStudentInPublication(Long idStudent, Publications publications) {
         Student studentFind = studentRepository.findById(idStudent).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         publications.setStudent(studentFind);
