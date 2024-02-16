@@ -1,5 +1,6 @@
-package com.alura.aluraAPI.dtos.forum;
+package com.alura.aluraAPI.dtos.forum.insert;
 
+import com.alura.aluraAPI.models.forum.Publications;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

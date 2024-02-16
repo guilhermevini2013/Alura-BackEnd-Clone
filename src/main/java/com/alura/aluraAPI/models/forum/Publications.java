@@ -1,6 +1,6 @@
 package com.alura.aluraAPI.models.forum;
 
-import com.alura.aluraAPI.dtos.forum.PublicationsDto;
+import com.alura.aluraAPI.dtos.forum.insert.PublicationsDto;
 import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.person.Student;
 import jakarta.persistence.*;
@@ -30,7 +30,7 @@ public class Publications {
     private Integer numberOfResponses;
     @ManyToOne(fetch = FetchType.LAZY , cascade = CascadeType.PERSIST)
     private Student student;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<Response> responses;
     private Date publicationDate;
 
