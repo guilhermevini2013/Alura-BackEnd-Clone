@@ -21,6 +21,7 @@ public class AccountStudentDTO {
         this.name = entity.getName();
         this.typeSignature = entity.getSignature().getTypeSignature();
     }
+
     public AccountStudentDTO(Blocked entity) {
         this(entity.getIdStudentBlocked());
         this.timeBlocked = entity.getTimeInHours();

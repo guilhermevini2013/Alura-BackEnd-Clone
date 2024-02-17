@@ -1,16 +1,13 @@
 package com.alura.aluraAPI.config.security;
 
-import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.repositories.AdminRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
-import com.alura.aluraAPI.services.exceptions.ValidationException;
 import com.alura.aluraAPI.services.token.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.util.Date;
 
 @Component
 public class SecurityFilter extends OncePerRequestFilter {
@@ -36,22 +31,23 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         var token = this.recoverToken(request);
-        if(token != null){
+        if (token != null) {
             String login = tokenService.validateToken(token);
             UserDetails user = null;
-            try{
-                user = adminRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
-            }catch (ResourceNotFoundException ex){
-                user = userRepository.findByEmail(login).orElseThrow(()-> new ResourceNotFoundException("Email incorrect or no exists"));
+            try {
+                user = adminRepository.findByEmail(login).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
+            } catch (ResourceNotFoundException ex) {
+                user = userRepository.findByEmail(login).orElseThrow(() -> new ResourceNotFoundException("Email incorrect or no exists"));
             }
             var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
         filterChain.doFilter(request, response);
     }
-    private String recoverToken(HttpServletRequest request){
+
+    private String recoverToken(HttpServletRequest request) {
         var authHeader = request.getHeader("Authorization");
-        if(authHeader == null) return null;
+        if (authHeader == null) return null;
         return authHeader.replace("Bearer ", "");
     }
 }

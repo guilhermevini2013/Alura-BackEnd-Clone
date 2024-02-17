@@ -5,11 +5,11 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 public record PersonLoadDTO(
-                             @Email
-                               @NotNull
-                               @NotBlank
-                               String email,
-                             @NotNull
-                               @NotBlank
-                               String password) {
+        @Email
+        @NotNull
+        @NotBlank
+        String email,
+        @NotNull
+        @NotBlank
+        String password) {
 }

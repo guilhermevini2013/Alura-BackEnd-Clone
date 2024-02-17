@@ -3,7 +3,7 @@ package com.alura.aluraAPI.models.person;
 import com.alura.aluraAPI.dtos.person.insert.StudentInsertDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.StudentCertificate;
-import com.alura.aluraAPI.models.forum.Publications;
+import com.alura.aluraAPI.models.forum.Publication;
 import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureStrategy;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,8 +32,8 @@ public class Student extends User {
     private Set<Course> completedCurses;
     @OneToMany(mappedBy = "student")
     private Set<StudentCertificate> studentCertificates = new HashSet<>();
-    @OneToMany(mappedBy = "student")
-    private Set<Publications> publications = new HashSet<>();
+    @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL)
+    private Set<Publication> publications = new HashSet<>();
 
     public Student(StudentInsertDTO studentInsertDTO, CalculateTimeSignatureStrategy timeSignatureStrategy) {
         this.name = studentInsertDTO.name();

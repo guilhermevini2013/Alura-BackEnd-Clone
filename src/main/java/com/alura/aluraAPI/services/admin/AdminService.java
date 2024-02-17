@@ -42,7 +42,7 @@ public class AdminService {
         Student entity = studentRepository.findById(idAccount).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
         entity.setIsAccountNonLocked(false);
         Blocked blockedSaved = blockedRepository.save(new Blocked(entity, time, calculateTimeBlockedStrategy));
-        emailService.sendEmailToStudent(entity.getEmail(), "Conta bloqueada", "Ola " + entity.getName() + " sua conta foi bloqueada ate a data de: "+ blockedSaved.getExpirationDate());
+        emailService.sendEmailToStudent(entity.getEmail(), "Conta bloqueada", "Ola " + entity.getName() + " sua conta foi bloqueada ate a data de: " + blockedSaved.getExpirationDate());
 
     }
 

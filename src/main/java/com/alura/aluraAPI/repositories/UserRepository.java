@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface UserRepository extends JpaRepository<User,Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     @Query(nativeQuery = true, value = """
             	SELECT admin.email AS username, admin.password
             	, admin.is_Non_Locked, admin.is_Non_Expired
@@ -24,6 +24,7 @@ public interface UserRepository extends JpaRepository<User,Long> {
             	WHERE admin.email = :email
             """)
     List<UserDetailsProjection> searchAdminAndRolesByEmail(String email);
+
     @Query(nativeQuery = true, value = """
             	SELECT student.email AS username, student.password
             	, student.is_Non_Locked, student.is_Non_Expired
@@ -35,8 +36,10 @@ public interface UserRepository extends JpaRepository<User,Long> {
             	WHERE student.email = :email
             """)
     List<UserDetailsProjection> searchStudentAndRolesByEmail(String email);
+
     @Query("select s from Student s where s.email= :email")
     Optional<Student> findStudentByEmail(String email);
+
     @Query("select a from Admin a where a.email= :email")
     Optional<Admin> findAdminByEmail(String email);
 }

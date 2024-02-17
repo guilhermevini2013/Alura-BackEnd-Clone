@@ -14,7 +14,7 @@ public class DashBoardComponent {
     private final StudentRepository studentRepository;
 
     @Transactional(readOnly = true)
-    public DashBoardReadDTO getValues(){
-        return new DashBoardReadDTO(studentRepository.count(),contentRepository.countTraining(),contentRepository.countCourse());
+    public DashBoardReadDTO getValues() {
+        return new DashBoardReadDTO(studentRepository.count(), contentRepository.countTraining(), contentRepository.countCourse());
     }
 }

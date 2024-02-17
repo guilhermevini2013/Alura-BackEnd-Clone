@@ -1,7 +1,6 @@
 package com.alura.aluraAPI.repositories;
 
 import com.alura.aluraAPI.models.person.Student;
-import com.alura.aluraAPI.projections.UserDetailsProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;

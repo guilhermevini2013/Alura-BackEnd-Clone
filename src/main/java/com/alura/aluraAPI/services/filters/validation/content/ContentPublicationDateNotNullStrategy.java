@@ -11,18 +11,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
+
 @Component
 @RequiredArgsConstructor
-public class ContentPublicationDateNotNullStrategy implements IValidatorFilterContent<ContentSearchDTO,ContentReadDTO> {
+public class ContentPublicationDateNotNullStrategy implements IValidatorFilterContent<ContentSearchDTO, ContentReadDTO> {
     private final ContentRepository contentRepository;
     private final FilterSpecification<Content> filterSpecification;
 
     @Override
     public void validate(ContentSearchDTO dto, Set<ContentReadDTO> listFilter, Content contentInstance) {
-        if (dto.publicationDate() != null){
+        if (dto.publicationDate() != null) {
             List<Content> listContent = contentRepository.findAll(filterSpecification.filterByLocalDate("publicationDate", dto.publicationDate()));
-            for (Content content:listContent) {
-                if (contentInstance.getClass().isInstance(content)){
+            for (Content content : listContent) {
+                if (contentInstance.getClass().isInstance(content)) {
                     listFilter.add(new ContentReadDTO(content));
                 }
             }

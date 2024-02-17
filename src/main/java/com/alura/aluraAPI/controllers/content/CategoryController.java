@@ -15,8 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CategoryController {
     private final CategoryService categoryService;
+
     @GetMapping
-    public ResponseEntity<List<CategoryReadDTO>> findAllCategories(){
+    public ResponseEntity<List<CategoryReadDTO>> findAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
     }
 }

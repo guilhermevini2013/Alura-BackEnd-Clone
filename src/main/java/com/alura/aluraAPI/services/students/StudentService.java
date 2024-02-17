@@ -13,7 +13,6 @@ import com.alura.aluraAPI.services.strategies.calculates.CalculateTimeSignatureS
 import com.alura.aluraAPI.services.strategies.verify.IVerify;
 import com.alura.aluraAPI.services.token.TokenService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.mail.MailException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;

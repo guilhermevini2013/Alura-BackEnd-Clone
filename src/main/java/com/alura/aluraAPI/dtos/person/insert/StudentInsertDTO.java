@@ -15,7 +15,7 @@ public record StudentInsertDTO(@NotNull
                                String email,
                                @NotNull
                                @NotBlank
-                               @Size(min = 6,message = "minimum of 6 characters")
+                               @Size(min = 6, message = "minimum of 6 characters")
                                String password,
                                @NotNull
                                @NotBlank

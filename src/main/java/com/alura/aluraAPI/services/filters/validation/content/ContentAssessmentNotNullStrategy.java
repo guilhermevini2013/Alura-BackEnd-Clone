@@ -11,18 +11,19 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Set;
+
 @Component
 @RequiredArgsConstructor
-public class ContentAssessmentNotNullStrategy implements IValidatorFilterContent<ContentSearchDTO,ContentReadDTO> {
+public class ContentAssessmentNotNullStrategy implements IValidatorFilterContent<ContentSearchDTO, ContentReadDTO> {
     private final ContentRepository contentRepository;
     private final FilterSpecification<Content> filterSpecification;
 
     @Override
     public void validate(ContentSearchDTO dto, Set<ContentReadDTO> listFilter, Content contentInstance) {
-        if (dto.assessment() != null){
+        if (dto.assessment() != null) {
             List<Content> listContent = contentRepository.findAll(filterSpecification.filterByDouble("assessment", dto.assessment()));
-            for (Content content:listContent) {
-                if (contentInstance.getClass().isInstance(content)){
+            for (Content content : listContent) {
+                if (contentInstance.getClass().isInstance(content)) {
                     listFilter.add(new ContentReadDTO(content));
                 }
             }

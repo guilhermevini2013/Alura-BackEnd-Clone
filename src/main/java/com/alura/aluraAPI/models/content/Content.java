@@ -32,12 +32,14 @@ public abstract class Content {
     public Content(String nameContent, String description) {
         this.nameContent = nameContent;
         this.description = description;
-        this.totalStudent = 0l;
+        this.totalStudent = 0L;
         this.publicationDate = LocalDate.now();
     }
+
     public void setCategory(Category category) {
         this.category = category;
     }
+
     public void setTotalHours(Integer totalHours) {
         this.totalHours = totalHours;
     }

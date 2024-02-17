@@ -1,8 +1,6 @@
 package com.alura.aluraAPI.services.filters;
 
-import com.alura.aluraAPI.dtos.person.read.AccountBlockedDTO;
 import com.alura.aluraAPI.dtos.person.read.AccountStudentDTO;
-import com.alura.aluraAPI.dtos.person.read.AccountUnBlockedDTO;
 import com.alura.aluraAPI.dtos.person.read.SearchStudentDTO;
 import com.alura.aluraAPI.services.filters.validation.student.StudentBlockNameStrategy;
 import com.alura.aluraAPI.services.filters.validation.student.StudentNameStrategy;
@@ -20,13 +18,14 @@ public class StudentFilter {
     private final StudentNameStrategy studentNameStrategy;
 
     public List<AccountStudentDTO> filter(SearchStudentDTO studentDTO, String typeStudent) {
-        if (typeStudent.equalsIgnoreCase("block")){
+        if (typeStudent.equalsIgnoreCase("block")) {
             return filterBlock(studentDTO);
         } else if (typeStudent.equalsIgnoreCase("unblock")) {
             return filterUnblock(studentDTO);
         }
         return List.of();
     }
+
     public List<AccountStudentDTO> filterUnblock(SearchStudentDTO studentDTO) {
         Set<AccountStudentDTO> listFilter = new HashSet<>();
         studentNameStrategy.validate(studentDTO, listFilter);
