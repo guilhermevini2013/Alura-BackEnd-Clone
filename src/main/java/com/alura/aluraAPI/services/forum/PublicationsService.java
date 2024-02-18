@@ -35,10 +35,10 @@ public class PublicationsService {
     @Transactional
     public void alterPublication(Long idPublication, PublicationsAlterDto publicationsAlterDto) {
         Publication publications = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-        publicationsRepository.save(alter(publications, publicationsAlterDto));
+        alterInformation(publications, publicationsAlterDto);
     }
 
-    public Publication alter(Publication entity, PublicationsAlterDto dto) {
+    public Publication alterInformation(Publication entity, PublicationsAlterDto dto) {
         entity.setTitle(dto.title());
         entity.setDescription(dto.description());
         entity.setCategories(insertCategoriesInPublication(dto.ids_categories(), entity));
@@ -47,9 +47,8 @@ public class PublicationsService {
 
     @Transactional
     public void deleteById(Long idPublication) {
-        Publication publication = publicationsRepository.findById(idPublication)
-                .orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
-        publication.getStudent().getPublications().removeIf(publish -> publish.getId().equals(idPublication));
+        Publication publication = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
+        publicationsRepository.delete(publication);
     }
 
     private void insertStudentInPublication(Long idStudent, Publication publications) {

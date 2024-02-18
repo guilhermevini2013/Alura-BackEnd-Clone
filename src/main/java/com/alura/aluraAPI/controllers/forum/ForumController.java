@@ -1,6 +1,7 @@
 package com.alura.aluraAPI.controllers.forum;
 
 import com.alura.aluraAPI.dtos.forum.insert.PublicationDto;
+import com.alura.aluraAPI.dtos.forum.insert.PublicationsAlterDto;
 import com.alura.aluraAPI.services.forum.PublicationsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +22,15 @@ public class ForumController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(publicationDTO).toUri();
         return ResponseEntity.created(uri).build();
     }
+
+    @PutMapping(value = "/publish/{id}")
+    public ResponseEntity<Void> alterPublish(@PathVariable Long id, @RequestBody PublicationsAlterDto publicationsAlterDto) {
+        publicationsService.alterPublication(id, publicationsAlterDto);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping(value = "/publish/{id}")
-    public ResponseEntity<Void> publish(@PathVariable Long id) {
+    public ResponseEntity<Void> deletePublish(@PathVariable Long id) {
         publicationsService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
