@@ -10,6 +10,11 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
 
+enum PublicationStatus {
+    SOLVED,
+    UNSOLVED
+}
+
 @Getter
 @Setter
 @Entity
@@ -31,10 +36,14 @@ public class Publication {
     @OneToMany(cascade = CascadeType.ALL)
     private Set<Response> responses;
     private Date publicationDate;
+    @Enumerated(EnumType.STRING)
+    private PublicationStatus status;
 
     public Publication(PublicationDto publicationsDto) {
         this.title = publicationsDto.title();
         this.description = publicationsDto.description();
         this.publicationDate = Date.from(Instant.now());
+        this.numberOfResponses = 0;
+        this.status = PublicationStatus.UNSOLVED;
     }
 }
