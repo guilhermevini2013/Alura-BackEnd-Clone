@@ -29,6 +29,12 @@ public class ForumController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping(value = "/publish/{id}")
+    public ResponseEntity<Void> markAsResolved(@PathVariable Long id) {
+        publicationsService.markAsResolved(id);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping(value = "/publish/{id}")
     public ResponseEntity<Void> deletePublish(@PathVariable Long id) {
         publicationsService.deleteById(id);
