@@ -2,6 +2,7 @@ package com.alura.aluraAPI.services.forum;
 
 import com.alura.aluraAPI.dtos.forum.insert.PublicationDto;
 import com.alura.aluraAPI.dtos.forum.insert.PublicationsAlterDto;
+import com.alura.aluraAPI.dtos.forum.read.PublicationReadDto;
 import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.forum.Publication;
 import com.alura.aluraAPI.models.person.Student;
@@ -10,6 +11,9 @@ import com.alura.aluraAPI.repositories.PublicationsRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +34,10 @@ public class PublicationsService {
         insertCategoriesInPublication(publicationsDto.ids_categories(), entity);
         publicationsRepository.save(entity);
         return true;
+    }
+    @Transactional(readOnly = true)
+    public Page<PublicationReadDto> findAll(PageRequest request) {
+        return publicationsRepository.findAll(request).map(PublicationReadDto::new);
     }
 
     @Transactional
