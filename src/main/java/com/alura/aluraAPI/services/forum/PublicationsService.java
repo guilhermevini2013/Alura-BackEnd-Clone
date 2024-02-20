@@ -33,9 +33,15 @@ public class PublicationsService {
     }
 
     @Transactional
+    public void markAsResolved(Long idPublication) {
+        Publication entity = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
+        entity.solvedPublish();
+    }
+
+    @Transactional
     public void alterPublication(Long idPublication, PublicationsAlterDto publicationsAlterDto) {
-        Publication publications = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-        alterInformation(publications, publicationsAlterDto);
+        Publication entity = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
+        alterInformation(entity, publicationsAlterDto);
     }
 
     public Publication alterInformation(Publication entity, PublicationsAlterDto dto) {

@@ -46,4 +46,7 @@ public class Publication {
         this.numberOfResponses = 0;
         this.status = PublicationStatus.UNSOLVED;
     }
+    public void solvedPublish(){
+        this.status = PublicationStatus.SOLVED;
+    }
 }
