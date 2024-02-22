@@ -28,12 +28,12 @@ public class PublicationsService {
     private final CategoryRepository categoryRepository;
 
     @Transactional
-    public boolean insert(PublicationDto publicationsDto) {
+    public PublicationReadDto insert(PublicationDto publicationsDto) {
         Publication entity = new Publication(publicationsDto);
         insertStudentInPublication(publicationsDto.id_student(), entity);
         insertCategoriesInPublication(publicationsDto.ids_categories(), entity);
-        publicationsRepository.save(entity);
-        return true;
+        entity = publicationsRepository.save(entity);
+        return new PublicationReadDto(entity);
     }
     @Transactional(readOnly = true)
     public Page<PublicationReadDto> findAll(PageRequest request) {

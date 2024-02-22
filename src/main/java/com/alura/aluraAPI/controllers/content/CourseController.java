@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -24,9 +25,9 @@ public class CourseController {
     private final CourseService courseService;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody @Valid CourseDTO courseDTO) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid CourseDTO courseDTO, UriComponentsBuilder componentsBuilder) {
         courseDTO = courseService.insert(courseDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(courseDTO).toUri();
+        URI uri = componentsBuilder.path("/course/id/{id}").buildAndExpand(courseDTO.id()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

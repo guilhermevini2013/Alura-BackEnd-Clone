@@ -24,13 +24,13 @@ public class AdminController {
         return ResponseEntity.ok(adminService.loginAdmin(personLoadDTO));
     }
 
-    @PostMapping(value = "/block/{id}")
+    @PutMapping(value = "/block/{id}")
     public ResponseEntity<String> blockAccount(@PathVariable Long id, @RequestParam(name = "timeInHours") Integer timeInHours) {
         adminService.blockAccount(id, timeInHours);
         return ResponseEntity.ok("Id " + id + " successfully Blocked");
     }
 
-    @PostMapping(value = "/unblock/{id}")
+    @PutMapping(value = "/unblock/{id}")
     public ResponseEntity<String> unBlockAccount(@PathVariable Long id) {
         adminService.unBlockAccount(id);
         return ResponseEntity.ok("Id " + id + " successfully Unblocked");

@@ -6,12 +6,14 @@ import com.alura.aluraAPI.models.forum.Publication;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public record PublicationReadDto(String title,
+public record PublicationReadDto(Long id,
+                                 String title,
                                  Integer numberOfResponses,
                                  Set<CategoryReadDTO> categories,
                                  String nameStudent) {
     public PublicationReadDto(Publication publication) {
-        this(publication.getTitle(),
+        this(publication.getId(),
+                publication.getTitle(),
                 publication.getNumberOfResponses(),
                 publication.getCategories().stream().map(category -> new CategoryReadDTO(category)).collect(Collectors.toSet()),
                 publication.getStudent().getName());

@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 
@@ -21,9 +22,9 @@ public class ForumController {
     private final PublicationsService publicationsService;
 
     @PostMapping(value = "/publish")
-    public ResponseEntity<Void> publish(@RequestBody PublicationDto publicationDTO) {
-        publicationsService.insert(publicationDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(publicationDTO).toUri();
+    public ResponseEntity<Void> publish(@RequestBody PublicationDto publicationDTO, UriComponentsBuilder componentsBuilder) {
+        PublicationReadDto insert = publicationsService.insert(publicationDTO);
+        URI uri = componentsBuilder.path("/forum/id/{id}").buildAndExpand(insert.id()).toUri();
         return ResponseEntity.created(uri).build();
     }
 

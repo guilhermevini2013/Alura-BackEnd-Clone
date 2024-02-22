@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ContentReadDTO {
+    private Long id;
     private String nameContent;
     private String description;
     private LocalDate publicationDate;
@@ -21,6 +22,7 @@ public class ContentReadDTO {
     private Long totalStudent;
 
     public ContentReadDTO(Content entityFind) {
+        this.id = entityFind.getId();
         this.nameContent = entityFind.getNameContent();
         this.description = entityFind.getDescription();
         this.publicationDate = entityFind.getPublicationDate();

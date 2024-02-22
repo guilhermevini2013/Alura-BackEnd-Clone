@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
@@ -24,9 +25,9 @@ public class TrainingController {
     private final TrainingService trainingService;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody TrainingInsertDTO trainingInsertDTO) {
+    public ResponseEntity<Void> insert(@RequestBody TrainingInsertDTO trainingInsertDTO, UriComponentsBuilder componentsBuilder) {
         ContentReadDTO inserted = trainingService.insert(trainingInsertDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(inserted).toUri();
+        URI uri = componentsBuilder.path("/training/id/{id}").buildAndExpand(inserted.getId()).toUri();
         return ResponseEntity.created(uri).build();
     }
 
