@@ -3,6 +3,7 @@ package com.alura.aluraAPI.services.forum;
 import com.alura.aluraAPI.dtos.forum.insert.PublicationDto;
 import com.alura.aluraAPI.dtos.forum.insert.PublicationsAlterDto;
 import com.alura.aluraAPI.dtos.forum.read.PublicationReadDto;
+import com.alura.aluraAPI.dtos.forum.read.PublicationSeachDTO;
 import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.forum.Publication;
 import com.alura.aluraAPI.models.person.Student;
@@ -10,10 +11,10 @@ import com.alura.aluraAPI.repositories.CategoryRepository;
 import com.alura.aluraAPI.repositories.PublicationsRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
+import com.alura.aluraAPI.services.filters.PublicationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +27,7 @@ public class PublicationsService {
     private final PublicationsRepository publicationsRepository;
     private final StudentRepository studentRepository;
     private final CategoryRepository categoryRepository;
+    private final PublicationFilter publicationFilter;
 
     @Transactional
     public PublicationReadDto insert(PublicationDto publicationsDto) {
@@ -35,6 +37,12 @@ public class PublicationsService {
         entity = publicationsRepository.save(entity);
         return new PublicationReadDto(entity);
     }
+
+    @Transactional(readOnly = true)
+    public Page<PublicationReadDto> findAllByFilter(PageRequest pageRequest, PublicationSeachDTO dto) {
+        return publicationFilter.filter(dto, pageRequest);
+    }
+
     @Transactional(readOnly = true)
     public Page<PublicationReadDto> findAll(PageRequest request) {
         return publicationsRepository.findAll(request).map(PublicationReadDto::new);

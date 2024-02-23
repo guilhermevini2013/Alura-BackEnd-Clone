@@ -3,6 +3,8 @@ package com.alura.aluraAPI.controllers.forum;
 import com.alura.aluraAPI.dtos.forum.insert.PublicationDto;
 import com.alura.aluraAPI.dtos.forum.insert.PublicationsAlterDto;
 import com.alura.aluraAPI.dtos.forum.read.PublicationReadDto;
+import com.alura.aluraAPI.dtos.forum.read.PublicationSeachDTO;
+import com.alura.aluraAPI.models.forum.PublicationStatus;
 import com.alura.aluraAPI.services.forum.PublicationsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -10,7 +12,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -34,6 +35,17 @@ public class ForumController {
                                                             @RequestParam(name = "direction", defaultValue = "ASC", required = false) String direction,
                                                             @RequestParam(name = "orderBy", defaultValue = "publicationDate", required = false) String orderBy) {
         return ResponseEntity.ok(publicationsService.findAll(PageRequest.of(pages, linesPerPages, Sort.Direction.valueOf(direction), orderBy)));
+    }
+
+    @GetMapping(value = "/publish/filter")
+    public ResponseEntity<Page<PublicationReadDto>> findAllByFilter(@RequestParam(name = "page", defaultValue = "0", required = false) Integer pages,
+                                                                    @RequestParam(name = "linesPerPage", defaultValue = "15", required = false) Integer linesPerPages,
+                                                                    @RequestParam(name = "direction", defaultValue = "ASC", required = false) String direction,
+                                                                    @RequestParam(name = "orderBy", defaultValue = "publicationDate", required = false) String orderBy,
+                                                                    @RequestParam(name = "title", required = false) String title,
+                                                                    @RequestParam(name = "status", required = false) String status) {
+        PublicationSeachDTO publicationSearch = new PublicationSeachDTO(title, PublicationStatus.valueOf(status.toUpperCase()));
+        return ResponseEntity.ok(publicationsService.findAllByFilter(PageRequest.of(pages, linesPerPages, Sort.Direction.valueOf(direction), orderBy), publicationSearch));
     }
 
     @PutMapping(value = "/publish/{id}")

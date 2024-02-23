@@ -12,6 +12,11 @@ public class FilterSpecification<T> {
                 criteriaBuilder.like(criteriaBuilder.lower(root.get(nameAttribute)), "%" + value.toLowerCase() + "%");
     }
 
+    public Specification<T> filterByEnum(String nameAttribute, String value) {
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.equal(criteriaBuilder.upper(root.get(nameAttribute)), value.toUpperCase());
+    }
+
     public Specification<T> filterByDouble(String doubleAttribute, Double value) {
         return (root, query, criteriaBuilder) ->
                 criteriaBuilder.greaterThanOrEqualTo(root.get(doubleAttribute), value);

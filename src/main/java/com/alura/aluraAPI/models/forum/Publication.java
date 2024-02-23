@@ -10,11 +10,6 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
 
-enum PublicationStatus {
-    SOLVED,
-    UNSOLVED
-}
-
 @Getter
 @Setter
 @Entity
