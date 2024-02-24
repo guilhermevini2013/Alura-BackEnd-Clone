@@ -1,7 +1,6 @@
 package com.alura.aluraAPI.services.forum;
 
 import com.alura.aluraAPI.dtos.forum.insert.PublicationDto;
-import com.alura.aluraAPI.dtos.forum.insert.PublicationsAlterDto;
 import com.alura.aluraAPI.dtos.forum.read.PublicationReadDto;
 import com.alura.aluraAPI.dtos.forum.read.PublicationSeachDTO;
 import com.alura.aluraAPI.models.content.Category;
@@ -49,18 +48,20 @@ public class PublicationsService {
     }
 
     @Transactional
-    public void markAsResolved(Long idPublication) {
+    public void markAsResolved(Long idPublication,Long idStudent) {
+        verifyIntegrityStudent(idStudent, idPublication);
         Publication entity = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         entity.solvedPublish();
     }
 
     @Transactional
-    public void alterPublication(Long idPublication, PublicationsAlterDto publicationsAlterDto) {
+    public void alterPublication(Long idPublication, PublicationDto publicationDto) {
+        verifyIntegrityStudent(publicationDto.id_student(), idPublication);
         Publication entity = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
-        alterInformation(entity, publicationsAlterDto);
+        alterInformation(entity, publicationDto);
     }
 
-    public Publication alterInformation(Publication entity, PublicationsAlterDto dto) {
+    public Publication alterInformation(Publication entity, PublicationDto dto) {
         entity.setTitle(dto.title());
         entity.setDescription(dto.description());
         entity.setCategories(insertCategoriesInPublication(dto.ids_categories(), entity));
@@ -68,9 +69,15 @@ public class PublicationsService {
     }
 
     @Transactional
-    public void deleteById(Long idPublication) {
+    public void deleteById(Long idPublication, Long idStudent) {
+        verifyIntegrityStudent(idStudent, idPublication);
         Publication publication = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         publicationsRepository.delete(publication);
+    }
+
+    private void verifyIntegrityStudent(Long idStudent, Long idPublication) {
+        Student student = studentRepository.findById(idStudent).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
+        student.getPublications().stream().filter(x -> x.getId() == idPublication).findFirst().orElseThrow(() -> new ResourceNotFoundException("Student Does Not Contain Publication"));
     }
 
     private void insertStudentInPublication(Long idStudent, Publication publications) {

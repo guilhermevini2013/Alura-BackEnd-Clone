@@ -1,7 +1,6 @@
 package com.alura.aluraAPI.controllers.forum;
 
 import com.alura.aluraAPI.dtos.forum.insert.PublicationDto;
-import com.alura.aluraAPI.dtos.forum.insert.PublicationsAlterDto;
 import com.alura.aluraAPI.dtos.forum.read.PublicationReadDto;
 import com.alura.aluraAPI.dtos.forum.read.PublicationSeachDTO;
 import com.alura.aluraAPI.models.forum.PublicationStatus;
@@ -43,26 +42,28 @@ public class ForumController {
                                                                     @RequestParam(name = "direction", defaultValue = "ASC", required = false) String direction,
                                                                     @RequestParam(name = "orderBy", defaultValue = "publicationDate", required = false) String orderBy,
                                                                     @RequestParam(name = "title", required = false) String title,
-                                                                    @RequestParam(name = "status", required = false) String status) {
+                                                                    @RequestParam(name = "status",defaultValue = "none",required = false) String status) {
         PublicationSeachDTO publicationSearch = new PublicationSeachDTO(title, PublicationStatus.valueOf(status.toUpperCase()));
         return ResponseEntity.ok(publicationsService.findAllByFilter(PageRequest.of(pages, linesPerPages, Sort.Direction.valueOf(direction), orderBy), publicationSearch));
     }
 
     @PutMapping(value = "/publish/{id}")
-    public ResponseEntity<Void> alterPublish(@PathVariable Long id, @RequestBody PublicationsAlterDto publicationsAlterDto) {
+    public ResponseEntity<Void> alterPublish(@PathVariable Long id, @RequestBody PublicationDto publicationsAlterDto) {
         publicationsService.alterPublication(id, publicationsAlterDto);
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping(value = "/publish/mark/{id}")
-    public ResponseEntity<Void> markAsResolved(@PathVariable Long id) {
-        publicationsService.markAsResolved(id);
+    @PutMapping(value = "/publish/mark")
+    public ResponseEntity<Void> markAsResolved(@RequestParam(name = "idPublish") Long idPublish,
+                                               @RequestParam(name = "idStudent") Long idStudent) {
+        publicationsService.markAsResolved(idPublish,idStudent);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping(value = "/publish/{id}")
-    public ResponseEntity<Void> deletePublish(@PathVariable Long id) {
-        publicationsService.deleteById(id);
+    @DeleteMapping(value = "/publish")
+    public ResponseEntity<Void> deletePublish(@RequestParam(name = "idPublish") Long idPublish,
+                                              @RequestParam(name = "idStudent") Long idStudent) {
+        publicationsService.deleteById(idPublish,idStudent);
         return ResponseEntity.noContent().build();
     }
 }
