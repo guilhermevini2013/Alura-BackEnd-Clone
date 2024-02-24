@@ -7,7 +7,7 @@ import com.alura.aluraAPI.models.content.Category;
 import com.alura.aluraAPI.models.forum.Publication;
 import com.alura.aluraAPI.models.person.Student;
 import com.alura.aluraAPI.repositories.CategoryRepository;
-import com.alura.aluraAPI.repositories.PublicationsRepository;
+import com.alura.aluraAPI.repositories.PublicationRepository;
 import com.alura.aluraAPI.repositories.StudentRepository;
 import com.alura.aluraAPI.services.exceptions.ResourceNotFoundException;
 import com.alura.aluraAPI.services.filters.PublicationFilter;
@@ -23,7 +23,7 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class PublicationsService {
-    private final PublicationsRepository publicationsRepository;
+    private final PublicationRepository publicationsRepository;
     private final StudentRepository studentRepository;
     private final CategoryRepository categoryRepository;
     private final PublicationFilter publicationFilter;
@@ -48,7 +48,7 @@ public class PublicationsService {
     }
 
     @Transactional
-    public void markAsResolved(Long idPublication,Long idStudent) {
+    public void markAsResolved(Long idPublication, Long idStudent) {
         verifyIntegrityStudent(idStudent, idPublication);
         Publication entity = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         entity.solvedPublish();
@@ -61,7 +61,7 @@ public class PublicationsService {
         alterInformation(entity, publicationDto);
     }
 
-    public Publication alterInformation(Publication entity, PublicationDto dto) {
+    private Publication alterInformation(Publication entity, PublicationDto dto) {
         entity.setTitle(dto.title());
         entity.setDescription(dto.description());
         entity.setCategories(insertCategoriesInPublication(dto.ids_categories(), entity));

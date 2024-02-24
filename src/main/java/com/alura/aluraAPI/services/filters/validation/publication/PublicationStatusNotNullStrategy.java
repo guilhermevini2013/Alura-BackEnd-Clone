@@ -3,7 +3,7 @@ package com.alura.aluraAPI.services.filters.validation.publication;
 import com.alura.aluraAPI.dtos.forum.read.PublicationReadDto;
 import com.alura.aluraAPI.dtos.forum.read.PublicationSeachDTO;
 import com.alura.aluraAPI.models.forum.Publication;
-import com.alura.aluraAPI.repositories.PublicationsRepository;
+import com.alura.aluraAPI.repositories.PublicationRepository;
 import com.alura.aluraAPI.services.filters.FilterSpecification;
 import com.alura.aluraAPI.services.filters.validation.IValidatorFilterPublication;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class PublicationStatusNotNullStrategy implements IValidatorFilterPublication<PublicationReadDto> {
     private final FilterSpecification<Publication> filterSpecification;
-    private final PublicationsRepository publicationsRepository;
+    private final PublicationRepository publicationsRepository;
 
     @Override
     public void validate(PublicationSeachDTO publicationSeachDTO, Set<PublicationReadDto> listFilter, PageRequest pageRequest) {
