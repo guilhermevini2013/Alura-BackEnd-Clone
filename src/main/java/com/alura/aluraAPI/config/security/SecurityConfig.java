@@ -41,7 +41,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/student/create").permitAll()
                 .requestMatchers(HttpMethod.POST, "/student/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/admin/login").permitAll()
-                .anyRequest().authenticated());
+                .anyRequest().permitAll());
     }
 
     private void configureRoutesStudentSecurity(HttpSecurity http) throws Exception {
