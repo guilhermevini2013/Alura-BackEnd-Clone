@@ -12,7 +12,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class BlockVerifyStretagy implements IVerify {
+public class BlockVerifyStrategy implements IVerify {
     private final BlockedRepository blockedRepository;
 
     @Override
