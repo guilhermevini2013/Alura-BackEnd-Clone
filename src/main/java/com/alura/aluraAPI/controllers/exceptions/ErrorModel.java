@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.Instant;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +13,6 @@ import java.time.Instant;
 public class ErrorModel {
     private Instant timestamp;
     private Integer status;
-    private String error;
+    private List<String> error;
     private String path;
 }

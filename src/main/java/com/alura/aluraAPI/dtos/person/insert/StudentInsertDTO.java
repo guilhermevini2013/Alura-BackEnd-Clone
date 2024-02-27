@@ -14,6 +14,6 @@ public record StudentInsertDTO(@NotBlank(message = "Required field")
                                @NotBlank(message = "Required field")
                                @Size(min = 6, message = "minimum of 6 characters")
                                String password,
-                               @NotBlank(message = "Required field")
+                               @NotNull(message = "Required field")
                                TypeSignature typeSignature) {
 }

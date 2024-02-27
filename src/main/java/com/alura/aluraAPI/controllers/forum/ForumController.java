@@ -37,7 +37,8 @@ public class ForumController {
                     @ApiResponse(description = "Create", responseCode = "201"),
                     @ApiResponse(description = "Student Not Found", responseCode = "404"),
                     @ApiResponse(description = "Unauthorized", responseCode = "401"),
-                    @ApiResponse(description = "Forbidden", responseCode = "403")
+                    @ApiResponse(description = "Forbidden", responseCode = "403"),
+                    @ApiResponse(description = "Validation field", responseCode = "400")
             })
     public ResponseEntity<Void> addPublish(@RequestBody @Valid PublicationDto publicationDTO, UriComponentsBuilder componentsBuilder) {
         PublicationReadDto insert = publicationsService.insert(publicationDTO);
@@ -86,7 +87,8 @@ public class ForumController {
                     @ApiResponse(description = "Publication Not Found", responseCode = "404"),
                     @ApiResponse(description = "Student Not Found", responseCode = "404"),
                     @ApiResponse(description = "Unauthorized", responseCode = "401"),
-                    @ApiResponse(description = "Forbidden", responseCode = "403")
+                    @ApiResponse(description = "Forbidden", responseCode = "403"),
+                    @ApiResponse(description = "Validation field", responseCode = "400")
             })
     public ResponseEntity<Void> alterPublish(@PathVariable Long id, @RequestBody @Valid PublicationDto publicationsAlterDto) {
         publicationsService.alterPublication(id, publicationsAlterDto);
@@ -133,7 +135,8 @@ public class ForumController {
                     @ApiResponse(description = "Publication Not Found", responseCode = "404"),
                     @ApiResponse(description = "Student Not Found", responseCode = "404"),
                     @ApiResponse(description = "Unauthorized", responseCode = "401"),
-                    @ApiResponse(description = "Forbidden", responseCode = "403")
+                    @ApiResponse(description = "Forbidden", responseCode = "403"),
+                    @ApiResponse(description = "Validation field", responseCode = "400")
             })
     public ResponseEntity<ResponseReadDTO> addComment(@PathVariable Long idPublication, @RequestBody @Valid ResponseDTO responseDTO, UriComponentsBuilder componentsBuilder) {
         ResponseReadDTO entityInserted = responseService.insert(idPublication, responseDTO);
