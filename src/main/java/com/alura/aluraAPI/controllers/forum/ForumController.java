@@ -11,6 +11,7 @@ import com.alura.aluraAPI.services.forum.ResponseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -38,7 +39,7 @@ public class ForumController {
                     @ApiResponse(description = "Unauthorized", responseCode = "401"),
                     @ApiResponse(description = "Forbidden", responseCode = "403")
             })
-    public ResponseEntity<Void> addPublish(@RequestBody PublicationDto publicationDTO, UriComponentsBuilder componentsBuilder) {
+    public ResponseEntity<Void> addPublish(@RequestBody @Valid PublicationDto publicationDTO, UriComponentsBuilder componentsBuilder) {
         PublicationReadDto insert = publicationsService.insert(publicationDTO);
         URI uri = componentsBuilder.path("/forum/id/{id}").buildAndExpand(insert.id()).toUri();
         return ResponseEntity.created(uri).build();
@@ -87,7 +88,7 @@ public class ForumController {
                     @ApiResponse(description = "Unauthorized", responseCode = "401"),
                     @ApiResponse(description = "Forbidden", responseCode = "403")
             })
-    public ResponseEntity<Void> alterPublish(@PathVariable Long id, @RequestBody PublicationDto publicationsAlterDto) {
+    public ResponseEntity<Void> alterPublish(@PathVariable Long id, @RequestBody @Valid PublicationDto publicationsAlterDto) {
         publicationsService.alterPublication(id, publicationsAlterDto);
         return ResponseEntity.ok().build();
     }
@@ -134,7 +135,7 @@ public class ForumController {
                     @ApiResponse(description = "Unauthorized", responseCode = "401"),
                     @ApiResponse(description = "Forbidden", responseCode = "403")
             })
-    public ResponseEntity<ResponseReadDTO> addComment(@PathVariable Long idPublication, @RequestBody ResponseDTO responseDTO, UriComponentsBuilder componentsBuilder) {
+    public ResponseEntity<ResponseReadDTO> addComment(@PathVariable Long idPublication, @RequestBody @Valid ResponseDTO responseDTO, UriComponentsBuilder componentsBuilder) {
         ResponseReadDTO entityInserted = responseService.insert(idPublication, responseDTO);
         URI uri = componentsBuilder.path("/response/{id}").buildAndExpand(entityInserted.id()).toUri();
         return ResponseEntity.created(uri).body(entityInserted);

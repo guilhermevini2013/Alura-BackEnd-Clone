@@ -6,18 +6,14 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public record StudentInsertDTO(@NotNull
-                               @NotBlank
+public record StudentInsertDTO(@NotBlank(message = "Required field")
                                String name,
-                               @Email
-                               @NotNull
-                               @NotBlank
+                               @Email(message = "Email incorrect")
+                               @NotBlank(message = "Required field")
                                String email,
-                               @NotNull
-                               @NotBlank
+                               @NotBlank(message = "Required field")
                                @Size(min = 6, message = "minimum of 6 characters")
                                String password,
-                               @NotNull
-                               @NotBlank
+                               @NotBlank(message = "Required field")
                                TypeSignature typeSignature) {
 }

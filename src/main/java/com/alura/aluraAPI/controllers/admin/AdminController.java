@@ -4,6 +4,7 @@ import com.alura.aluraAPI.dtos.dashboard.DashBoardReadDTO;
 import com.alura.aluraAPI.dtos.person.insert.PersonLoadDTO;
 import com.alura.aluraAPI.dtos.person.read.*;
 import com.alura.aluraAPI.services.admin.AdminService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,7 +21,7 @@ public class AdminController {
     private final AdminService adminService;
 
     @PostMapping(value = "/login")
-    public ResponseEntity<LoginToken> loginAdmin(@RequestBody PersonLoadDTO personLoadDTO) {
+    public ResponseEntity<LoginToken> loginAdmin(@RequestBody @Valid PersonLoadDTO personLoadDTO) {
         return ResponseEntity.ok(adminService.loginAdmin(personLoadDTO));
     }
 

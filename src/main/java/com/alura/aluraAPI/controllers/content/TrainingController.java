@@ -4,6 +4,7 @@ import com.alura.aluraAPI.dtos.content.insert.TrainingInsertDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.services.contents.TrainingService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -25,7 +26,7 @@ public class TrainingController {
     private final TrainingService trainingService;
 
     @PostMapping
-    public ResponseEntity<Void> insert(@RequestBody TrainingInsertDTO trainingInsertDTO, UriComponentsBuilder componentsBuilder) {
+    public ResponseEntity<Void> insert(@RequestBody @Valid TrainingInsertDTO trainingInsertDTO, UriComponentsBuilder componentsBuilder) {
         ContentReadDTO inserted = trainingService.insert(trainingInsertDTO);
         URI uri = componentsBuilder.path("/training/id/{id}").buildAndExpand(inserted.getId()).toUri();
         return ResponseEntity.created(uri).build();
