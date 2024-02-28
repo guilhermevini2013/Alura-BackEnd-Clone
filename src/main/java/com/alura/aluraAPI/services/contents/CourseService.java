@@ -55,7 +55,7 @@ public class CourseService {
         return contentRepository.findAllCourse(pageRequest).map(course -> new ContentReadDTO(course));
     }
 
-    @Transactional
+    @Transactional(rollbackFor = DataIntegrityViolationException.class)
     public void delete(Long id) {
         try {
             if (!contentRepository.existsById(id)) {

@@ -26,7 +26,7 @@ public class Handler {
     }
 
     @ExceptionHandler(DataBaseException.class)
-    public ResponseEntity<ErrorModel> notFound(DataBaseException e, HttpServletRequest request) {
+    public ResponseEntity<ErrorModel> dataBase(DataBaseException e, HttpServletRequest request) {
         status = HttpStatus.BAD_REQUEST.value();
         return ResponseEntity.status(status).body(new ErrorModel(Instant.now(), status, List.of(e.getMessage()), request.getServletPath()));
     }

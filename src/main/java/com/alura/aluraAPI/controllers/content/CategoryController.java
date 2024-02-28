@@ -22,7 +22,9 @@ public class CategoryController {
     @Operation(description = "Get all course categories",
             summary = "Get all course categories",
             responses = {
-                    @ApiResponse(description = "OK", responseCode = "200")
+                    @ApiResponse(description = "OK", responseCode = "200"),
+                    @ApiResponse(description = "Unauthorized", responseCode = "401"),
+                    @ApiResponse(description = "Forbidden", responseCode = "403")
             })
     public ResponseEntity<List<CategoryReadDTO>> findAllCategories() {
         return ResponseEntity.ok(categoryService.getAllCategories());
