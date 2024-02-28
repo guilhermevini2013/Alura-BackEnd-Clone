@@ -6,6 +6,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.services.contents.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/course", produces = "application/json")
 @RequiredArgsConstructor
+@Tag(name = "Course", description = "Controller for Course")
 public class CourseController {
     private final CourseService courseService;
 

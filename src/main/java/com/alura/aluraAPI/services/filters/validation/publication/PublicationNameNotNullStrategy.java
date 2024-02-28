@@ -23,7 +23,7 @@ public class PublicationNameNotNullStrategy implements IValidatorFilterPublicati
     @Override
     public void validate(PublicationSeachDTO publicationSeachDTO, Set<PublicationReadDto> listFilter, PageRequest pageRequest) {
         if (publicationSeachDTO.title() != null) {
-            Page<Publication> listResponse = publicationsRepository.findAll(filterSpecification.filterByString("title", publicationSeachDTO.title()),pageRequest);
+            Page<Publication> listResponse = publicationsRepository.findAll(filterSpecification.filterByString("title", publicationSeachDTO.title()), pageRequest);
             listResponse.forEach(response -> {
                 listFilter.add(new PublicationReadDto(response));
             });

@@ -32,7 +32,7 @@ public class Student extends User {
     private Set<Course> completedCurses;
     @OneToMany(mappedBy = "student")
     private Set<StudentCertificate> studentCertificates = new HashSet<>();
-    @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private Set<Publication> publications = new HashSet<>();
 
     public Student(StudentInsertDTO studentInsertDTO, CalculateTimeSignatureStrategy timeSignatureStrategy) {

@@ -75,9 +75,6 @@ public class TrainingService {
 
     private void addCoursesInTraining(Training entity, TrainingInsertDTO trainingInsertDTO) {
         Set<Course> courseList = new HashSet<>();
-        if (trainingInsertDTO.curses().size() < 3) {
-            throw new ValidationException("Not enough courses");
-        }
         for (Long idCourse : trainingInsertDTO.curses()) {
             Course course = contentRepository.findByIdCourse(idCourse).orElse(null);
             if (course != null) {

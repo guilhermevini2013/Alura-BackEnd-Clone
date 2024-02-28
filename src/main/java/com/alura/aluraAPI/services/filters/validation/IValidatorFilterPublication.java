@@ -6,5 +6,5 @@ import org.springframework.data.domain.PageRequest;
 import java.util.Set;
 
 public interface IValidatorFilterPublication<T> {
-     void validate(PublicationSeachDTO publicationSeachDTO, Set<T> listFilter, PageRequest request);
+    void validate(PublicationSeachDTO publicationSeachDTO, Set<T> listFilter, PageRequest request);
 }

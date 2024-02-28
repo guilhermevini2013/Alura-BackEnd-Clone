@@ -6,6 +6,7 @@ import com.alura.aluraAPI.dtos.person.read.LoginToken;
 import com.alura.aluraAPI.services.students.StudentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 @RestController
 @RequestMapping(value = "/student", produces = "application/json")
 @RequiredArgsConstructor
+@Tag(name = "Student", description = "Controller for Student")
 public class StudentController {
     private final StudentService studentService;
 

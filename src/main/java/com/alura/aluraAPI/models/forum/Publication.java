@@ -41,10 +41,12 @@ public class Publication {
         this.numberOfResponses = 0;
         this.status = PublicationStatus.UNSOLVED;
     }
-    public void addResponse(Response response){
+
+    public void addResponse(Response response) {
         responses.add(response);
     }
-    public void solvedPublish(){
+
+    public void solvedPublish() {
         this.status = PublicationStatus.SOLVED;
     }
 }

@@ -3,7 +3,6 @@ package com.alura.aluraAPI.dtos.content.insert;
 import com.alura.aluraAPI.models.content.Certificate;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record CertificateDTO(@JsonIgnore Long id,

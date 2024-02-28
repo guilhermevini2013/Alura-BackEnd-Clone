@@ -64,7 +64,7 @@ public class AdminService {
         return studentRepository.findAllStudentNotBlocked(request).map(account -> new AccountUnBlockedDTO(account));
     }
 
-    public List<AccountStudentDTO> findUnblockByFilter(SearchStudentDTO studentDTO, String typeStudent) {
+    public List<AccountStudentDTO> findStudentByFilter(SearchStudentDTO studentDTO, String typeStudent) {
         return studentFilter.filter(studentDTO, typeStudent);
     }
 

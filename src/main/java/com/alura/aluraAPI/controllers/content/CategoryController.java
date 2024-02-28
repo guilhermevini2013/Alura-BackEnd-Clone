@@ -4,6 +4,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.CategoryReadDTO;
 import com.alura.aluraAPI.services.contents.CategoryService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/category", produces = "application/json")
 @RequiredArgsConstructor
+@Tag(name = "Admin", description = "Controller for Admin")
 public class CategoryController {
     private final CategoryService categoryService;
 
