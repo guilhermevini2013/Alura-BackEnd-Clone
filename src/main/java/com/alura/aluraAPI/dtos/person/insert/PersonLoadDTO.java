@@ -12,6 +12,5 @@ public record PersonLoadDTO(
         String email,
         @NotBlank(message = "Required field")
         @Schema(description = "Password for person(Student or Admin)")
-        @Size(min = 6, message = "Minimum of 6 characters")
         String password) {
 }

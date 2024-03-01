@@ -28,10 +28,10 @@ public class SecurityConfig {
         this.configureRoutesStudentSecurity(http);
         this.configureRoutesPublicSecurity(http);
         return http
-                .cors(x -> x.setBuilder(http))
-                .csrf(x -> x.disable())
+                .cors(cors -> cors.setBuilder(http))
+                .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .headers(x -> x.frameOptions(y -> y.disable()))
+                .headers(header -> header.frameOptions(frame -> frame.disable()))
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

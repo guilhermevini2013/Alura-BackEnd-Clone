@@ -1,4 +1,4 @@
-package com.alura.aluraAPI.config;
+package com.alura.aluraAPI.config.doc;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.OpenAPI;
