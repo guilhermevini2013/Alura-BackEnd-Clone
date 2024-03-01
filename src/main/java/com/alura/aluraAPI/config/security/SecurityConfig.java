@@ -17,6 +17,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
     private final SecurityFilter securityFilter;
+    private static final String[] AUTH_DOC = {
+            "/api/v1/auth/**",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/swagger-ui/**",
+            "/swagger-ui.html"
+    };
 
     public SecurityConfig(SecurityFilter securityFilter) {
         this.securityFilter = securityFilter;
@@ -41,7 +48,8 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/student/create").permitAll()
                 .requestMatchers(HttpMethod.POST, "/student/login").permitAll()
                 .requestMatchers(HttpMethod.POST, "/admin/login").permitAll()
-                .anyRequest().permitAll());
+                .requestMatchers(AUTH_DOC).permitAll()
+                .anyRequest().authenticated());
     }
 
     private void configureRoutesStudentSecurity(HttpSecurity http) throws Exception {
