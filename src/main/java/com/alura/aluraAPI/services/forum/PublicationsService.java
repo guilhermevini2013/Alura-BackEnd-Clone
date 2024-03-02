@@ -49,15 +49,13 @@ public class PublicationsService {
 
     @Transactional
     public void markAsResolved(Long idPublication, Long idStudent) {
-        verifyIntegrityStudent(idStudent, idPublication);
-        Publication entity = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
+        Publication entity = publicationsRepository.findByIdAndStudentId(idPublication, idStudent).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         entity.solvedPublish();
     }
 
     @Transactional
     public void alterPublication(Long idPublication, PublicationDto publicationDto) {
-        verifyIntegrityStudent(publicationDto.id_student(), idPublication);
-        Publication entity = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
+        Publication entity = publicationsRepository.findByIdAndStudentId(idPublication, publicationDto.id_student()).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         alterInformation(entity, publicationDto);
     }
 
@@ -70,14 +68,8 @@ public class PublicationsService {
 
     @Transactional
     public void deleteById(Long idPublication, Long idStudent) {
-        verifyIntegrityStudent(idStudent, idPublication);
-        Publication publication = publicationsRepository.findById(idPublication).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
+        Publication publication = publicationsRepository.findByIdAndStudentId(idPublication, idStudent).orElseThrow(() -> new ResourceNotFoundException("Publication not found"));
         publicationsRepository.delete(publication);
-    }
-
-    private void verifyIntegrityStudent(Long idStudent, Long idPublication) {
-        Student student = studentRepository.findById(idStudent).orElseThrow(() -> new ResourceNotFoundException("Student not found"));
-        student.getPublications().stream().filter(x -> x.getId() == idPublication).findFirst().orElseThrow(() -> new ResourceNotFoundException("Student Does Not Contain Publication"));
     }
 
     private void insertStudentInPublication(Long idStudent, Publication publications) {
