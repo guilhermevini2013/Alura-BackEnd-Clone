@@ -6,6 +6,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.services.contents.CourseService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,7 @@ import java.util.List;
 @RequestMapping(value = "/course", produces = "application/json")
 @RequiredArgsConstructor
 @Tag(name = "Course", description = "Controller for Course")
+@SecurityRequirement(name = "bearerAuth")
 public class CourseController {
     private final CourseService courseService;
 

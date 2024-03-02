@@ -6,6 +6,7 @@ import com.alura.aluraAPI.dtos.person.read.*;
 import com.alura.aluraAPI.services.admin.AdminService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -38,6 +39,7 @@ public class AdminController {
     }
 
     @PutMapping(value = "/block/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(description = "Block account student",
             summary = "Block account student",
             responses = {@ApiResponse(description = "OK", responseCode = "200"),
@@ -52,6 +54,7 @@ public class AdminController {
     }
 
     @PutMapping(value = "/unblock/{id}")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(description = "Unblock account student",
             summary = "Unblock account student",
             responses = {@ApiResponse(description = "OK", responseCode = "200"),
@@ -66,6 +69,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/blocked")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(description = "Find all account blocked pagination",
             summary = "Find all account blocked pagination",
             responses = {@ApiResponse(description = "OK",
@@ -82,6 +86,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/dashboard")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(description = "Find for information from dashboard",
             summary = "Find for information from dashboard",
             responses = {
@@ -95,6 +100,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/unblocked")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(description = "Find all account unblocked pagination",
             summary = "Find all account unblocked pagination",
             responses = {
@@ -111,6 +117,7 @@ public class AdminController {
     }
 
     @GetMapping(value = "/student/filter")
+    @SecurityRequirement(name = "bearerAuth")
     @Operation(description = "Find all account blocked or unblocked by Filter",
             summary = "Find all account blocked or unblocked by Filter",
             responses = {@ApiResponse(description = "OK", responseCode = "200"),
