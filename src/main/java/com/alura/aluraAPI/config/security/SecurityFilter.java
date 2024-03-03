@@ -48,10 +48,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     private Boolean verifyEmail(String email) {
         String[] addressEmail = email.split("@");
-        if (addressEmail[1].equals("admin"))
-            return false;
-        else
-            return true;
+        return !addressEmail[1].equals("admin");
     }
 
     private String recoverToken(HttpServletRequest request) {

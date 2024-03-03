@@ -8,6 +8,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,10 +38,10 @@ public class Handler {
         return ResponseEntity.status(status).body(new ErrorModel(Instant.now(), status, List.of(e.getMessage()), request.getServletPath()));
     }
 
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ErrorModel> credentialsIncorrect(BadCredentialsException e, HttpServletRequest request) {
+    @ExceptionHandler({BadCredentialsException.class, AuthenticationException.class})
+    public ResponseEntity<ErrorModel> credentialsIncorrect(HttpServletRequest request) {
         status = HttpStatus.BAD_REQUEST.value();
-        return ResponseEntity.status(status).body(new ErrorModel(Instant.now(), status, List.of("credentials Incorrect"), request.getContextPath()));
+        return ResponseEntity.status(status).body(new ErrorModel(Instant.now(), status, List.of("Email or Password incorrect"), request.getContextPath()));
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

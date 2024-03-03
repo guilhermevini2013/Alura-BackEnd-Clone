@@ -17,7 +17,7 @@ public class UserDetailsUtil {
         return user;
     }
 
-    private static User setAttributesInUser(List<UserDetailsProjection> result, User user) {
+    private static void setAttributesInUser(List<UserDetailsProjection> result, User user) {
         user.setEmail(result.get(0).getUsername());
         user.setPassword(result.get(0).getPassword());
         user.setIsAccountNonLocked(result.get(0).getIs_Non_Locked());
@@ -27,7 +27,6 @@ public class UserDetailsUtil {
         for (UserDetailsProjection projection : result) {
             user.addRole(new TypeRole(projection.getRoleId(), projection.getAuthority()));
         }
-        return user;
     }
 
     private static void validateStudent(User user) {

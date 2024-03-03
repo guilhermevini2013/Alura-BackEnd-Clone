@@ -2,7 +2,6 @@ package com.alura.aluraAPI.services.user;
 
 import com.alura.aluraAPI.models.person.Admin;
 import com.alura.aluraAPI.models.person.Student;
-import com.alura.aluraAPI.models.person.User;
 import com.alura.aluraAPI.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,9 +26,6 @@ public class UserDetailsImpl implements UserDetailsService {
 
     private Boolean verifyEmail(String email) {
         String[] addressEmail = email.split("@");
-        if (addressEmail[1].equals("admin"))
-            return false;
-        else
-            return true;
+        return !addressEmail[1].equals("admin");
     }
 }
