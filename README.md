@@ -1,4 +1,60 @@
-<h1>Plataforma de Estudo API</h1>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Estudo API</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        h2 {
+            color: #2980b9;
+        }
+
+        code {
+            background-color: #ecf0f1;
+            padding: 2px 5px;
+            border-radius: 4px;
+        }
+
+        pre {
+            background-color: #ecf0f1;
+            padding: 10px;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        a {
+            color: #3498db;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Plataforma de Estudo API</h1>
 
     <h2>Visão Geral</h2>
 
@@ -47,3 +103,6 @@
     <p>Este projeto foi inspirado na plataforma Alura, com o objetivo de criar um ambiente de estudo versátil e eficiente. Agradecemos à equipe da Alura pela inspiração.</p>
 
     <p>Bons estudos! 📚🚀</p>
+
+</body>
+</html>
