@@ -5,6 +5,7 @@ import com.alura.aluraAPI.dtos.content.readOnly.ContentReadDTO;
 import com.alura.aluraAPI.dtos.content.readOnly.ContentSearchDTO;
 import com.alura.aluraAPI.models.content.Course;
 import com.alura.aluraAPI.models.content.Training;
+import com.alura.aluraAPI.repositories.CategoryRepository;
 import com.alura.aluraAPI.repositories.ContentRepository;
 import com.alura.aluraAPI.services.email.EmailService;
 import com.alura.aluraAPI.services.exceptions.DataBaseException;
@@ -29,12 +30,14 @@ public class TrainingService {
     private final ContentFilter trainingFilter;
     private final CalculateTimeTrainingStrategy timeTraining;
     private final ContentRepository contentRepository;
+    private final CategoryRepository categoryRepository;
     private final EmailService emailService;
 
     @Transactional
     public ContentReadDTO insert(TrainingInsertDTO trainingInsertDTO) {
         Training entity = new Training(trainingInsertDTO, timeTraining);
         addCoursesInTraining(entity, trainingInsertDTO);
+        entity.setCategory(categoryRepository.getReferenceById(trainingInsertDTO.idCategory()));
         entity.calculatedTime();
         entity = contentRepository.save(entity);
         emailService.sendEmailAllStudent("Nova formacao de " + entity.getCategory().getName() + " na PLATAFORMA!", "Ola, venha conhecer nossa formacao de: "
