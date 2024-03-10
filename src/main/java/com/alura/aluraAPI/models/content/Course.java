@@ -26,7 +26,7 @@ public class Course extends Content {
     private ICalculable<Course> calculable;
 
     public Course(CourseDTO cursesDTO, CalculateTimeCourseStrategy timeCourse) {
-        super(cursesDTO.nameContent(), cursesDTO.description());
+        super(cursesDTO.nameContent(), cursesDTO.description(),cursesDTO.linkImg());
         super.certificate = new Certificate(cursesDTO.certificateDTO(), this);
         cursesDTO.videoLessonDTOList().stream().forEach(x -> videoLessons.add(new VideoLesson(x, this)));
         this.calculable = timeCourse;

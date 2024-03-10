@@ -12,16 +12,17 @@ import java.util.List;
 
 public class CourseFactory {
     public static ContentReadDTO createValidContentReadDTO(){
-        return new ContentReadDTO("Java","Muito bom", LocalDate.now(),10,2.0,2l);
+//        return new ContentReadDTO("Java","Muito bom", LocalDate.now(),10,2.0,2l);
+        return null;
     }
     public static VideoLessonDTO createValidVideoLessonDTO(){
         return new VideoLessonDTO(1l,"java aula 1","/java",10);
     }
     public static CourseDTO createValidCourseDTO(){
-        return new CourseDTO(1l,"Java","muito bom", List.of(createValidVideoLessonDTO()),new CertificateDTO(1l,"java completo"),1l);
+        return new CourseDTO(1l,"Java","muito bom", List.of(createValidVideoLessonDTO()),null,new CertificateDTO(1l,"java completo"),1l);
     }
     public static CourseDTO createInValidCourseDTO(){
-        return new CourseDTO(1l,"Java","muito bom", List.of(createValidVideoLessonDTO()),new CertificateDTO(1l,"java completo"),2l);
+        return new CourseDTO(1l,"Java","muito bom", List.of(createValidVideoLessonDTO()),null,new CertificateDTO(1l,"java completo"),2l);
     }
     public static Course createValidCourse(){
         return new Course(createValidCourseDTO(),new CalculateTimeCourseStrategy());

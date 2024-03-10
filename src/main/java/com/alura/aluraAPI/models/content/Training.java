@@ -23,7 +23,7 @@ public class Training extends Content {
     private ICalculable<Training> calculable;
 
     public Training(TrainingInsertDTO trainingInsertDTO, CalculateTimeTrainingStrategy timeTraining) {
-        super(trainingInsertDTO.nameContent(), trainingInsertDTO.description());
+        super(trainingInsertDTO.nameContent(), trainingInsertDTO.description(),trainingInsertDTO.linkImg());
         this.calculable = timeTraining;
     }
 

@@ -39,7 +39,7 @@ public class StudentService {
         student.addRole(roleRepository.findByAuthority("ROLE_STUDENT"));
         student.setPassword(passwordEncoder.encode(studentInsertDTO.password()));
         studentRepository.save(student);
-        emailService.sendEmailToStudent(studentInsertDTO.email(), "Cadastro concluido", "Ola " + studentInsertDTO.name() + " Seja bem-vindo a maior plataforma de estudo do BRASIL!!!");
+        //emailService.sendEmailToStudent(studentInsertDTO.email(), "Cadastro concluido", "Ola " + studentInsertDTO.name() + " Seja bem-vindo a maior plataforma de estudo do BRASIL!!!");
     }
 
     @Transactional

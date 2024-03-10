@@ -20,6 +20,7 @@ public class ContentReadDTO {
     private Integer totalHours;
     private Double assessment;
     private Long totalStudent;
+    private String linkImg;
 
     public ContentReadDTO(Content entityFind) {
         this.id = entityFind.getId();
@@ -29,5 +30,6 @@ public class ContentReadDTO {
         this.totalHours = entityFind.getTotalHours();
         this.assessment = entityFind.getAssessment();
         this.totalStudent = entityFind.getTotalStudent();
+        this.linkImg = entityFind.getLinkImg();
     }
 }

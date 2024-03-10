@@ -24,14 +24,16 @@ public abstract class Content {
     protected LocalDate publicationDate;
     protected String description;
     protected Integer totalHours;
+    protected String linkImg;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     protected Certificate certificate;
     @ManyToOne(fetch = FetchType.LAZY)
-    private Category category;
+    protected Category category;
 
-    public Content(String nameContent, String description) {
+    public Content(String nameContent, String description,String linkImg) {
         this.nameContent = nameContent;
         this.description = description;
+        this.linkImg = linkImg;
         this.totalStudent = 0L;
         this.publicationDate = LocalDate.now();
     }
