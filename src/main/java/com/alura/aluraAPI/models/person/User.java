@@ -21,21 +21,21 @@ import java.util.List;
 public abstract class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
-    private Long id;
+    protected Long id;
     @Column(unique = true)
-    private String email;
-    private String password;
+    protected String email;
+    protected String password;
     @ManyToMany
     @JoinTable(name = "user_role",
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_role"))
-    private List<TypeRole> roles = new ArrayList<>();
+    protected List<TypeRole> roles = new ArrayList<>();
     @Column(name = "isNonExpired")
-    private Boolean isAccountNonExpired;
+    protected Boolean isAccountNonExpired;
     @Column(name = "isNonLocked")
-    private Boolean isAccountNonLocked;
-    private Boolean isCredentialsNonExpired;
-    private Boolean isEnabled;
+    protected Boolean isAccountNonLocked;
+    protected Boolean isCredentialsNonExpired;
+    protected Boolean isEnabled;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

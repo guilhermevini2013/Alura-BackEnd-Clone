@@ -35,8 +35,7 @@ public class StudentService {
 
     @Transactional(rollbackFor = ValidationException.class)
     public void create(StudentInsertDTO studentInsertDTO) {
-        Student student = new Student(studentInsertDTO, timeSignatureStrategy);
-        student.addRole(roleRepository.findByAuthority("ROLE_STUDENT"));
+        Student student = new Student(studentInsertDTO, roleRepository.findByAuthority("ROLE_STUDENT"), timeSignatureStrategy);
         student.setPassword(passwordEncoder.encode(studentInsertDTO.password()));
         studentRepository.save(student);
         //emailService.sendEmailToStudent(studentInsertDTO.email(), "Cadastro concluido", "Ola " + studentInsertDTO.name() + " Seja bem-vindo a maior plataforma de estudo do BRASIL!!!");

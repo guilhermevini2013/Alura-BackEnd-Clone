@@ -35,7 +35,7 @@ public class Student extends User {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private Set<Publication> publications = new HashSet<>();
 
-    public Student(StudentInsertDTO studentInsertDTO, CalculateTimeSignatureStrategy timeSignatureStrategy) {
+    public Student(StudentInsertDTO studentInsertDTO,TypeRole role, CalculateTimeSignatureStrategy timeSignatureStrategy) {
         this.name = studentInsertDTO.name();
         super.setPassword(studentInsertDTO.password());
         super.setEmail(studentInsertDTO.email());
@@ -43,6 +43,7 @@ public class Student extends User {
         super.setIsAccountNonLocked(true);
         super.setIsCredentialsNonExpired(true);
         super.setIsEnabled(true);
+        super.roles.add(role);
         this.signature = new Signature(studentInsertDTO.typeSignature(), timeSignatureStrategy);
     }
 }
